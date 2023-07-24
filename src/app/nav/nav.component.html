@@ -1,0 +1,84 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="anchor">
+        <div class="container-fluid">
+            <a class="navbar-brand" routerLink="/" href="#"><img src="assets/images/icones/mushromLogo.png"
+                    alt="Logo" height="45"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <!-- <span class="navbar-toggler-icon"></span> -->
+                <fa-icon [icon]="faAlignJustify"></fa-icon>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item my-auto">
+                        <a class="nav-link text-uppercase active" aria-current="page" routerLink="/" href="#">Portail</a>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <a class="nav-link text-uppercase" routerLink="/guide-des-champignons" href="#">Guide des champignons</a>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <a class="nav-link text-uppercase" href="#">Discussion</a>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <a class="nav-link text-uppercase" href="#">Actualité</a>
+                    </li>
+                </ul>
+
+
+                <div class="navbar-nav d-flex me-3">
+                    <div *ngIf="is_auth; else login" class="d-flex flex-wrap flex-lg-nowrap">
+                        <a class="noUnderline text-light dropdown-toggle px-3" href="#" role="button"
+                            id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <ng-template [ngIf]="user.avatarFilename" [ngIfElse]="defaultAvatar">
+                                <img [src]="user.avatarFilename" alt="Avatar" height="50" class="rounded mr-4" />
+                            </ng-template>
+
+                            <ng-template #defaultAvatar>
+                                <img src="assets/images/icones/connexion.png" alt="Avatar" height="50"
+                                    class="mr-3">
+                            </ng-template>
+
+                            {{user.pseudo}}
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
+                            aria-labelledby="dropdownMenuLink">
+                            <h6 class="dropdown-header">Connecté en tant que</h6>
+                            <li>
+                                <p class="px-2 ftsz-9 text-center text-secondary">user.username</p>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <a class="dropdown-item" href="">Espace personnel</a>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li *ngIf="hasRole_admin">
+                                <a class="dropdown-item ftsz-9" href="#route_admin">Back office admin</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li *ngIf="hasRole_user">
+                                <a class="dropdown-item ftsz-9" href="#route_profil">Espace personnel</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item ftsz-9 fw-bold" href="Route_deconnexion">Déconnexion</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <ng-template #login>
+                        <a href="#login">
+                            <img src="./../../assets/images/icones/connexion.png" alt="Avatar" height="50">
+                        </a>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

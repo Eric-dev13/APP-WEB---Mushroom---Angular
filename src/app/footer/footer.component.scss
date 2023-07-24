@@ -1,0 +1,87 @@
+// Atténue la couleur 
+@function setTextColorIfHover($baseColor, $opacity) {
+    @return(darken($baseColor, $opacity));
+}
+
+// Personnaliser la couleur des liens de balise a {}
+@mixin linkColor($myLinkColor,$opacity) {
+
+    text-decoration: none;
+
+    color: $myLinkColor !important;
+
+    &:link {
+        color: $myLinkColor !important;
+    }
+
+    &:visited {
+        color: $myLinkColor !important;
+    }
+
+    &:hover {
+        color: setTextColorIfHover($myLinkColor, $opacity) !important;
+    }
+}
+
+
+.footer {
+    
+    font-family: 'Playfair Display', serif;
+    
+    h3 {
+        font-size: 1.4em;
+        font-weight: 700;
+    }
+
+    h4 {
+        font-size: 1.2em;
+        font-weight: 500;
+    }
+
+    p {
+        font-size: 1em;
+    }
+
+    ul,
+    h6 {
+        padding-left: 0;
+
+        li {
+            list-style: none;
+            font-size: .9em;
+            line-height: 2em;
+            a {
+              @include linkColor(white, 30%);  
+            }
+        }
+    }
+
+    &__debutPage {
+        @include linkColor(white, 30%);  
+    }
+
+    &__contact {
+        @include linkColor(#ffc107, 10%);
+    }
+
+    
+    &__langIcon {
+        img {
+            margin: 1px;
+            width: 70px;
+            border-radius: 5px;
+        }
+
+    }
+
+    &__copyright {
+        width: 100%;
+        text-align: right;
+
+        a {
+            @include linkColor(rgb(179, 202, 255), 10%);
+        }
+    }
+
+}
+

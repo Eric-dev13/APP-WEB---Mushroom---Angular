@@ -1,0 +1,125 @@
+<footer class="container-fluid bg-dark text-light px-4 footer" id="footer">
+    <div class="row">
+        <div class="col-12 text-center p-4 border-secondary border-bottom">
+            <h6><a href="#anchor" class="footer__debutPage ftsz-14">Début de page</a></h6>
+        </div>
+        <div class="col-12 p-4 border-secondary border-bottom">
+            <h4 class="text-center">MISE EN GARDE</h4>
+            <p class="text-center px-4">
+                Ce site, ne peut pas vous apprendre à reconnaître de manière sûre les champignons.<br> Nous nous
+                dégageons de toute responsabilité quand à la mauvaise interprétation des informations y figurant et nous
+                vous conseillons de vérifier les informations auprès d'un professionnel
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <section class="col-12 col-md-4 col-lg-4 col-xl-4 p-4 order-2 order-md-1 border-secondary border-bottom">
+            <div class="row">
+                <h4 class="text-center">A propos</h4>
+                <div class="col-12 pt-3 border-secondary border-bottom pb-3">
+                    <div class="d-flex">
+                        <div class="d-flex flex-column footer__langIcon px-3">
+                            <a href="https://www.java.com/fr/" target="__blank">
+                                <img src="../../assets/images/icones/stackTech/java.png" class="mb-2" alt="Java">
+                            </a>
+                            <a href="https://angular.io/" target="__blank">
+                                <img src="../../assets/images/icones/stackTech/Angular.png" alt="Angular">
+                            </a>
+                        </div>
+                        <div class="ps-3">
+                            <p class="py-3">
+                                <span class="fw-bold">Développeur</span> : Lanza Eric <br>
+                            </p>
+                            <p class="mb-3 py-3">
+                                Site réalisé avec Angular et java. <br>
+                                - Angular, un framework JavaScript pour le front-end. <br>
+                                - Java pour le back-end (API)
+                            </p>
+                            <div class="text-end">
+                                <div class="badge text-bg-warning text-nowrap" style="width: 8rem;">
+                                    Web full-stack
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 text-center pt-5">
+                    <p>
+                        <a class="ftsz-15 footer__contact text-warning" href="#sendMail'">Nous contacter</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section
+            class="col-12 col-md-5 col-lg-5 col-xl-4 p-4 order-1 order-md-2 border-secondary border-bottom d-flex flex-column align-items-center">
+            <h4>Navigation</h4>
+            <ul>
+                <hr class="bg-secondary">
+                <h5 class="text-secondary fw-bold ftsz-10">Le royaume des champignons</h5>
+                <li>
+                    <a class="" routerLink="/guide-des-champignons" href="#">Guide des champignons</a>
+                </li>
+                <li class="">
+                    <a href="#">Discussion
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="#">Actualités
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <!-- {% if app.user %} -->
+                <hr class="bg-secondary">
+                <h5 class="text-secondary fw-bold ftsz-10">Accès membre</h5>
+                <!-- {% if is_granted('ROLE_ADMIN') %} -->
+                <li><a href="#">Back office</a></li>
+                <!-- {% endif %} -->
+                <li><a class="" href="#">Modifer mon profil</a></li>
+                <li><a href="">Me déconnecter</a></li>
+                <!-- {% else %} -->
+                <li><a class="" href="#">S'incrire</a></li>
+                <li><a class="" href="#">Se connecter</a></li>
+                <!-- {% endif %} -->
+                <hr class="bg-secondary">
+                <li><a href="#">Mentions légales</a></li>
+                <li><a class="" href="#" id="showBoxCookiesManager">Cookies</a></li>
+            </ul>
+        </section>
+        <section class="col-12 col-md-3 col-lg-3 col-xl-4 p-4 order-3 order-md-3">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="text-center mb-3">Découvrir mes autres sites</h4>
+                </div>
+                <aside class="col-6 col-sm-4 col-md-12 col-xl-6 d-flex flex-column align-items-center">
+                    <!-- {{ component.boxVideoLinkUrl(
+                        "/build/images/icones/Screenshot_Meteo.png",
+                        "/build/videos/raspBot.mp4",
+                        "https://ricou12.github.io/Robotique/",
+                        "Un projet robotique créé avec un Raspberry Pi et arduino ."
+                    ) }} -->
+                </aside>
+                <aside class="col-6 col-sm-4 col-md-12 col-xl-6 d-flex flex-column align-items-center">
+                    <!-- {{ component.boxVideoLinkUrl(
+                        "/build/images/icones/Screenshot_Meteo.png",
+                        "/build/videos/meteo.mp4",
+                        "https://ricou12.github.io/meteo-webService/",
+                        "Application météo Javascript uitlisant une API."
+                    ) }} -->
+                </aside>
+                <aside class="col-6 col-sm-4 col-md-12 col-xl-6 d-flex flex-column align-items-center">
+                    <!-- {{ component.boxVideoLinkUrl(
+                        "/build/images/icones/Screenshot_Meteo.png",
+                        "/build/videos/pictureBox.mp4",
+                        "https://ricou12.github.io/PictureBox-BOOTSTRAP-JS/",
+                        "Premier pas avec HTML, CSS, Javascript."
+                    ) }} -->
+                </aside>
+                <aside class="footer__copyright ftsz-8">
+                    <a href="http://copyright.be" target="_blank">Copyright © 2023 le royaume des champignons - Tous
+                        droits réservés</a>
+                </aside>
+            </div>
+        </section>
+    </div>
+</footer>
