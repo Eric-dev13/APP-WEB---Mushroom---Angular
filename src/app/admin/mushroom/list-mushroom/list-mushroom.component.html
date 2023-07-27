@@ -1,0 +1,34 @@
+<div class="container py-3">
+
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Nom commun</th>
+                <th scope="col">Photo</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let mushroom of mushrooms">
+                <td scope="row">{{mushroom.id}}</td>
+                <td>{{mushroom.commonname}}</td>
+                <td>
+                    <img class="" *ngIf="mushroom.medias.length > 0; else default"
+                        [src]="'assets/upload/mushrooms/' + mushroom.medias[0].path" alt="{{mushroom.commonname}}" width="150">
+                    <ng-template #default>
+                        <img class="" src="assets/images/icones/default.png"
+                            alt="{{mushroom.commonname}}" width="150">
+                    </ng-template>
+                </td>
+                <td>
+                    <div class="d-flex">
+                        <a [routerLink]="['/admin/champignons/editer', mushroom.id]" href=""class="btn btn-outline-success me-2" title="Editer" ><fa-icon [icon]="faEdit"></fa-icon></a>
+                        <a (click)="delete(mushroom.id)" class="btn btn-outline-danger" title="Supprimer"><fa-icon [icon]="faTrash"></fa-icon></a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

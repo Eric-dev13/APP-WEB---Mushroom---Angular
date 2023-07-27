@@ -1,0 +1,68 @@
+<div class="container py-3">
+
+    <h1 class="text-center mb-3">Ajouter une nouvel espèce</h1>
+
+    <form #form="ngForm" (submit)="send(form)">
+
+        <div class="mb-3">
+            <label for="commonname" class="form-label">Nom commun</label>
+            <input [(ngModel)]="mushroom.commonname" type="text" class="form-control" id="commonname" name="commonname">
+        </div>
+
+        <div class="mb-3">
+            <label for="latinname" class="form-label">Nom latin</label>
+            <input [(ngModel)]="mushroom.latinname" type="text" class="form-control" id="latinname" name="latinname">
+        </div>
+
+        <div class="mb-3">
+            <label for="flesh" class="form-label">Chair</label>
+            <textarea [(ngModel)]="mushroom.flesh" class="form-control" id="flesh" rows="3" name="flesh"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="hat" class="form-label">Chapeau</label>
+            <textarea [(ngModel)]="mushroom.hat" class="form-control" id="hat" rows="3" name="hat"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="lamella" class="form-label">Lamelle</label>
+            <textarea [(ngModel)]="mushroom.lamella" class="form-control" id="lamella" rows="3" name="lamella"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="foot" class="form-label">Pied</label>
+            <textarea [(ngModel)]="mushroom.foot" class="form-control" id="foot" rows="3" name="foot"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="habitat" class="form-label">habitat</label>
+            <textarea [(ngModel)]="mushroom.habitat" class="form-control" id="habitat" rows="3" name="habitat"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="comment" class="form-label">Commentaire</label>
+            <textarea [(ngModel)]="mushroom.comment" class="form-control" id="comment" rows="3" name="comment"></textarea>
+        </div>
+
+        <input type="hidden" [(ngModel)]="mushroom.id" name="id">
+
+        <!-- <div class="mb-3">
+        <label for="localnames" class="form-label">Catégories</label>
+        <select [(ngModel)]="mushroom.localnames" class="form-select" aria-label="Default select example" id="category" name="categorie_id" >
+            <option disabled>Catégorie</option>
+            <option [value]="localnames.id" *ngFor="let localname of localnames" >{{localnames.name}}</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="tempsprep" class="form-label">tempsPrep</label>
+        <textarea [(ngModel)]="mushroom.tempsprep" class="form-control" id="tempsprep" rows="3" name="tempsprep"></textarea>
+    </div> -->
+
+
+        <button class="btn btn-primary">Envoyer</button>
+        <!-- <button (click)="addMushroom()">Add mushroom</button> -->
+
+    </form>
+
+</div>

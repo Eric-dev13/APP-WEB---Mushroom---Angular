@@ -1,0 +1,28 @@
+/*****************************/
+/********  BOOTSTRAP  ********/
+/*****************************/
+
+// 1. Incluez d'abord les fonctions (afin que vous puissiez manipuler les couleurs, les SVG, le calcul, etc.) 
+@import "../../node_modules/bootstrap/scss/functions";
+
+// 2. Inclure tous les remplacements de variable par défaut ici 
+//$primary: #bedefa; // modifier une couleur de bootstrap
+$raspberry: rgb(197, 29, 74); // Ajouter des couleurs dans bootstrap / theme de bootstrap
+$vegetable: #3f503e;
+
+// 3. Inclure le reste des feuilles de style Bootstrap requises
+// variables bootstrap (dont theme-color)
+@import "../../node_modules/bootstrap/scss/variables"; 
+@import "../../node_modules/bootstrap/scss/variables-dark";
+
+// Ajoute un nom pour la nouvelle couleur 
+$custom-colors: (
+    "vegetable" : $vegetable,
+    "raspberry" : $raspberry
+);
+// Ajoute la nouvelle couleur au theme existant.
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+
+// IMPORTATION de BOOTSTRAP
+@import "../../node_modules/bootstrap/scss/bootstrap";

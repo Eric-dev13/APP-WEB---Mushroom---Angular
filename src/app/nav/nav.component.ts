@@ -14,20 +14,18 @@ export class NavComponent {
   is_auth!: boolean;
   hasRole_admin!: boolean;
   hasRole_user!: boolean;
-
-
-
-  user=
-    {
-    avatarFilename: './../../assets/images/icones/connexion.png',
-    pseudo: 'Eric',
-    username: 'eric'
-  }
+  userDetail!: {avatarFilename: string, pseudo: string, username:string };
+   
 
   ngOnInit(){
     this.is_auth = true;
     this.hasRole_admin = true ;
     this.hasRole_user = false ;
+    this.userDetail =  {
+      avatarFilename: './../../assets/images/icones/connexion.png',
+      pseudo: 'Eric',
+      username: 'eric'
+    }
   }
 
 }

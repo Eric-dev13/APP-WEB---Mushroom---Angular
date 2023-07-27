@@ -1,38 +1,68 @@
-# Royaume des champignons
+# Angular - Royaume des champignons
 
 
 
-## Front end
+## Installation
 
-
-
-### Installation angular
+Installer `Node Js` pour bénéficier du gestionnaire de package`npm`
 
 `ng new nom-du-projet --style=scss --skip-tests=true`
 
-### Création composant Home
-Page d'acceuil
 
-### Création composant nav
-Barre de navigation
 
-### Création composant Mushrooms
-Affiche la collection des vignettes.
+## Demarrage du serveur
 
-### Création composant card
-Permets d'afficher une vignette comprenant une images, le nom commun, la comestibilité.
+````
+localhost:4200
+````
 
-### Installation de bootstrap
+
+
+## Création composant (controller)
+
+````
+ng generate component nom-du-composant
+OU
+ng g c nom-du-composant
+````
+
+
+
+## Création service
+
+````
+ng g service nom-du-service
+````
+
+Mettre a disposition de méthode pour les traitements
+
+Exemple :CRUD
+
+## Bootstrap
+
+### Installation
 
 ````
  npm i bootstrap
 ````
 
+### Utilisation
 
+**Ajouter les liens vers les fichiers CSS et JS**
 
 ![image-20230722232411952](.\assets.readme\image-20230722232411952.png)
 
 
+
+## SASS - Fichier SCSS 
+
+**Importation de Fichiers SCSS Globaux** : Pour importer des fichiers SCSS globaux dans toute l'application, vous pouvez le faire à partir du fichier `styles.scss` situé dans le répertoire `src` de votre projet. Tous les fichiers SCSS que vous importez dans `styles.scss` seront disponibles dans l'ensemble de votre application.
+
+**Utilisation de SCSS dans les Composants** : Lorsque vous créez des styles pour un composant spécifique, vous pouvez  utiliser les fonctionnalités avancées de SCSS telles que les variables,  les mixins, les fonctions, etc. directement dans le fichier `my-component.component.scss`.
+
+**Importer le Fichier SCSS** : Dans votre fichier principal SCSS (par exemple, `styles.scss`), vous pouvez importer le fichier SCSS de la dépendance en utilisant la directive `@import`.
+
+Le préfixe `~` est utilisé pour indiquer à Angular de rechercher la dépendance dans le dossier `node_modules`.
 
 ## Fontawesome
 
@@ -90,36 +120,7 @@ export class NavComponent {
 
 
 
-# MushroomAngular
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-
-
-## RFS
+## RFS (redimensionnement auto des polices)
 
 RFS est un moteur de redimensionnement d'unité qui a été initialement développé pour redimensionner les tailles de police (d'où son abréviation pour Responsive Font Sizes). De nos jours, RFS est capable de redimensionner pratiquement toutes les valeurs de n'importe quelle propriété CSS avec des unités, telles que margin, padding, border-radius ou même box-shadow.
 
@@ -135,6 +136,137 @@ Usage:
 @import "../node_modules/rfs/scss";
 ```
 
+
+
+## Cycle de vie des composants
+
+1. Elle sera déclenchée une seule fois.
+2. `ngOnInit()`: déclenchée après l’exécution du constructeur. Elle permet d’initialiser le composant avec le 1er affichage des données de la vue ayant un *binding* avec des propriétés de la classe du composant. Cette *callback* est déclenchée une seule fois à l’initialisation du composant même si `ngOnChanges()` n’est pas déclenchée.
+3. `ngDoCheck()` permet d’indiquer des changements si Angular ne les a pas détecté.
+4. `ngAfterContentInit()` est déclenchée à l’initialisation après [la projection de contenu](https://cdiese.fr/angular-child-component/#angular_child_component-content_projection). Elle est déclenchée même s’il n’y a pas de contenu à projeter.
+5. `ngAfterContentChecked()`: déclenchée après la détection de changement dans [le contenu projeté](https://cdiese.fr/angular-child-component/#angular_child_component-content_projection). Cette *callback* est déclenchée même s’il n’y a pas de projection de contenu.
+6. `ngAfterViewInit()`: déclenchée après l’initialisation de la vue du composant et après l’initialisation de la vue des composants enfant.
+7. `ngAfterViewChecked()` est déclenchée après détection d’un changement dans la vue du composant et dans la vue des composants enfant.
+8. `ngOnDestroy()` est déclenchée avant la destruction du composant.
+
+A chaque détection de changements, les *callbacks* déclanchées sont, dans l’ordre:
+
+1. `ngOnChanges()` si les paramètres en entrée du composant sont modifiés.
+2. `ngDoCheck()`
+3. `ngAfterContentChecked()` est déclenchée même s’il n’y a pas de contenu projeté.
+4. `ngAfterViewChecked()`.
+
+
+
+## Requête vers l'API
+
+
+
+### Formulaire
+
+Exporte les fournisseurs et directives requis pour les formulaires  pilotés par modèle, les rendant disponibles pour l’importation par les  NgModules qui importent ce module.
+
+````
+// src\app\app.module.ts
+
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';  // Gestion de formulaire lié a ngModel
+````
+
+
+
+
+
+#### Bibliothèque  HttpClient
+
+Declare `HttpClientModule` dans `src\app\app.module.ts`
+
+````
+// src\app\app.module.ts
+
+...
+
+//Request vers l'api
+import { HttpClientModule } from '@angular/common/http';
+
+@NgModule({
+  declarations: [
+    ...
+  ],
+  imports: [
+    ...
+    HttpClientModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { 
+
+}
+````
+
+
+
+##### Requête GET (controller)
+
+````
+// src\app\mushrooms\mushrooms.component.ts
+
+import { Component,OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+@Component({
+  selector: 'app-mushrooms',
+  templateUrl: './mushrooms.component.html',
+  styleUrls: ['./mushrooms.component.scss']
+})
+export class MushroomsComponent implements OnInit{
+
+  mushroomsApi:string = "http://localhost:9000/api/v1/admin/mushroom";
+  mushrooms: any;
+
+ constructor(private http: HttpClient){}
+
+  ngOnInit(): void {
+    this.http.get(this.mushroomsApi).subscribe((res)=>{
+      this.mushrooms = res; 
+      console.log(this.mushrooms);
+    });
+  }
+}
+````
+
+HTML
+
+````
+<!-- src\app\mushrooms\mushrooms.component.html -->
+
+<section class="col d-flex justify-content-center" *ngFor="let mushroom of mushrooms">
+            <div class="listMushrooms__card box-shadow-down">
+                <a [routerLink]="['/champignon', mushroom.id]">
+                    <div class="listMushrooms__card__eat d-flex justify-content-center align-items-center" *ngIf="mushroom.edibilityEntity != null">
+                        <div class="text-center">
+                            <img class="listMushrooms__card__eat__img" [src]="'assets/images/edibility/' + mushroom.edibilityEntity.path" alt="?">
+                            <p class="text-light">{{ mushroom.edibilityEntity.name }}</p>
+                        </div>
+                    </div>
+                    <div class="listMushrooms__card__bloc-img">
+                        <div class="listMushrooms__card__bloc-img__opacity"></div>
+                        <img class="listMushrooms__card__bloc-img__image" *ngIf="mushroom.mediaEntities.length > 0; else default" [src]="'upload/mushrooms/' + mushroom.mediaEntities[0].path" alt="{{mushroom.commonname}}">
+                        <ng-template #default>
+                             <img class="listMushrooms__card__bloc-img__image" src="assets/images/icones/default.png" alt="{{mushroom.commonname}}">
+                        </ng-template>
+                    </div>
+                    <div class="listMushrooms__card__titre d-flex flex-row justify-content-center align-items-center">
+                        <h5 class="text-greenDark txtShadow--white text-center">{{mushroom.commonname}}</h5>
+                    </div>
+                </a>
+            </div>
+        </section>
+````
+
+
+
 Pour lier un asset dans un composant, vous pouvez utiliser la balise HTML <img> pour une image, ou <link> et <script> pour les fichiers CSS et JavaScript. 
 
 ```
@@ -148,3 +280,62 @@ Pour lier un asset dans un composant, vous pouvez utiliser la balise HTML <img> 
 <script src="assets/js/script.js"></script>
 ```
 
+L’élément <ng-template> d’Angular définit un modèle qui n’est pas rendu par défaut.
+Notez que si vous encapsulez du contenu dans un <ng-template> sans demander à Angular de le rendre, ce contenu n’apparaîtra pas sur une page.
+
+
+
+
+
+Notre objectif est de vous aider à identifier facilement les champignons que vous croisez lors de vos balades en forêt. Grâce à notre système de recherche avancée, vous pouvez filtrer les espèces par couleur, forme, habitat et bien plus encore. Que vous soyez un débutant enthousiaste ou un mycologue chevronné, Le Royaume des Champignons est là pour enrichir vos connaissances et votre passion.
+
+Mais ce n'est pas tout ! Nous croyons en la force de la communauté. C'est pourquoi nous avons créé un forum interactif où vous pourrez échanger vos découvertes, poser vos questions, partager vos photos et discuter avec d'autres amateurs de champignons. Notre communauté bienveillante est prête à vous accueillir et à vous aider dans votre aventure mycologique.
+
+Alors, rejoignez-nous dès aujourd'hui et partons ensemble à la découverte du merveilleux royaume des champignons de Provence. Faisons de cette passion commune une source d'apprentissage, de partage et d'émerveillement !
+
+Prêt à plonger dans ce monde mystérieux et fascinant ? Rejoignez-nous au Royaume des Champignons !
+
+
+
+## Routage
+
+Externe
+
+
+
+Interne
+
+````
+import { Router, ActivatedRoute } from '@angular/router';
+
+...
+constructor(private router: Router, private route: ActivatedRoute) { }
+...
+this.router.navigate(['admin/champignons/Liste-des-champignons']);
+````
+
+
+
+
+
+
+
+HTTP Angular
+
+app.module.ts importer **httpClientModule**
+
+Dans le composant pour les requete vers l’api
+
+import **httpClient , onInit**
+
+implementer  **onInit** sur la classe
+
+Déclarer dans la classe les variables string qui pointe vers l’url de l’api
+
+mushroom : string = url-api
+
+dans constructeur injecte http
+
+constructor( private http:HttpClient){ }
+
+dans méthode ngOnInit(){

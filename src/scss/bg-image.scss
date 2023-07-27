@@ -1,0 +1,20 @@
+
+@mixin bgImageForest($image) {
+    background: url($image);
+    -webkit-filter: blur(2px);
+    filter: blur(2px);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-image--forest {
+    @include bgImageForest("../assets/images/foret/foret-3.jpg");
+}
+
+.bg-image--forum {
+    @include bgImageForest("../assets/images/foret/foret-2.jpg");
+}
+
+.bg-image--error404 {
+    @include bgImageForest("../assets/images/foret/foret-5.jpg");
+}

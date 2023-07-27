@@ -18,10 +18,10 @@
                         <a class="nav-link text-uppercase" routerLink="/guide-des-champignons" href="#">Guide des champignons</a>
                     </li>
                     <li class="nav-item my-auto">
-                        <a class="nav-link text-uppercase" href="#">Discussion</a>
+                        <a class="nav-link text-uppercase" routerLink="/forum" forum href="#">Discussion</a>
                     </li>
                     <li class="nav-item my-auto">
-                        <a class="nav-link text-uppercase" href="#">Actualité</a>
+                        <a class="nav-link text-uppercase" routerLink="/actualite" href="#">Actualité</a>
                     </li>
                 </ul>
 
@@ -30,8 +30,8 @@
                     <div *ngIf="is_auth; else login" class="d-flex flex-wrap flex-lg-nowrap">
                         <a class="noUnderline text-light dropdown-toggle px-3" href="#" role="button"
                             id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            <ng-template [ngIf]="user.avatarFilename" [ngIfElse]="defaultAvatar">
-                                <img [src]="user.avatarFilename" alt="Avatar" height="50" class="rounded mr-4" />
+                            <ng-template [ngIf]="userDetail.avatarFilename" [ngIfElse]="defaultAvatar">
+                                <img [src]="userDetail.avatarFilename" alt="Avatar" height="50" class="rounded mr-4" />
                             </ng-template>
 
                             <ng-template #defaultAvatar>
@@ -39,7 +39,7 @@
                                     class="mr-3">
                             </ng-template>
 
-                            {{user.pseudo}}
+                            {{userDetail.pseudo}}
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
@@ -58,6 +58,18 @@
                             <li *ngIf="hasRole_admin">
                                 <a class="dropdown-item ftsz-9" href="#route_admin">Back office admin</a>
                             </li>
+                            <li *ngIf="hasRole_admin">
+                                <a class="dropdown-item ftsz-9"  routerLink="/admin/champignons/Liste-des-champignons"  href="#route_admin">Les champignons</a>
+                            </li>
+                            <li *ngIf="hasRole_admin">
+                                <a class="dropdown-item ftsz-9"  routerLink="/admin/champignons/nouveau"  href="#route_admin">Nouvelle espéce</a>
+                            </li>
+                            <li *ngIf="hasRole_admin">
+                                <a class="dropdown-item ftsz-9"  routerLink="/admin/champignons/editer"  href="#route_admin">Editer les médias</a>
+                            </li>
+                            <li *ngIf="hasRole_admin">
+                                <a class="dropdown-item ftsz-9"  routerLink="/admin/media/Liste-des-medias"  href="#route_admin">Les photos</a>
+                            </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -74,7 +86,7 @@
 
                     <ng-template #login>
                         <a href="#login">
-                            <img src="./../../assets/images/icones/connexion.png" alt="Avatar" height="50">
+                            <img src="assets/images/icones/connexion.png" alt="Avatar" height="50">
                         </a>
                     </ng-template>
                 </div>

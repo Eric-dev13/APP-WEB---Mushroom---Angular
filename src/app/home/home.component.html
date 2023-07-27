@@ -1,25 +1,41 @@
-<div class="containerFullSize"></div>
-<!-- Video -->
+<section class="position-relative d-flex flex-column justify-content-around align-items-center home">
 
-<!-- <div class="background bgColor--filterBlack"></div> -->
-
-<section class="position-relative d-flex flex-column justify-content-around align-items-center bg-danger home">
-    <video class="home__video-bg" playsinline autoplay="true" loop muted>
-        <source src="assets/videos/bg-video.mp4" type="video/mp4">
-        <source src="assets/videos/bg-video.webm" type="video/webm">
+    <!-- Video -->
+    <video class="home__video-bg" autoplay loop muted>
+        <source src="assets/videos/bg-video_edit.mp4" type="video/mp4">
+        Votre navigateur ne prend pas en charge la balise vidéo.
     </video>
-    
-    <div class="row">
-        <section class="col border">
-            <h1 class="text-center text-light py-4 py-lg-5">Le royaume des champignons</h1>
-        </section>
-    </div>
-    <div class="row">
-        <section class="col border">
-            <a href="#" style="text-decoration:none;">
-                <h2 class="ft-lobster text-light text-center p-2 p-lg-5">Massif de la Sainte-Baumes, massif des Maures,
-                    Alpes du Sud.</h2>
-            </a>
-        </section>
+
+    <!-- Background transparent pour assombrir -->
+    <div class="position-absolute bg-black bg-opacity-50 w-100 h-100 z-n1"></div>
+
+    <!-- TITRE PRINCIPAL -->
+    <h1 class="text-center text-light z-2">Le royaume des champignons</h1>
+
+    <!-- PRESENTATION DU SITE -->
+    <div class="container z-2">
+        <a href="#" class="text-decoration-none">
+            <h2 class="text-light">
+                Bienvenue sur notre site dédié à l'identification des champignons.
+                Notre objectif est de vous immerger dans le fascinant univers des champignons et de
+                vous offrir une expérience unique.</h2>
+
+            <!-- <h2 class="text-light">
+                Sur notre plateforme, vous trouverez une collection complète de photos et de descriptions détaillées sur
+                différentes espèces de champignons que vous pouvez découvrir au cœur de cette magnifique région
+                provençale.
+            </h2> -->
+
+            <h2 class="text-light">
+                Que vous soyez un passionné de mycologie ou simplement curieux de la diversité des champignons en
+                Provence, notre site est conçu pour vous offrir une expérience enrichissante et éducative.
+            </h2>
+
+            <h2 class="text-light">
+                Parcourez nos galeries de photos pour observer de près les spécimens captivants, en apprendre davantage
+                sur leur habitat et leurs caractéristiques distinctives. Nous espérons que cette plateforme vous
+                permettra de mieux apprécier et comprendre le monde étonnant des champignons.
+            </h2>
+        </a>
     </div>
 </section>

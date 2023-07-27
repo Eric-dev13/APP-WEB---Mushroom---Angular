@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core'; // 
+import { FormsModule } from '@angular/forms';  // Gestion de formulaire lié a ngModel
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module'; // Gestion du routage
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { NavComponent } from './nav/nav.component';
@@ -10,6 +11,17 @@ import { CardComponent } from './card/card.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FooterComponent } from './footer/footer.component';
+import { ForumComponent } from './forum/forum.component';
+
+//Request vers l'api
+import { HttpClientModule } from '@angular/common/http';
+import { FormMushroomComponent } from './admin/mushroom/form-mushroom/form-mushroom.component';
+import { ListMushroomComponent } from './admin/mushroom/list-mushroom/list-mushroom.component';
+import { FormMediaComponent } from './admin/media/form-media/form-media.component';
+import { ListMediaComponent } from './admin/media/list-media/list-media.component';
+import { MushromDescriptionComponent } from './mushrom-description/mushrom-description.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { NotFoundComponent } from './page-error/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -18,12 +30,22 @@ import { FooterComponent } from './footer/footer.component';
     NavComponent,
     MushroomsComponent,
     CardComponent,
-    FooterComponent
+    FooterComponent,
+    ForumComponent,
+    FormMushroomComponent,
+    ListMushroomComponent,
+    FormMediaComponent,
+    ListMediaComponent,
+    MushromDescriptionComponent,
+    DashboardComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
