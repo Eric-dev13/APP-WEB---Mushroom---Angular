@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module'; // Gestion du routage
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { NavComponent } from './nav/nav.component';
-import { MushroomsComponent } from './mushrooms/mushrooms.component';
+import { MushroomsComponent } from './mushroom/mushrooms/mushrooms.component';
 import { CardComponent } from './card/card.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -19,7 +19,7 @@ import { FormMushroomComponent } from './admin/mushroom/form-mushroom/form-mushr
 import { ListMushroomComponent } from './admin/mushroom/list-mushroom/list-mushroom.component';
 import { FormMediaComponent } from './admin/media/form-media/form-media.component';
 import { ListMediaComponent } from './admin/media/list-media/list-media.component';
-import { MushromDescriptionComponent } from './mushrom-description/mushrom-description.component';
+import { MushromComponent } from './mushroom/mushroom/mushroom.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { NotFoundComponent } from './page-error/not-found/not-found.component';
 
@@ -36,7 +36,7 @@ import { NotFoundComponent } from './page-error/not-found/not-found.component';
     ListMushroomComponent,
     FormMediaComponent,
     ListMediaComponent,
-    MushromDescriptionComponent,
+    MushromComponent,
     DashboardComponent,
     NotFoundComponent
   ],

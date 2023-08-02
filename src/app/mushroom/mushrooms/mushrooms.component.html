@@ -1,0 +1,40 @@
+<div class="bgfullSize bg-image--forest"></div>
+<div class="bgfullSize bgColor--filterBlack"></div>
+
+<article class="container listMushrooms">
+    <div class="row">
+        <header class="col text-light text-center">
+            <h1 class="pt-3">Guide des champignons</h1>
+            <p>Guide des champignons : Explorez la biodiversité fongique. Identifiez, apprenez et appréciez les champignons avec notre guide complet. Parcourez les formes, couleurs et habitats fascinants.</p>
+        </header>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-8">
+        <section class="col d-flex justify-content-center" *ngFor="let mushroom of mushrooms">
+            <div class="listMushrooms__card box-shadow-down">
+                <!-- <a [routerLink]="['/champignon', mushroom.id]"> -->
+                <a [routerLink]="['/champignon', mushroom.slug]">
+                    <div class="listMushrooms__card__eat d-flex justify-content-center align-items-center" *ngIf="mushroom.edibility != '' && mushroom.edibility != null">
+                        <div class="text-center">
+                            <img class="listMushrooms__card__eat__img" [src]="'assets/images/edibility/' + mushroom.edibility.path" alt="?">
+                            <p class="text-light">{{ mushroom.edibility.name }}</p>
+                        </div>
+                    </div>
+                    <div class="listMushrooms__card__bloc-img">
+                        <div class="listMushrooms__card__bloc-img__opacity"></div>
+                        <img class="listMushrooms__card__bloc-img__image" *ngIf="mushroom.medias.length > 0; else default" [src]="API_URL_GET_FILE + mushroom.medias[0].path" alt="{{mushroom.commonname}}">
+                        <ng-template #default>
+                             <img class="listMushrooms__card__bloc-img__image" src="assets/images/icones/default.png" alt="{{mushroom.commonname}}">
+                        </ng-template>
+                    </div>
+                    <div class="listMushrooms__card__titre d-flex flex-row justify-content-center align-items-center">
+                        <h5 class="fw-semibold text-vegetable txtShadow--white text-center">{{mushroom.commonname}}</h5>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </div>
+    <div class="my-4">
+        <!-- Pagination -->
+    </div>
+</article>

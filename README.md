@@ -115,7 +115,8 @@ export class NavComponent {
   ++ faCoffee = faCoffee;
 }
 ````
-
+Environnement
+ng generate environments
 
 
 
@@ -158,9 +159,15 @@ A chaque détection de changements, les *callbacks* déclanchées sont, dans l�
 
 
 
+## Rafraichissement d'un composant de la page
+
+Pour actualiser une page sans devoir la recharger  il suffit de modifier les données et angular regénère le bloc incriminé.
+
+
+
+
+
 ## Requête vers l'API
-
-
 
 ### Formulaire
 
@@ -301,8 +308,6 @@ Prêt à plonger dans ce monde mystérieux et fascinant ? Rejoignez-nous au Roya
 
 Externe
 
-
-
 Interne
 
 ````
@@ -339,3 +344,4 @@ dans constructeur injecte http
 constructor( private http:HttpClient){ }
 
 dans méthode ngOnInit(){
+

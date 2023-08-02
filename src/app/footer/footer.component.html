@@ -57,7 +57,7 @@
                 <hr class="bg-secondary">
                 <h5 class="text-secondary fw-bold ftsz-10">Le royaume des champignons</h5>
                 <li>
-                    <a class="" routerLink="/guide-des-champignons" href="#">Guide des champignons</a>
+                    <a class="" routerLink="/guide-des-champignons"[routerLink]="['guide-des-champignons']">Guide des champignons</a>
                 </li>
                 <li class="">
                     <a href="#">Discussion
@@ -69,11 +69,13 @@
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <!-- {% if app.user %} -->
+                <hr class="bg-secondary">
+                <h5 class="text-secondary fw-bold ftsz-10">Accès administrateur</h5>
+                <li><a href="#">Back office administrateur</a></li>
+                <!-- {% if app.user %} Si authentifié --> 
                 <hr class="bg-secondary">
                 <h5 class="text-secondary fw-bold ftsz-10">Accès membre</h5>
-                <!-- {% if is_granted('ROLE_ADMIN') %} -->
-                <li><a href="#">Back office</a></li>
+                <!-- {% if is_granted('ROLE_ADMIN') %} Si role administrateur -->
                 <!-- {% endif %} -->
                 <li><a class="" href="#">Modifer mon profil</a></li>
                 <li><a href="">Me déconnecter</a></li>

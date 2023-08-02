@@ -1,0 +1,58 @@
+@import "../../../../node_modules/rfs/scss";
+
+.descriptionMushroom {
+    h1 {
+         @include font-size(5.5rem); 
+     }
+     h2{
+        font-family: 'Roboto Condensed';
+         @include font-size(1.2rem);
+     }
+
+    &__header{
+        &__letter {
+            letter-spacing: 15px;
+            line-height: 30px;
+            color:rgb(129, 50, 8);
+        }
+    }
+  
+    &__eat {
+        img {
+            -webkit-filter: drop-shadow(2px 2px 0.2rem black);
+            filter: drop-shadow(2px 2px 0.2rem black);
+            height: 40px;
+        }
+
+        p {
+            margin-top: 5px;
+        }
+    }
+
+    &__preview {
+        width: 5vw;
+        max-width: 50px;
+        -webkit-filter: invert(0.5);
+        filter: invert(0.5);
+    }
+
+    &__follow {
+        width: 5vw;
+        max-width: 50px;
+        -webkit-filter: invert(0.5);
+        filter: invert(0.5);
+    }
+
+    &__img {
+        overflow: hidden;
+        border-radius: 60px 0px 60px 0px;
+    }
+
+    &__description {
+        // Couleur du texte
+         color: #32363b !important;
+        span {
+            font-weight: 800;
+        }
+    }
+}
