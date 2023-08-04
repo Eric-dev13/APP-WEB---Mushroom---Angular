@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { faEdit,faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit,faTrash, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { Router, ActivatedRoute } from '@angular/router';
 import { API_ADMIN_BASE_URL, API_URL_GET_FILE_MUSHROOM } from 'src/environments/config';
 
@@ -16,6 +16,7 @@ export class ListMushroomComponent implements OnInit {
   
   faEdit = faEdit;
   faTrash = faTrash;
+  faCircleInfo = faCircleInfo;
 
     // Déclaration de constantes
     readonly API_ADMIN_BASE_URL: string = API_ADMIN_BASE_URL;
@@ -32,6 +33,7 @@ export class ListMushroomComponent implements OnInit {
       console.log(this.mushrooms);
     });
   }
+
 
   delete(id: any) {
     // DELETE

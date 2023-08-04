@@ -22,6 +22,7 @@ import { ListMediaComponent } from './admin/media/list-media/list-media.componen
 import { MushromComponent } from './mushroom/mushroom/mushroom.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { NotFoundComponent } from './page-error/not-found/not-found.component';
+import { DetailMushroomComponent } from './admin/mushroom/detail-mushroom/detail-mushroom.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { NotFoundComponent } from './page-error/not-found/not-found.component';
     ListMediaComponent,
     MushromComponent,
     DashboardComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    DetailMushroomComponent
   ],
   imports: [
     BrowserModule,

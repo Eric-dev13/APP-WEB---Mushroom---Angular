@@ -8,6 +8,8 @@ import { ListMediaComponent } from './admin/media/list-media/list-media.componen
 import { ListMushroomComponent } from './admin/mushroom/list-mushroom/list-mushroom.component';
 import { FormMushroomComponent } from './admin/mushroom/form-mushroom/form-mushroom.component';
 import { NotFoundComponent } from './page-error/not-found/not-found.component';
+import { DetailMushroomComponent } from './admin/mushroom/detail-mushroom/detail-mushroom.component';
+
 
 
 
@@ -18,9 +20,10 @@ const routes: Routes = [
   { path:"champignon/:id",component: MushromComponent },
   { path:"forum", component: ForumComponent },
   // ADMIN
-  { path:"admin/champignons/Liste-des-champignons", component: ListMushroomComponent },
-  { path:"admin/champignons/nouveau", component: FormMushroomComponent },
-  { path:"admin/champignons/editer/:id", component: FormMushroomComponent },
+  { path:"admin/champignon/Liste-des-champignons", component: ListMushroomComponent },
+  { path:"admin/champignon/description/:slug", component: DetailMushroomComponent },
+  { path:"admin/champignon/nouveau", component: FormMushroomComponent },
+  { path:"admin/champignon/editer/:id", component: FormMushroomComponent },
 
   { path:"admin/media/Liste-des-medias", component: ListMediaComponent },
   
