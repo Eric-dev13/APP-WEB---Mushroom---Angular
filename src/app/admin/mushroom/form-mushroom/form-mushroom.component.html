@@ -2,31 +2,64 @@
 
     <h1 class="text-center mb-3">Ajouter une nouvel espèce</h1>
 
-    <form #form="ngForm" (submit)="send(form)">
-
+    <form #form="ngForm" (submit)="send(form)" class="fw-bold" enctype="multipart/form-data">
+        <!-- NOM COMMUN - CHAMP OBLIGATOIRE -->
         <div class="mb-3">
             <label for="commonname" class="form-label">Nom commun</label>
             <input [(ngModel)]="mushroom.commonname" type="text" class="form-control" id="commonname" name="commonname">
         </div>
 
+        <!-- NOM LATIN -->
         <div class="mb-3">
             <label for="latinname" class="form-label">Nom latin</label>
             <input [(ngModel)]="mushroom.latinname" type="text" class="form-control" id="latinname" name="latinname">
         </div>
 
+        <!-- COMESTIBILITE -->
+        <div class="mb-3">
+            <label for="edibility" class="form-label">Comestibilité</label>
+            <select class="form-select" [(ngModel)]="mushroom.edibility.id" name="edibility" id="edibility">
+                <option selected disabled>Choisir...</option>
+                <option *ngFor="let edibility of edibilities" [value]="edibility.id">{{ edibility.name }}</option>
+            </select>
+        </div>
+
+        <!-- MEDIAS -->
+        <div class="mb-3 p-2 border">
+            <app-add-media (mediaEvent)="addMedia($event)"></app-add-media>
+            <ul class="list-group">
+                <li  class="list-group-item fw-normal" *ngFor="let media of mushroom.medias">
+                    {{media.name}} : {{media.path}}
+                </li>
+            </ul>
+        </div>
+
+        <!-- CHAIR -->
         <div class="mb-3">
             <label for="flesh" class="form-label">Chair</label>
             <textarea [(ngModel)]="mushroom.flesh" class="form-control" id="flesh" rows="3" name="flesh"></textarea>
         </div>
 
+        <!-- CHAPEAU -->
         <div class="mb-3">
             <label for="hat" class="form-label">Chapeau</label>
             <textarea [(ngModel)]="mushroom.hat" class="form-control" id="hat" rows="3" name="hat"></textarea>
         </div>
 
+        <!-- LAMELLE -->
         <div class="mb-3">
             <label for="lamella" class="form-label">Lamelle</label>
-            <textarea [(ngModel)]="mushroom.lamella" class="form-control" id="lamella" rows="3" name="lamella"></textarea>
+            <textarea [(ngModel)]="mushroom.lamella" class="form-control" id="lamella" rows="3"
+                name="lamella"></textarea>
+        </div>
+
+        <!-- TYPE DE LAMELLE -->
+        <div class="mb-3">
+            <label for="lamellatype" class="form-label">Type de lamelles</label>
+            <select class="form-select" aria-label="Default select example" [(ngModel)]="mushroom.lamellatype.id" name="lamellatype" id="lamellatype">
+                <option selected disabled>Choisir...</option>
+                <option *ngFor="let lamellatype of lamellaTypes"  [value]="lamellatype.id">{{ lamellatype.name }}</option>
+            </select>
         </div>
 
         <div class="mb-3">
@@ -36,33 +69,20 @@
 
         <div class="mb-3">
             <label for="habitat" class="form-label">habitat</label>
-            <textarea [(ngModel)]="mushroom.habitat" class="form-control" id="habitat" rows="3" name="habitat"></textarea>
+            <textarea [(ngModel)]="mushroom.habitat" class="form-control" id="habitat" rows="3"
+                name="habitat"></textarea>
         </div>
 
         <div class="mb-3">
             <label for="comment" class="form-label">Commentaire</label>
-            <textarea [(ngModel)]="mushroom.comment" class="form-control" id="comment" rows="3" name="comment"></textarea>
+            <textarea [(ngModel)]="mushroom.comment" class="form-control" id="comment" rows="3"
+                name="comment"></textarea>
         </div>
 
         <input type="hidden" [(ngModel)]="mushroom.id" name="id">
 
-        <!-- <div class="mb-3">
-        <label for="localnames" class="form-label">Catégories</label>
-        <select [(ngModel)]="mushroom.localnames" class="form-select" aria-label="Default select example" id="category" name="categorie_id" >
-            <option disabled>Catégorie</option>
-            <option [value]="localnames.id" *ngFor="let localname of localnames" >{{localnames.name}}</option>
-        </select>
-    </div>
-
-    <div class="mb-3">
-        <label for="tempsprep" class="form-label">tempsPrep</label>
-        <textarea [(ngModel)]="mushroom.tempsprep" class="form-control" id="tempsprep" rows="3" name="tempsprep"></textarea>
-    </div> -->
-
 
         <button class="btn btn-primary">Envoyer</button>
-        <!-- <button (click)="addMushroom()">Add mushroom</button> -->
-
     </form>
 
 </div>

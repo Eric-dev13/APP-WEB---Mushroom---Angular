@@ -23,6 +23,7 @@ import { MushromComponent } from './mushroom/mushroom/mushroom.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { NotFoundComponent } from './page-error/not-found/not-found.component';
 import { DetailMushroomComponent } from './admin/mushroom/detail-mushroom/detail-mushroom.component';
+import { AddMediaComponent } from './admin/media/add-media/add-media.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { DetailMushroomComponent } from './admin/mushroom/detail-mushroom/detail
     MushromComponent,
     DashboardComponent,
     NotFoundComponent,
-    DetailMushroomComponent
+    DetailMushroomComponent,
+    AddMediaComponent
   ],
   imports: [
     BrowserModule,

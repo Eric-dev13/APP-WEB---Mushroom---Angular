@@ -21,7 +21,7 @@ const routes: Routes = [
   { path:"forum", component: ForumComponent },
   // ADMIN
   { path:"admin/champignon/Liste-des-champignons", component: ListMushroomComponent },
-  { path:"admin/champignon/description/:slug", component: DetailMushroomComponent },
+  { path:"admin/champignon/description/:id", component: DetailMushroomComponent },
   { path:"admin/champignon/nouveau", component: FormMushroomComponent },
   { path:"admin/champignon/editer/:id", component: FormMushroomComponent },
 

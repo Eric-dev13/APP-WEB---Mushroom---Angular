@@ -2,7 +2,7 @@
 
     <div class="d-flex justify-content-evenly align-items-center">
         <div>
-            <a [routerLink]="['/admin/champignon/description', mushroom.slug]" href="" class="btn btn-info"
+            <a [routerLink]="['/admin/champignon/Liste-des-champignons']" href="" class="btn btn-info"
                 title="Retour"><fa-icon class="text-light" [icon]="faRotateLeft"></fa-icon></a>
         </div>
         <div>
@@ -13,7 +13,6 @@
                 title="Editer"><fa-icon [icon]="faEdit"></fa-icon></a>
             <a (click)="delete(mushroom.id)" class="btn btn-outline-danger  me-2" title="Supprimer"><fa-icon
                     [icon]="faTrash"></fa-icon></a>
-            
         </div>
     </div>
 
@@ -74,6 +73,13 @@
         <div class="col-2 border-top py-2 me-1">Nombre de photos</div>
         <div class="col-9 border-top py-2">
             {{mushroom.medias.length}}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2 border-top py-2 me-1">Nom du fichier</div>
+        <div class="col-9 border-top py-2"  *ngFor="let media of mushroom.medias">
+            {{media.name}}
         </div>
     </div>
 
@@ -139,8 +145,7 @@
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Comestible</div>
         <div class="col-9 border-top py-2">
-            <img [src]="'assets/images/edibility/' + mushroom.edibility.path" alt="?" style="filter: invert(1);"
-                height="50">
+            <img [src]="'assets/images/edibility/' + mushroom.edibility.path" alt="?" style="filter: invert(1);" height="50">
         </div>
     </div>
 

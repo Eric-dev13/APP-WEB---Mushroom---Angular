@@ -3,7 +3,7 @@
 
 <article class="container">
 
-    <div class="row  bg-light bg-opacity-25 py-3 m-md-3 rounded descriptionMushroom border">
+    <div class="row bg-light bg-opacity-25 py-3 m-md-3 rounded descriptionMushroom ">
         <!-- Carousel  -->
         <div class="col-12 col-md-6 order-md-3 col-lg-6 order-lg-3 col-xl-5 order-xl-3 p-3 mb-3">
             <div *ngIf="mushroom.medias.length == 0; else showAllImages" id="carouselExampleIndicators" class="carousel slide carousel-fade descriptionMushroom__img" data-bs-ride="carousel">
@@ -23,12 +23,13 @@
                     <div class="carousel-indicators">
                         <button *ngFor="let media of mushroom.medias; index as i" type="button"
                             data-bs-target="#carouselExampleIndicators" [attr.data-bs-slide-to]="i" [class.active]="i == 0"
-                            aria-label="Slide" [attr.aria-label]="i"></button>
+                            aria-label="Slide" [attr.aria-label]="i">
+                        </button>
                     </div>
                     <div class="carousel-inner">
                         <div *ngFor="let media of mushroom.medias; index as i" class="carousel-item"
                             [class.active]="i === 0" id="conteneur_image">
-                            <img [src]="API_URL_GET_FILE_MUSHROOM  + media.path" class="d-block w-100" [alt]="media.path" zoom="2" />
+                            <img [src]="API_URL_GET_FILE_MUSHROOM  + media.path" class="d-block w-100" [alt]="media.path" />
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"

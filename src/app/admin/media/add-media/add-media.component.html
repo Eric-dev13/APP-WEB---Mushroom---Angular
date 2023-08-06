@@ -1,0 +1,15 @@
+<div class="mb-3 p-2 border">
+    <h5 class="mb-3 fw-bold">Importer des photos (format autoriser: jpg, png, gif)</h5>
+
+    <div class="mb-3">
+        <label for="name" class="form-label fw-semibold">Nom du média</label>
+        <input class="form-control" #name id="name" name="name">
+    </div>
+
+    <div class="mb-3">
+        <label for="path" class="form-label fw-semibold">Sélectionnez un fichier</label>
+        <input type="file" class="form-control mb-3" #path id="path" name="path">
+    </div>
+
+    <div (click)="addMedia(name.value,path.value)" class="btn btn-outline-primary">Ajouter</div>
+</div>
