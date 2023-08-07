@@ -23,10 +23,16 @@
                 <td>{{mushroom.commonname}}</td>
                 <td>{{ mushroom.edibility?.name }}</td>
                 <td>
-                    <a (click)="activate(mushroom.id, mushroom.visibility)" class="btn btn-outline-light me-2" >
-                        <fa-icon title="partager" *ngIf="!mushroom.visibility" [icon]="faThumbsUp"></fa-icon>
-                        <fa-icon title="Ne plus partager" *ngIf="mushroom.visibility" [icon]="faThumbsDown"></fa-icon>
+                    <a *ngIf="mushroom.visibility; else notPublish" (click)="activate(mushroom.id, mushroom.visibility)" class="btn btn-outline-light me-2" >
+                        <fa-icon title="Masquer" [icon]="faThumbsDown"></fa-icon>
                     </a>
+                    <ng-template  #notPublish>
+                        <a (click)="activate(mushroom.id, mushroom.visibility)" class="btn btn-outline-secondary me-2" >
+                            <fa-icon title="Publier" [icon]="faThumbsUp"></fa-icon>
+                            
+                        </a>
+                    </ng-template>
+                    
                 </td>
                 <td>
                     <div class="d-flex">

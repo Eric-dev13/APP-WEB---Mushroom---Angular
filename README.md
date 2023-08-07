@@ -345,3 +345,23 @@ constructor( private http:HttpClient){ }
 
 dans méthode ngOnInit(){
 
+
+
+
+
+```
+# RESTE A FAIRE
+
+Activer l'authentification avec gestion des roles.
+- Afficher masquer liens de navbar
+- Afficher masquer liens de footer
+- Parcourir les pages avec la console du navigateur pour corriger les erreurs.
+- Construire une page avec un slide bar latérale pour le menu administration ()
+
+
+ACTION SUR LE CRUD ADMIN
+- regler l'envoi des medias (ajoute les enregistrements vides)
+- Gèrer l'upload front envoi l'image vers l'api qui la recupère la renomme (random) et la stocke dans dossier upload
+- La methode put OU patch non fonctionnelle.
+- G
+```

@@ -29,9 +29,7 @@ export class ListMushroomComponent implements OnInit {
   mushrooms: any;
   mushroomIsVisible:any
 
- 
-
-  ngOnInit(): void {
+  reaload() {
     // GET : findAll
     this.http.get(this.API_ADMIN_BASE_URL + "mushroom").subscribe((res) => {
       this.mushrooms = res;
@@ -39,21 +37,18 @@ export class ListMushroomComponent implements OnInit {
     });
   }
 
+  ngOnInit(): void { this.reaload()  }
+    
+
+  // Inverser la valeur de mushroom.visibility
   activate(id:any, visibility:any){
-
-    this.mushroomIsVisible={ 
-      'visibility' : false
-    };
-
-    // console.log('test1', this.mushroomIsVisible)
-    // console.log('test2', !this.mushroomIsVisible.visibility)
-
-    //Inverse mushroom.visibility
-    this.http.put(this.API_ADMIN_BASE_URL + 'mushroom/' + id, this.mushroomIsVisible).subscribe({
-      next: (data) => console.log(data),
+    
+    this.http.patch(this.API_ADMIN_BASE_URL + 'mushroom/publier/' + id, {}).subscribe({
+      next: (data) => this.reaload(),
       error: (err) => console.log('Observer got an error: ' + err),
-      complete: () => console.log('Observer got a complete notification')
+      complete: () => console.log('Modification effectué')
     })
+    
   }
 
   delete(id: any) {
@@ -61,10 +56,12 @@ export class ListMushroomComponent implements OnInit {
     this.http.delete(this.API_ADMIN_BASE_URL + 'mushroom/' + id).subscribe({
       next: (data) => console.log(data),
       error: (err) => console.log('Observer got an error: ' + err),
-      complete: () => console.log('Observer got a complete notification')
+      complete: () => console.log('L\'enregistrement a été supprimé')
     })
 
     this.router.navigate(['admin/champignons/Liste-des-champignons']);
   }
+
+
 
 }

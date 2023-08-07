@@ -24,6 +24,8 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { NotFoundComponent } from './page-error/not-found/not-found.component';
 import { DetailMushroomComponent } from './admin/mushroom/detail-mushroom/detail-mushroom.component';
 import { AddMediaComponent } from './admin/media/add-media/add-media.component';
+import { RegisterComponent } from './security/register/register.component';
+import { LoginComponent } from './security/login/login.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { AddMediaComponent } from './admin/media/add-media/add-media.component';
     DashboardComponent,
     NotFoundComponent,
     DetailMushroomComponent,
-    AddMediaComponent
+    AddMediaComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
