@@ -28,29 +28,28 @@ export class MushromComponent implements OnInit {
 
   ngOnInit() {
     // Récupérer le paramètre 'id' de l'URL
-    // this.id_mushroom = this.route.snapshot.paramMap.get('id');
-    // if (this.id_mushroom) {
-      //   // Le paramètre est un nombre (id)
-      //   console.log('Paramètre id:', this.id_mushroom);
-      //   // Traitement - GET : findById
-      //   this.http.get(this.API_BASE_URL + "mushroom/" + this.id_mushroom).subscribe((res) => {
-      //     this.mushroom = res;
-      //     console.log(this.mushroom);
-      //   });
-      // }
-
+    this.id_mushroom = this.route.snapshot.paramMap.get('id');
+    if (this.id_mushroom) {
+        // Le paramètre est un nombre (id)
+        console.log('Paramètre id:', this.id_mushroom);
+        // Traitement - GET : findById
+        this.http.get(this.API_BASE_URL + "mushroom/" + this.id_mushroom).subscribe((res) => {
+          this.mushroom = res;
+          console.log(this.mushroom);
+        });
+      }
 
     // Récupérer le paramètre 'slug' de l'URL et le transmets à l'api qui renvoie les infos détaillées.
-   this.slug_mushroom = this.route.snapshot.paramMap.get('slug');
-   if (this.slug_mushroom) {
-    // Le paramètre est une chaîne de caractères (slug)
-    console.log('Paramètre slug:', this.slug_mushroom);
-    // Traitement GET : findBySlug
-    this.http.get(this.API_BASE_URL + "mushroom/findBySlug/" + this.slug_mushroom).subscribe((res) => {
-      this.mushroom = res;
-      console.log(this.mushroom);
-    });
-  }
+  //  this.slug_mushroom = this.route.snapshot.paramMap.get('slug');
+  //  if (this.slug_mushroom) {
+  //   // Le paramètre est une chaîne de caractères (slug)
+  //   console.log('Paramètre slug:', this.slug_mushroom);
+  //   // Traitement GET : findBySlug
+  //   this.http.get(this.API_BASE_URL + "mushroom/findBySlug/" + this.slug_mushroom).subscribe((res) => {
+  //     this.mushroom = res;
+  //     console.log(this.mushroom);
+  //   });
+  // }
    
   }
 

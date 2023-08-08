@@ -9,8 +9,6 @@ import { API_BASE_URL, API_URL_GET_FILE_MUSHROOM, API_URL_GET_FILE } from '../..
 })
 export class MushroomsComponent implements OnInit {
 
-  // mushroomsUrlApi: string = "http://localhost:9000/api/v1/mushroom/field-selected";
-
   // Déclaration de constantes
   readonly API_BASE_URL: string = API_BASE_URL;
   readonly API_URL_GET_FILE: string = API_URL_GET_FILE + 'mushrooms/'

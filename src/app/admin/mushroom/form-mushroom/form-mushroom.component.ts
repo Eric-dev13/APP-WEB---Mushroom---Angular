@@ -22,15 +22,18 @@ export class FormMushroomComponent implements OnInit {
     private route: ActivatedRoute
   ) { }
 
+
+
   edibilities: any;
 
   lamellaTypes: any;
 
   sending: any;
 
+  id_mushroom: any;
 
   // Représente la table principal
-  mushroom = {
+  mushroom:any = {
     "id": 0,
     "commonname": '',
     "latinname": '',
@@ -42,7 +45,7 @@ export class FormMushroomComponent implements OnInit {
     "habitat": '',
     "comment": '',
     "edibility": { 'id': '' },
-    "medias": [{'name':'','path':''}]
+    "medias": [{ 'name': '', 'path': '' }]
   }
 
   // Table des noms courants regionaux 
@@ -68,6 +71,7 @@ export class FormMushroomComponent implements OnInit {
 
 
   ngOnInit(): void {
+    // Vérifie si un parametre est passé dans l'url de l'url
     // Requete vers api pour recupèrer edibility et afficher dans un select box 
     // GET : findAll edibilityEntity
     this.http.get(this.API_ADMIN_BASE_URL + "edibility").subscribe((res) => {
@@ -80,6 +84,16 @@ export class FormMushroomComponent implements OnInit {
       this.lamellaTypes = res;
       console.log(this.lamellaTypes);
     });
+
+    // Récupérer le paramètre 'id' de l'URL et le transmets à l'api qui renvoie les infos détaillées.
+    this.id_mushroom = this.route.snapshot.paramMap.get('id');
+    if (this.id_mushroom) {
+      // GET : findAll Mushroom Order By commonname
+    this.http.get(this.API_ADMIN_BASE_URL + "mushroom/" + this.id_mushroom).subscribe((res) => {
+      this.mushroom = res;
+      console.log(this.lamellaTypes);
+    });
+    }
   }
 
 

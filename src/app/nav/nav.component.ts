@@ -18,8 +18,8 @@ export class NavComponent {
    
 
   ngOnInit(){
-    this.is_auth = true;
-    this.hasRole_admin = true ;
+    this.is_auth = false;
+    this.hasRole_admin = false ;
     this.hasRole_user = false ;
     this.userDetail =  {
       avatarFilename: './../../assets/images/icones/connexion.png',

@@ -1,0 +1,12 @@
+.containerImg{
+width: 100px;
+height: auto;
+overflow: hidden;
+}
+.zoom {
+    transition: .8s;
+}
+
+.zoom:hover {
+    scale: 1.2;
+}

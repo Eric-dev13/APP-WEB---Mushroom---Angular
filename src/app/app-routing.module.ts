@@ -9,25 +9,28 @@ import { ListMushroomComponent } from './admin/mushroom/list-mushroom/list-mushr
 import { FormMushroomComponent } from './admin/mushroom/form-mushroom/form-mushroom.component';
 import { NotFoundComponent } from './page-error/not-found/not-found.component';
 import { DetailMushroomComponent } from './admin/mushroom/detail-mushroom/detail-mushroom.component';
+import { AuthenticateComponent } from './security/authenticate/authenticate.component';
 
 
 
 
 const routes: Routes = [
+  // ROUTES PUBLIQUES
   { path:"", component: HomeComponent },
   { path:"guide-des-champignons",component: MushroomsComponent },
-  { path:"champignon/:slug",component: MushromComponent },
   { path:"champignon/:id",component: MushromComponent },
+  { path:"champignon/description/:slug",component: MushromComponent },
   { path:"forum", component: ForumComponent },
-  // ADMIN
+  // ROUTES PROTEGES - ADMIN
   { path:"admin/champignon/Liste-des-champignons", component: ListMushroomComponent },
   { path:"admin/champignon/description/:id", component: DetailMushroomComponent },
   { path:"admin/champignon/nouveau", component: FormMushroomComponent },
   { path:"admin/champignon/editer/:id", component: FormMushroomComponent },
-
   { path:"admin/media/Liste-des-medias", component: ListMediaComponent },
-  
-  { path: "**", component: NotFoundComponent} // Page d'erreur 404 - NOT FOUND
+  // ROUTE D'AUTHENTIFICATION
+  { path:"securite/authentification", component: AuthenticateComponent },
+  // TOUTES LES AUTRES ROUTES = NOT FOUND
+  { path: "**", component: NotFoundComponent} // Page d'erreur 404
 ];
 
 @NgModule({

@@ -1,10 +1,13 @@
 
 @mixin bgImageForest($image) {
-    background: url($image);
-    -webkit-filter: blur(2px);
-    filter: blur(2px);
+    position: absolute;
+    background-image: url($image);
+    width: 100%;
+    height: 100%;
     background-repeat: no-repeat;
     background-size: cover;
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
 }
 
 .bg-image--forest {
@@ -18,3 +21,13 @@
 .bg-image--error404 {
     @include bgImageForest("../assets/images/foret/foret-5.jpg");
 }
+
+.bg-image--forest-2 {
+    @include bgImageForest("../assets/images/divers/autumn-83761_1280.jpg");
+}
+
+.bg-image--forest-1 {
+    @include bgImageForest("../assets/images/divers/fall-3193305_1280.jpg");
+}
+
+

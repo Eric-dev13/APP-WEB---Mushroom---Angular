@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="anchor">
         <div class="container-fluid">
-            <a class="navbar-brand" routerLink="/" href="#"><img src="assets/images/icones/mushromLogo.png"
+            <a class="navbar-brand" [routerLink]="['/']" href="#"><img src="assets/images/icones/mushromLogo.png"
                     alt="Logo" height="45"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -12,16 +12,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item my-auto">
-                        <a class="nav-link text-uppercase active" aria-current="page" routerLink="/" href="#">Portail</a>
+                        <a class="nav-link text-uppercase active" aria-current="page" [routerLink]="['/']" href="#">Portail</a>
                     </li>
                     <li class="nav-item my-auto">
-                        <a class="nav-link text-uppercase" routerLink="/guide-des-champignons" href="#">Guide des champignons</a>
+                        <a class="nav-link text-uppercase" [routerLink]="['/guide-des-champignons']" href="#">Guide des champignons</a>
                     </li>
                     <li class="nav-item my-auto">
-                        <a class="nav-link text-uppercase" routerLink="/forum" forum href="#">Discussion</a>
+                        <a class="nav-link text-uppercase" [routerLink]="['/forum']" forum href="#">Discussion</a>
                     </li>
                     <li class="nav-item my-auto">
-                        <a class="nav-link text-uppercase" routerLink="/actualite" href="#">Actualité</a>
+                        <a class="nav-link text-uppercase" [routerLink]="['/actualite']" href="#">Actualité</a>
                     </li>
                 </ul>
 
@@ -59,16 +59,16 @@
                                 <a class="dropdown-item ftsz-9" href="#route_admin">Back office admin</a>
                             </li>
                             <li *ngIf="hasRole_admin">
-                                <a class="dropdown-item ftsz-9"  routerLink="/admin/champignon/Liste-des-champignons"  href="#route_admin">Les champignons</a>
+                                <a class="dropdown-item ftsz-9" [routerLink]="['admin/champignon/Liste-des-champignons']"  href="#route_admin">Les champignons</a>
                             </li>
                             <li *ngIf="hasRole_admin">
-                                <a class="dropdown-item ftsz-9"  routerLink="/admin/champignon/nouveau"  href="#route_admin">Nouvelle espéce</a>
+                                <a class="dropdown-item ftsz-9" [routerLink]="['admin/champignon/nouveau']"  href="#route_admin">Nouvelle espéce</a>
                             </li>
                             <li *ngIf="hasRole_admin">
-                                <a class="dropdown-item ftsz-9"  routerLink="/admin/champignon/editer"  href="#route_admin">Editer les médias</a>
+                                <a class="dropdown-item ftsz-9" [routerLink]="['admin/champignon/editer']"  href="#route_admin">Editer les médias</a>
                             </li>
                             <li *ngIf="hasRole_admin">
-                                <a class="dropdown-item ftsz-9"  routerLink="/admin/media/Liste-des-medias"  href="#route_admin">Les photos</a>
+                                <a class="dropdown-item ftsz-9" [routerLink]="['admin/media/Liste-des-medias']"  href="#route_admin">Les photos</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -85,7 +85,7 @@
                     </div>
 
                     <ng-template #login>
-                        <a href="#login">
+                        <a [routerLink]="['securite/authentification']">
                             <img src="assets/images/icones/connexion.png" alt="Avatar" height="50">
                         </a>
                     </ng-template>
