@@ -30,11 +30,11 @@
             <div class="input-boxes">
               <div class="input-box">
                 <i class="fas fa-envelope"></i>
-                <input (ngModel)="userAuthentication.email" name="emailAuthentication" type="email" placeholder="Entrez votre email" required>
+                <input [(ngModel)]="userAuthentication.email" name="email" type="email" placeholder="Entrez votre email" required>
               </div>
               <div class="input-box">
                 <i class="fas fa-lock"></i>
-                <input (ngModel)="userAuthentication.password" name="passswordAuthentication" type="password" placeholder="Entrez votre mot de passe" required>
+                <input [(ngModel)]="userAuthentication.password" name="password" type="password" placeholder="Entrez votre mot de passe" required>
               </div>
               <div class="text"><a href="#">Mot de passe oublié?</a></div>
               <div class="button input-box">
@@ -51,18 +51,18 @@
             <div class="input-boxes">
               <div class="input-box">
                 <i class="fas fa-user"></i>
-                <input (ngModel)="userRegistration.name" name="nameRegistration" type="text" placeholder="Entrez votre nom" required>
+                <input [(ngModel)]="userRegistration.pseudo" name="pseudo" type="text" placeholder="Entrez votre pseudo" required>
               </div>
               <div class="input-box">
                 <i class="fas fa-envelope"></i>
-                <input (ngModel)="userRegistration.email" name="emailRegistration" type="email" placeholder="Entrez votre email" required>
+                <input [(ngModel)]="userRegistration.email" name="email" type="email" placeholder="Entrez votre email" required>
               </div>
               <div class="input-box">
                 <i class="fas fa-lock"></i>
-                <input (ngModel)="userRegistration.password" name="passswordRegistration" type="password" placeholder="Entrez votre mot de passe" required>
+                <input [(ngModel)]="userRegistration.password" name="passsword" type="password" placeholder="Entrez votre mot de passe" required>
               </div>
               <div class="button input-box">
-                <input (ngModel)="userRegistration.name" name="name" type="submit" value="M'inscrire">
+                <input type="submit" value="M'inscrire">
               </div>
               <div class="text sign-up-text">Vous avez déjà un compte? <label for="flip">Connecte-toi maintenant</label>
               </div>

@@ -19,11 +19,17 @@ export class AuthenticateComponent {
 
   constructor(private http: HttpClient) { }
 
+  token!:any;
+
+  is_auth!:boolean;
+
+  userDetail:any;
+
   userRegistration:any = {
-  "pseudo": "ronaldo",
-  "firstname": "ronaldo",
-  "lastname": "laronaldonza2",
-  "email":"ronaldo@gmail.com",
+  "pseudo": "Luke",
+  "firstname": "Luke",
+  "lastname": "Skywalker",
+  "email":"skywalker@gmail.com",
   "password": "1234",
   "avatar": "asssets/ronaldo.jpg"
 }
@@ -34,29 +40,29 @@ userAuthentication: any ={
   "password": "1234"
 }
 
-userDetail:any;
 
-  ngOnInit(): void {
-    
-  }
+
+  ngOnInit(): void { }
 
   authentication(formAuth:NgForm)
   {
     // POST :  Si l'utilisateur est enregistrer dans la base de données le serveur lui renverra un token
     // a chaque fois que l'on souhaite acceder a une route privée on dois envoyer le token
     // le serveur decode le token verifie la validité de la signature puis renvoie les infos demandées
-    this.http.post(this.URL_AUTH + "authenticate",formAuth.value).subscribe((res) => {
-      this.userDetail = res;
-      console.log(this.userDetail);
+    if(formAuth.valid){
+          this.http.post(this.URL_AUTH + "authenticate",formAuth.value).subscribe((res) => {
+      this.token = res;
+      console.log(this.token);
     });
+    }
   }
 
   registration(formRegister:NgForm)
   {
     // POST :  findAll
     this.http.post(this.URL_AUTH + "register",formRegister.value).subscribe((res) => {
-      this.userDetail = res;
-      console.log(this.userDetail);
+      this.token = res;
+      console.log(this.token);
     });
   }
 
