@@ -365,3 +365,5 @@ ACTION SUR LE CRUD ADMIN
 - La methode put OU patch non fonctionnelle.
 - G
 ```
+
+En Angular, le symbole `?` est utilisé pour définir une variable en option dans des modèles de liaison (templates) lorsque vous traitez avec des propriétés potentiellement nulles ou indéfinies. Cette fonctionnalité est appelée le "safe navigation operator" ou "Elvis operator". Il vous permet d'accéder à une propriété d'un objet tout en évitant des erreurs si l'objet lui-même ou la propriété que vous essayez d'accéder est nul(le) ou indéfini(e).

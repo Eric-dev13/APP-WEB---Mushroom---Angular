@@ -29,6 +29,11 @@
     src: url('../assets/fonts/Barlow_Condensed/BarlowCondensed-Regular.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'Poppins', sans-serif;
+    src: url('../assets/fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+}
+
 // TAILLE DES POLICES
 .ftsz {
     &-20 {

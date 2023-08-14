@@ -25,6 +25,7 @@ import { NotFoundComponent } from './page-error/not-found/not-found.component';
 import { DetailMushroomComponent } from './admin/mushroom/detail-mushroom/detail-mushroom.component';
 import { AddMediaComponent } from './admin/media/add-media/add-media.component';
 import { AuthenticateComponent } from './security/authenticate/authenticate.component';
+import { AddLocalnameComponent } from './admin/localname/add-localname/add-localname.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AuthenticateComponent } from './security/authenticate/authenticate.comp
     NotFoundComponent,
     DetailMushroomComponent,
     AddMediaComponent,
-    AuthenticateComponent
+    AuthenticateComponent,
+    AddLocalnameComponent
   ],
   imports: [
     BrowserModule,

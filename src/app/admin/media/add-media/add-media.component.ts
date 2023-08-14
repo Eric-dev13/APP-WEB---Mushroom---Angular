@@ -6,18 +6,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./add-media.component.scss']
 })
 export class AddMediaComponent {
-
-  object = {
-    name: '',
-    path: ''
-  }
-
-  @Output() mediaEvent = new EventEmitter<any>();
+  media:any = {};
+  @Output() mediaEvent: EventEmitter<any> = new EventEmitter<any>();
 
   addMedia(name: string, path: string) {
-    this.object.name = name;
-    this.object.path = path;
+    this.media.name = name;
+    this.media.path = path;
+    this.mediaEvent.emit(this.media);
 
-    this.mediaEvent.emit(this.object);
   }
 }

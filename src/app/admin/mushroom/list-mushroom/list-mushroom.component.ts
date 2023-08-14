@@ -29,14 +29,6 @@ export class ListMushroomComponent implements OnInit {
   mushrooms: any;
   mushroomIsVisible:any
 
-  reaload() {
-    // GET : findAll
-    this.http.get(this.API_ADMIN_BASE_URL + "mushroom").subscribe((res) => {
-      this.mushrooms = res;
-      console.log(this.mushrooms);
-    });
-  }
-
   ngOnInit(): void { this.reaload()  }
     
 
@@ -54,12 +46,18 @@ export class ListMushroomComponent implements OnInit {
   delete(id: any) {
     // DELETE
     this.http.delete(this.API_ADMIN_BASE_URL + 'mushroom/' + id).subscribe({
-      next: (data) => console.log(data),
+      next: (data) => this.reaload(),
       error: (err) => console.log('Observer got an error: ' + err),
       complete: () => console.log('L\'enregistrement a été supprimé')
     })
+  }
 
-    this.router.navigate(['admin/champignons/Liste-des-champignons']);
+  reaload() {
+    // GET : findAll
+    this.http.get(this.API_ADMIN_BASE_URL + "mushroom").subscribe((res) => {
+      this.mushrooms = res;
+      console.log(this.mushrooms);
+    });
   }
 
 

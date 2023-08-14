@@ -3,6 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { API_ADMIN_BASE_URL } from 'src/environments/config';
+import { EdibilityInterface } from 'src/app/admin/edibility/edibility-interface';
+import { MushroomInterface } from '../mushroom-interface';
+
+
 
 
 @Component({
@@ -23,121 +27,132 @@ export class FormMushroomComponent implements OnInit {
   ) { }
 
 
+  edibilities: any;  // listes a charger dans les selectBox
+  lamellaTypes: any; // listes a charger dans les selectBox
 
-  edibilities: any;
-
-  lamellaTypes: any;
-
-  sending: any;
 
   id_mushroom: any;
 
-  // Représente la table principal
-  mushroom:any = {
-    "id": 0,
-    "commonname": '',
-    "latinname": '',
-    "flesh": '',
-    "hat": '',
-    "lamella": '',
-    "lamellatype": { 'id': '' },
-    "foot": '',
-    "habitat": '',
-    "comment": '',
-    "edibility": { 'id': '' },
-    "medias": [{ 'name': '', 'path': '' }]
+  // Représente la table principal (mushroom) dont la structure est représenté dans une interface.
+  // mushroom: MushroomInterface = {
+  mushroom: any = {
+    id: 0,
+    commonname: "",
+    latinname: "",
+    flesh: "",
+    hat: "",
+    lamella: "",
+    foot: "",
+    habitat: "",
+    comment: "",
+    lamellatype: {id:0},
+    edibility: {id:0},
+    localnames: [],
+    medias: []
   }
 
-  // Table des noms courants regionaux 
-  localnames = {
-    "name": ''
+
+  reaload() {
+    // Requete vers api pour recupèrer edibility et afficher dans un select box 
+    // GET : findAll edibilityEntity
+    this.http.get(this.API_ADMIN_BASE_URL + "edibility").subscribe((res) => {
+      this.edibilities = res;
+    });
+
+    // GET : findAll LamellatypeEntity
+    this.http.get(this.API_ADMIN_BASE_URL + "lamellaType").subscribe((res) => {
+      this.lamellaTypes = res;
+    });
+
+    // POST ou PUT : Si un paramètre 'id' est présent dans l'URL nous sommes en mode mise à jour (PUT) sinon ajouter (POST)
+    this.id_mushroom = this.route.snapshot.paramMap.get('id');
+    // console.log('id_mushroom: ',this.id_mushroom)
+    if (this.id_mushroom) {
+      // GET : Find By ID
+      this.http.get(this.API_ADMIN_BASE_URL + "mushroom/" + this.id_mushroom).subscribe((res) => {
+        this.mushroom = res;
+        // console.log('update mushroom: ',this.mushroom)
+      });
+    }
   }
 
-  // Ajouter des photos -Form Emitter
-  // medias: Array<any> = []
 
-  // addMedia(event: any) {
-  //   this.medias.push({
-  //     name: event.name,
-  //     path: event.path
-  //   })
-  // }
+  ngOnInit(): void {
+    this.reaload();
+  }
+
+  // Ajouter des noms - Form Emitter
+  addLocalname(event: any) {
+    this.mushroom.localnames?.push({
+      name: event.name
+    })
+  }
+
+  // Ajouter des photos - Form Emitter
+  
   addMedia(event: any) {
-    this.mushroom.medias.push({
+    this.mushroom.medias?.push({
       name: event.name,
       path: event.path
     })
   }
 
 
-  ngOnInit(): void {
-    // Vérifie si un parametre est passé dans l'url de l'url
-    // Requete vers api pour recupèrer edibility et afficher dans un select box 
-    // GET : findAll edibilityEntity
-    this.http.get(this.API_ADMIN_BASE_URL + "edibility").subscribe((res) => {
-      this.edibilities = res;
-      console.log(this.edibilities);
-    });
-
-    // GET : findAll LamellatypeEntity
-    this.http.get(this.API_ADMIN_BASE_URL + "lamellaType").subscribe((res) => {
-      this.lamellaTypes = res;
-      console.log(this.lamellaTypes);
-    });
-
-    // Récupérer le paramètre 'id' de l'URL et le transmets à l'api qui renvoie les infos détaillées.
-    this.id_mushroom = this.route.snapshot.paramMap.get('id');
-    if (this.id_mushroom) {
-      // GET : findAll Mushroom Order By commonname
-    this.http.get(this.API_ADMIN_BASE_URL + "mushroom/" + this.id_mushroom).subscribe((res) => {
-      this.mushroom = res;
-      console.log(this.lamellaTypes);
-    });
-    }
-  }
-
-
   send(form: NgForm) {
-    if (form.value.id != 0) {
-      // UPDATE 
-      this.http.put(this.API_ADMIN_BASE_URL + 'mushroom/', form.value).subscribe((res) => {
-        console.log('Nouveau champignon ajouté');
-      });
+    // Validation du formulaire
+    if (form.invalid) {
+      console.log('Le formulaire est invalide.');
+      return;
+    }
+
+    // si la propriété "edibility" n'est pas renseignée elles doit renvoyées NULL sinon un objet pour renseigner la cle étrangere corespondant à l'ID edibility.
+    if (this.mushroom.edibility?.id === 0){ 
+      form.value.edibility = null;
     } else {
-      // POST : Exemple de requete qui doit être envoyer vers l'api a partir du formulaire.
-      // this.sending = {
-      //   "commonname": 'nom commun,
-      //   "latinname": 'nom latin',
-      //   "flesh": 'description de la chair',
-      //   "hat": 'description du chapeau',
-      //   "lamella": 'description des lamelles',
-      //   "lamellatype": { 'id': '5' },
-      //   "foot": 'description du pied',
-      //   "habitat": 'habitat',
-      //   "comment": 'Quelques commentaires',
-      //   "edibility": { 'id': '4' },
-      //   "medias": [
-      //     {
-      //         "name": "essai-2",
-      //         "path": "619ebf981691a506289049.jpg"
-      //     }
-      //   ],
-      //   "localnames": [
-      //      {
-      //         "name": "essai-2",
-      //      }
-      //    ],
-      // }
+      form.value.edibility = {id:form.value.edibility};
+    }
+    // si la propriété "lamellatype" n'est pas renseignée elles doit renvoyées NULL sinon un objet pour renseigner la cle étrangere corespondant à l'ID lamellatype.
+    if (this.mushroom.lamellatype?.id === 0) {
+      form.value.lamellatype = null;
+    } else {
+      form.value.lamellatype =  {id:form.value.lamellatype};
+    }
 
-      console.log('mushroom: ', this.mushroom);
-      console.log('formulaire: ', form.value);
+    // si la propriété mushroom.localnames contient des objets (collection de nom) je les transfert dans l'objet form.
+    if (this.mushroom.localnames.length > 0) {
+      form.value.localnames = this.mushroom.localnames;
+    }
 
-      this.http.post(this.API_ADMIN_BASE_URL + 'mushroom/', this.mushroom).subscribe({
-        next: (data) => console.log('Nouveau champignon ajouté'),
+    // si la propriété mushroom.medias contient des objets (collection de nom) je les transfert dans l'objet form.
+    if (this.mushroom.medias.length > 0) {
+      form.value.medias = this.mushroom.medias;
+    }
+
+    console.table("Form:", form.value)
+    console.table("Form Mushroom:", this.mushroom);
+
+    if (this.mushroom.id != 0) {
+      // PATCH - Modification de l'enregistrement 
+      this.http.patch(this.API_ADMIN_BASE_URL + 'mushroom/', form.value).subscribe({
+        next: (data) => {
+          console.log('Champignon modifié: ', data);
+          this.router.navigate(["admin/champignon/Liste-des-champignons"]);
+        },
         error: (err) => console.log('Observer got an error: ' + err),
         complete: () => console.log('Observer got a complete notification')
       });
-
+    } else {
+      // POST - Ajoute le nouvel enregistrement
+      this.http.post(this.API_ADMIN_BASE_URL + 'mushroom/', form.value).subscribe({
+        next: (data) => {
+          console.log('Champignon ajouté: ', data);
+          //this.router.navigate(["admin/champignon/Liste-des-champignons"]);
+        },
+        error: (err) => console.log('Observer got an error: ' + err),
+        complete: () => console.log('Observer got a complete notification')
+      });
     }
   }
+
+
 }

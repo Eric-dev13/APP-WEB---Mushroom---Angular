@@ -16,7 +16,7 @@
                 <td scope="row">{{mushroom.id}}</td>
                 <td>
                     <a [routerLink]="['/admin/champignon/description', mushroom.id]" href="" class="" title="Voir la description">
-                        <div class="containerImg border">
+                        <div class="containerImg">
                             <img class="zoom img-fluid" 
                                 *ngIf="mushroom.medias.length > 0; else default" 
                                 [src]="API_URL_GET_FILE_MUSHROOM + mushroom.medias[0].path" 

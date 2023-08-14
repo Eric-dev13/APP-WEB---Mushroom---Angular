@@ -5,8 +5,8 @@
     <form #form="ngForm" (submit)="send(form)" class="fw-bold" enctype="multipart/form-data">
         <!-- NOM COMMUN - CHAMP OBLIGATOIRE -->
         <div class="mb-3">
-            <label for="commonname" class="form-label">Nom commun</label>
-            <input [(ngModel)]="mushroom.commonname" type="text" class="form-control" id="commonname" name="commonname">
+            <label for="commonname" class="form-label"  title="Saisie obligatoire">Nom commun <span class="text-danger">*</span></label>
+            <input [(ngModel)]="mushroom.commonname" type="text" class="form-control" id="commonname" name="commonname" required>
         </div>
 
         <!-- NOM LATIN -->
@@ -15,12 +15,22 @@
             <input [(ngModel)]="mushroom.latinname" type="text" class="form-control" id="latinname" name="latinname">
         </div>
 
+         <!-- NOM LOCAL -->
+         <div class="mb-3 p-2 border">
+            <app-add-localname (localnameEvent)="addLocalname($event)"></app-add-localname>
+            <ul class="list-group">
+                <li class="list-group-item fw-normal" *ngFor="let localname of mushroom?.localnames">
+                    {{localname.name}}
+                </li>
+            </ul>
+        </div>
+
         <!-- COMESTIBILITE -->
         <div class="mb-3">
             <label for="edibility" class="form-label">Comestibilité</label>
-            <select class="form-select" [(ngModel)]="mushroom.edibility.id" name="edibility" id="edibility">
-                <option selected disabled>Choisir...</option>
-                <option *ngFor="let edibility of edibilities" [value]="edibility.id">{{ edibility.name }}</option>
+            <select class="form-select" [(ngModel)]="mushroom?.edibility.id" name="edibility" id="edibility">
+                <option value="0" selected>Choisir....</option>
+                <option *ngFor="let edibility of edibilities" [value]="edibility?.id">{{ edibility?.name }}</option>
             </select>
         </div>
 
@@ -28,8 +38,8 @@
         <div class="mb-3 p-2 border">
             <app-add-media (mediaEvent)="addMedia($event)"></app-add-media>
             <ul class="list-group">
-                <li  class="list-group-item fw-normal" *ngFor="let media of mushroom.medias">
-                    {{media.name}} : {{media.path}}
+                <li class="list-group-item fw-normal" *ngFor="let media of mushroom?.medias">
+                    {{media.name}}:{{media.path}}
                 </li>
             </ul>
         </div>
@@ -56,30 +66,33 @@
         <!-- TYPE DE LAMELLE -->
         <div class="mb-3">
             <label for="lamellatype" class="form-label">Type de lamelles</label>
-            <select class="form-select" aria-label="Default select example" [(ngModel)]="mushroom.lamellatype.id" name="lamellatype" id="lamellatype">
-                <option selected disabled>Choisir...</option>
-                <option *ngFor="let lamellatype of lamellaTypes"  [value]="lamellatype.id">{{ lamellatype.name }}</option>
+            <select class="form-select" [(ngModel)]="mushroom?.lamellatype.id" name="lamellatype" id="lamellatype">
+                <option value="0" selected>Choisir...</option>
+                <option *ngFor="let lamellatype of lamellaTypes" [value]="lamellatype?.id">{{ lamellatype?.name }}</option>
             </select>
         </div>
 
+        <!-- PIED -->
         <div class="mb-3">
             <label for="foot" class="form-label">Pied</label>
             <textarea [(ngModel)]="mushroom.foot" class="form-control" id="foot" rows="3" name="foot"></textarea>
         </div>
 
+        <!-- HABITAT -->
         <div class="mb-3">
             <label for="habitat" class="form-label">habitat</label>
             <textarea [(ngModel)]="mushroom.habitat" class="form-control" id="habitat" rows="3"
                 name="habitat"></textarea>
         </div>
 
+        <!-- COMMENTAIRE -->
         <div class="mb-3">
             <label for="comment" class="form-label">Commentaire</label>
             <textarea [(ngModel)]="mushroom.comment" class="form-control" id="comment" rows="3"
                 name="comment"></textarea>
         </div>
 
-        <input type="hidden" [(ngModel)]="mushroom.id" name="id">
+        <!-- <input type="hidden" [(ngModel)]="mushroom.id" name="idtest" id="'id"> -->
 
 
         <button class="btn btn-primary">Envoyer</button>

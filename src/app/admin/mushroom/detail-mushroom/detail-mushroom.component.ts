@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faEdit, faTrash, faCircleInfo, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { API_BASE_URL, API_ADMIN_BASE_URL, API_URL_GET_FILE_MUSHROOM } from '../../../../environments/config'
@@ -24,9 +24,11 @@ export class DetailMushroomComponent implements OnInit {
 
 
   // Déclaration de constantes
-  readonly API_BASE_URL: string = API_BASE_URL;
-  readonly API_URL_GET_FILE_MUSHROOM: string = API_URL_GET_FILE_MUSHROOM;
-  readonly API_ADMIN_BASE_URL: string = API_ADMIN_BASE_URL;
+  readonly API_BASE_URL:string = API_BASE_URL;
+  readonly API_URL_GET_FILE_MUSHROOM:string = API_URL_GET_FILE_MUSHROOM;
+  readonly API_ADMIN_BASE_URL:string = API_ADMIN_BASE_URL;
+
+  readonly headers:any  = { 'Authorization': `Bearer ${sessionStorage.getItem("access_token")}` };
 
   // Variables
   slug_mushroom: any;
@@ -36,7 +38,7 @@ export class DetailMushroomComponent implements OnInit {
   ngOnInit(): void {
     this.id_mushroom = this.route.snapshot.paramMap.get('id');
     if (this.id_mushroom) {
-      //Le paramètre est une chaîne de caractères (slug)
+      //Le paraheadersmètre est une chaîne de caractères (slug)
       console.log('Paramètre id:', this.id_mushroom);
       // Traitement GET : findBySlug
       this.http.get(this.API_BASE_URL + "mushroom/" + this.id_mushroom).subscribe((res) => {

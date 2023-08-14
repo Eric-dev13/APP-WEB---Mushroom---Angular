@@ -9,7 +9,7 @@
             <h1 class="text-center my-3">{{mushroom.commonname}}</h1>
         </div>
         <div>
-            <a [routerLink]="['/admin/champignon/editer', mushroom.slug]" href="" class="btn btn-outline-success me-2"
+            <a [routerLink]="['/admin/champignon/editer', mushroom.id]" href="" class="btn btn-outline-success me-2"
                 title="Editer"><fa-icon [icon]="faEdit"></fa-icon></a>
             <a (click)="delete(mushroom.id)" class="btn btn-outline-danger  me-2" title="Supprimer"><fa-icon
                     [icon]="faTrash"></fa-icon></a>
