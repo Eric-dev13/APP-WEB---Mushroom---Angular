@@ -1,4 +1,5 @@
 export interface MediaInterface {
-    name: string | null;
-    path: string;
+    id?: number | null;
+    name?: string | null;
+    path?: string;
 }

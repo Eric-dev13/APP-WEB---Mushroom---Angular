@@ -26,6 +26,9 @@ import { DetailMushroomComponent } from './admin/mushroom/detail-mushroom/detail
 import { AddMediaComponent } from './admin/media/add-media/add-media.component';
 import { AuthenticateComponent } from './security/authenticate/authenticate.component';
 import { AddLocalnameComponent } from './admin/localname/add-localname/add-localname.component';
+import { EdibilitiesComponent } from './admin/edibility/edibilities/edibilities.component';
+import { EdibilityComponent } from './admin/edibility/edibility/edibility.component';
+import { FormEdibilityComponent } from './admin/edibility/form-edibility/form-edibility.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,10 @@ import { AddLocalnameComponent } from './admin/localname/add-localname/add-local
     DetailMushroomComponent,
     AddMediaComponent,
     AuthenticateComponent,
-    AddLocalnameComponent
+    AddLocalnameComponent,
+    EdibilitiesComponent,
+    EdibilityComponent,
+    FormEdibilityComponent
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,13 @@
-@import "../../../../node_modules/rfs/scss";
+
 
 .descriptionMushroom {
     h1 {
-         @include font-size(5.5rem); 
+        font-size: 4.5em; 
      }
+
      h2{
         font-family: 'Roboto Condensed';
-         @include font-size(1.2rem);
+        font-size:  1.2rem;
      }
 
     &__header{

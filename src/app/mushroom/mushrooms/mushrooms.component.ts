@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { API_BASE_URL, API_URL_GET_FILE_MUSHROOM, API_URL_GET_FILE } from '../../../environments/config';
-
+import { API_BASE_URL, API_URL_GET_FILE_MUSHROOM, API_URL_GET_FILE_EDIBILITY } from '../../../environments/config';
+ 
 @Component({
   selector: 'app-mushrooms',
   templateUrl: './mushrooms.component.html',
@@ -11,8 +11,8 @@ export class MushroomsComponent implements OnInit {
 
   // Déclaration de constantes
   readonly API_BASE_URL: string = API_BASE_URL;
-  readonly API_URL_GET_FILE: string = API_URL_GET_FILE + 'mushrooms/'
   readonly API_URL_GET_FILE_MUSHROOM: string = API_URL_GET_FILE_MUSHROOM;
+  readonly API_URL_GET_FILE_EDIBILITY: string = API_URL_GET_FILE_EDIBILITY;
 
   mushrooms: any;
 

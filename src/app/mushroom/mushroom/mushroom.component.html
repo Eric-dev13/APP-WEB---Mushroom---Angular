@@ -2,11 +2,14 @@
 <div class="bgfullSize bgColor--filterBlack"></div>
 
 <article class="container">
-
+    <!-- <div>
+        <a [routerLink]="['/admin/champignon/Liste-des-champignons']" href="" class="btn btn-info"
+            title="Retour"><fa-icon class="text-light" [icon]="faRotateLeft"></fa-icon></a>
+    </div> -->
     <div class="row bg-light bg-opacity-25 py-3 m-md-3 rounded descriptionMushroom ">
         <!-- Carousel  -->
         <div class="col-12 col-md-6 order-md-3 col-lg-6 order-lg-3 col-xl-5 order-xl-3 p-3 mb-3">
-            <div *ngIf="mushroom.medias.length == 0; else showAllImages" id="carouselExampleIndicators" class="carousel slide carousel-fade descriptionMushroom__img" data-bs-ride="carousel">
+            <div *ngIf="mushroom?.medias?.length == 0; else showAllImages" id="carouselExampleIndicators" class="carousel slide carousel-fade descriptionMushroom__img" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
                         class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -21,15 +24,15 @@
                 <div id="carouselExampleIndicators" class="carousel slide carousel-fade descriptionMushroom__img"
                     data-bs-ride="carousel">
                     <div class="carousel-indicators">
-                        <button *ngFor="let media of mushroom.medias; index as i" type="button"
+                        <button *ngFor="let media of mushroom?.medias; index as i" type="button"
                             data-bs-target="#carouselExampleIndicators" [attr.data-bs-slide-to]="i" [class.active]="i == 0"
                             aria-label="Slide" [attr.aria-label]="i">
                         </button>
                     </div>
                     <div class="carousel-inner">
-                        <div *ngFor="let media of mushroom.medias; index as i" class="carousel-item"
+                        <div *ngFor="let media of mushroom?.medias; index as i" class="carousel-item"
                             [class.active]="i === 0" id="conteneur_image">
-                            <img [src]="API_URL_GET_FILE_MUSHROOM  + media.path" class="d-block w-100" [alt]="media.path" />
+                            <img [src]="API_URL_GET_FILE_MUSHROOM  + media?.path" class="d-block w-100" [alt]="media?.path" />
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -47,61 +50,60 @@
         </div>
         <!-- Titre et sous titre -->
         <div class="col-12 col-md-12 order-md-1 col-lg-6 order-lg-2 col-xl-7 order-xl-2 mt-1 p-3 text-center fiche__header">
-            <h1 class="text-light txtShadow--dark">{{ mushroom.commonname }}</h1>
-            <h2 class="descriptionMushroom__header__letter text-uppercase txtShadow--dark">{{ mushroom.latinname }}</h2>
+            <h1 class="text-light txtShadow--dark">{{ mushroom?.commonname }}</h1>
+            <h2 class="descriptionMushroom__header__letter text-uppercase txtShadow--dark">{{ mushroom?.latinname }}</h2>
         </div>
         <!-- Comestibilité -->
-        <div
-            class="col-12 col-md-12 order-md-2 col-lg-6 order-lg-1 col-xl-5 order-xl-1 mt-2 d-flex justify-content-center align-items-end descriptionMushroom__eat">
+        <div class="col-12 col-md-12 order-md-2 col-lg-6 order-lg-1 col-xl-5 order-xl-1 mt-2 d-flex justify-content-center align-items-end descriptionMushroom__eat">
             <div class="text-center font-weight-bold text-light txtShadow--dark">
-                <img [src]="'assets/images/edibility/' + mushroom.edibility.path" alt="?">
-                <p>{{ mushroom.edibility.name }}</p>
+                <img [src]="API_URL_GET_FILE_EDIBILITY + mushroom?.edibility?.path" alt="?">
+                <p>{{ mushroom?.edibility?.name }}</p>
             </div>
         </div>
         <!-- Descriptif -->
         <div class="col-12 col-md-6 order-md-4 col-lg-6 order-lg-4 col-xl-7 order-xl-4 px-3 px-md-4 py-3 p-lg-5 rounded">
             <!-- Nom local -->
-            <p *ngIf="mushroom.localname && mushroom.localname.length > 0">
+            <p *ngIf="mushroom?.localname">
                 <span class="fw-bold">Nom local</span><br>
-                <ng-template *ngFor="let localname of mushroom.localname">
-                    {{ localname.name }}
+                <ng-template *ngFor="let localname of mushroom?.localname">
+                    {{ localname?.name }}
                 </ng-template>
             </p>
 
-            <p *ngIf="mushroom.hat && mushroom.hat.length > 0">
+            <p *ngIf="mushroom?.hat">
                 <span class="fw-bold">Chapeau</span><br>
-                {{ mushroom.hat }}
+                {{ mushroom?.hat }}
             </p>
 
-            <!-- <div class="d-block">
-                <img [src]="'assets/images/lamella/' + mushroom.lamellatype.path" class="float-right" alt="?"
+            <div class="d-block" *ngIf="mushroom?.lamellatype">
+                <img [src]="API_URL_GET_FILE_LAMELLATYPE + mushroom?.lamellatype?.path" class="float-right" alt="?"
                     width="50">
-                <p *ngIf="mushroom.lamella && mushroom.lamella.length > 0">
+                <p *ngIf="mushroom?.lamella">
                     <span class="fw-bold">Hyménium</span>
                     (Lames - Tubes - Plis - Aiguillons - Pores)<br>
-                    {{ mushroom.lamella }}
+                    {{ mushroom?.lamella }}
                 </p>
-            </div> -->
+            </div>
 
-            <p *ngIf="mushroom.foot && mushroom.foot.length > 0">
+            <p *ngIf="mushroom?.foot">
                 <span class="fw-bold">Pied</span><br>
-                {{ mushroom.foot }}
+                {{ mushroom?.foot }}
             </p>
 
-            <p *ngIf="mushroom.flesh && mushroom.flesh.length > 0">
+            <p *ngIf="mushroom?.flesh">
                 <span class="fw-bold">Chair</span><br>
-                {{ mushroom.flesh }}
+                {{ mushroom?.flesh }}
             </p>
 
 
-            <p *ngIf="mushroom.habitat && mushroom.habitat.length > 0">
+            <p *ngIf="mushroom?.habitat">
                 <span class="fw-bold">Habitat</span><br>
-                {{ mushroom.habitat }}
+                {{ mushroom?.habitat }}
             </p>
 
-            <p *ngIf="mushroom.comment && mushroom.comment.length > 0">
+            <p *ngIf="mushroom?.comment">
                 <span class="fw-bold">Remarques</span><br>
-                {{ mushroom.comment }}
+                {{ mushroom?.comment }}
             </p>
         </div>
     </div>

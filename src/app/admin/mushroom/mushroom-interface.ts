@@ -4,17 +4,17 @@ import {LamellatypeInterface} from 'src/app/admin/lamellatype/lamellatype-interf
 import {MediaInterface} from 'src/app/admin/media/media-interface';
 
 export interface MushroomInterface {
-    id: number;
-    commonname: string;
-    latinname: string | null;
-    flesh: string | null;
-    hat: string | null;
-    lamella: string | null;
-    foot: string | null;
-    habitat: string | null;
-    comment: string | null;
-    edibility: EdibilityInterface | null; // Représente un objet et peux être vide
-    lamellatype: LamellatypeInterface | null; // Représente un objet et peux être vide
-    localnames: LocalnameInterface[]; // tableau d'objets peux être vide
-    medias: MediaInterface[]; // tableau d'objets
+    id?: number;
+    commonname?: string;
+    latinname?: string;
+    flesh?: string;
+    hat?: string;
+    lamella?: string;
+    foot?: string;
+    habitat?: string;
+    comment?: string;
+    edibility?: EdibilityInterface | null; // Représente un objet et peux être vide
+    lamellatype?: LamellatypeInterface; // Représente un objet et peux être vide
+    localnames?: LocalnameInterface[]; // tableau d'objets peux être vide
+    medias?: MediaInterface[]; // tableau d'objets
 }

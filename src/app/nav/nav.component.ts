@@ -30,7 +30,7 @@ export class NavComponent {
     
     this.is_auth = true;
     this.hasRole_admin = true ;
-    this.hasRole_user = false ;
+    this.hasRole_user = true ;
     this.userDetail =  {
       avatarFilename: './../../assets/images/icones/connexion.png',
       pseudo: 'Eric',

@@ -1,5 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-@import "../../../node_modules/rfs/scss";
 
 
 
@@ -8,14 +7,14 @@
     overflow: hidden;
 
     h1 {
-        @include font-size(6rem);
+        font-size: 6em;
         letter-spacing: 10px;
         animation: zoomInUp;
         animation-duration: 1.2s;
     }
 
     h2 {
-        @include font-size(1.5rem);
+        font-size: 1.5em;;
         line-height: 1.5;
         animation: fadeIn;
         animation-duration: 3s;

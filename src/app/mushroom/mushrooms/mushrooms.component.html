@@ -15,13 +15,13 @@
                 <a [routerLink]="['/champignon', mushroom.id]">
                     <div class="listMushrooms__card__eat d-flex justify-content-center align-items-center" *ngIf="mushroom.edibility != '' && mushroom.edibility != null">
                         <div class="text-center">
-                            <img class="listMushrooms__card__eat__img" [src]="'assets/images/edibility/' + mushroom.edibility.path" alt="?">
+                            <img class="listMushrooms__card__eat__img" [src]="API_URL_GET_FILE_EDIBILITY + mushroom.edibility.path" alt="?">
                             <p class="text-light">{{ mushroom.edibility.name }}</p>
                         </div>
                     </div>
                     <div class="listMushrooms__card__bloc-img">
                         <div class="listMushrooms__card__bloc-img__opacity"></div>
-                        <img class="listMushrooms__card__bloc-img__image" *ngIf="mushroom.medias.length > 0; else default" [src]="API_URL_GET_FILE + mushroom.medias[0].path" alt="{{mushroom.commonname}}">
+                        <img class="listMushrooms__card__bloc-img__image" *ngIf="mushroom.medias.length > 0; else default" [src]="API_URL_GET_FILE_MUSHROOM + mushroom.medias[0].path" alt="{{mushroom.commonname}}">
                         <ng-template #default>
                              <img class="listMushrooms__card__bloc-img__image" src="assets/images/icones/default.png" alt="{{mushroom.commonname}}">
                         </ng-template>

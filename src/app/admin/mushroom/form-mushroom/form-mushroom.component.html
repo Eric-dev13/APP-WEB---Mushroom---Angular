@@ -1,95 +1,158 @@
 <div class="container py-3">
 
-    <h1 class="text-center mb-3">Ajouter une nouvel espèce</h1>
+    <div class="d-flex align-items-center">
+        <div>
+            <a [routerLink]="['/admin/champignon/Liste-des-champignons']" href="" class="btn btn-info"
+                title="Retour"><fa-icon class="text-light" [icon]="faRotateLeft"></fa-icon></a>
+        </div>
+        <div class="flex-grow-1">
+            <h1 class="text-center my-3">{{mushroom.commonname && mushroom.commonname !='' ? 'Editer: ' + mushroom.commonname : 'Ajouter nouvelle espèce'}}</h1>
+        </div>
+    </div>
+
+    <h1 class="text-center mb-3"></h1>
 
     <form #form="ngForm" (submit)="send(form)" class="fw-bold" enctype="multipart/form-data">
+
         <!-- NOM COMMUN - CHAMP OBLIGATOIRE -->
-        <div class="mb-3">
-            <label for="commonname" class="form-label"  title="Saisie obligatoire">Nom commun <span class="text-danger">*</span></label>
-            <input [(ngModel)]="mushroom.commonname" type="text" class="form-control" id="commonname" name="commonname" required>
+        <div class="h4 fw-semibold pb-2 mb-4 border-bottom border-danger">
+            <label for="commonname" class="form-label" title="Saisie obligatoire">Nom commun <span
+                    class="text-danger">*</span></label>
+            <input [(ngModel)]="mushroom.commonname" placeholder="Nom français utilisé pour identifier l'espèce."
+                type="text" class="form-control border-0" id="commonname" name="commonname" required>
         </div>
 
         <!-- NOM LATIN -->
-        <div class="mb-3">
+        <div class="h4 fw-semibold pb-2 mb-4 border-bottom border-secondary">
             <label for="latinname" class="form-label">Nom latin</label>
-            <input [(ngModel)]="mushroom.latinname" type="text" class="form-control" id="latinname" name="latinname">
+            <input [(ngModel)]="mushroom.latinname"
+                placeholder="Le nom latin est sa dénomination scientifique binominale composée du genre suivi de l'épithète spécifique."
+                type="text" class="form-control border-0" id="latinname" name="latinname">
         </div>
 
-         <!-- NOM LOCAL -->
-         <div class="mb-3 p-2 border">
+        <!--  NOM LOCAL  -->
+        <div class="h4 fw-semibold pb-2 mb-4 border-bottom border-secondary">
             <app-add-localname (localnameEvent)="addLocalname($event)"></app-add-localname>
-            <ul class="list-group">
+            <ul class="list-group mt-3">
                 <li class="list-group-item fw-normal" *ngFor="let localname of mushroom?.localnames">
                     {{localname.name}}
                 </li>
             </ul>
         </div>
 
-        <!-- COMESTIBILITE -->
-        <div class="mb-3">
+        <!-- ////// COMESTIBILITE ////// -->
+        <div class="h4 fw-semibold pb-2 mb-4 border-bottom border-secondary">
             <label for="edibility" class="form-label">Comestibilité</label>
-            <select class="form-select" [(ngModel)]="mushroom?.edibility.id" name="edibility" id="edibility">
-                <option value="0" selected>Choisir....</option>
+            <select class="form-select border-2 border-start-0 border-top-0 border-end-0"
+                [(ngModel)]="mushroom.edibility" name="edibility" id="edibility">
+                <option [value]="{id: 0}" selected>Choisir....</option>
                 <option *ngFor="let edibility of edibilities" [value]="edibility?.id">{{ edibility?.name }}</option>
             </select>
         </div>
 
         <!-- MEDIAS -->
-        <div class="mb-3 p-2 border">
+        <div class="pb-2 mb-4 border-bottom border-secondary">
+            <h4 class="fw-semibold">Photos / images</h4>
+            <p class="fw-semibold">Importer des photos (format autoriser: jpg, png, gif)</p>
             <app-add-media (mediaEvent)="addMedia($event)"></app-add-media>
-            <ul class="list-group">
-                <li class="list-group-item fw-normal" *ngFor="let media of mushroom?.medias">
-                    {{media.name}}:{{media.path}}
-                </li>
-            </ul>
+
+            <p class="fw-semibold">Liste des médias existants</p>
+            <div class="table-responsive">
+                <table class="table table-dark table-striped fw-normal">
+                    <thead>
+                        <tr>
+                            <th scope="col">Image</th>
+                            <th scope="col">Nom du fichier</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let media of mushroom?.medias" class="table-secondary">
+                            <td>
+                                <!-- Affichage de l'image -->
+                                <!-- <img *ngIf="selectedImage" [src]="selectedImage" alt="Image sélectionnée" height="200"> -->
+                                <img class="rounded" [src]="API_URL_GET_FILE_MUSHROOM + media?.path"
+                                    alt="{{mushroom.commonname}}" width="100">
+                            </td>
+                            <td>
+                                {{ media.path }}
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    <a [routerLink]="['/admin/media/editer/', media?.id]" href=""
+                                        class="btn btn-outline-success me-2" title="Editer">
+                                        <fa-icon [icon]="faEdit"></fa-icon>
+                                    </a>
+                                    <a (click)="delete(media?.id)" class="btn btn-outline-danger" title="Supprimer">
+                                        <fa-icon [icon]="faTrash"></fa-icon>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- CHAIR -->
-        <div class="mb-3">
+        <div class="h4 fw-semibold pb-2 mb-4 border-bottom border-secondary">
             <label for="flesh" class="form-label">Chair</label>
-            <textarea [(ngModel)]="mushroom.flesh" class="form-control" id="flesh" rows="3" name="flesh"></textarea>
+            <textarea [(ngModel)]="mushroom.flesh"
+                placeholder="La chair se réfère au tissu intérieur situé sous la surface, jouant un rôle clé dans la structure et la texture du champignon."
+                class="form-control border-0" id="flesh" rows="3" name="flesh">
+            </textarea>
         </div>
 
         <!-- CHAPEAU -->
-        <div class="mb-3">
+        <div class="h4 fw-semibold pb-2 mb-4 border-bottom border-secondary">
             <label for="hat" class="form-label">Chapeau</label>
-            <textarea [(ngModel)]="mushroom.hat" class="form-control" id="hat" rows="3" name="hat"></textarea>
+            <textarea [(ngModel)]="mushroom.hat"
+                placeholder="Le chapeau est la partie supérieure généralement en forme de disque qui recouvre le sommet du champignon et abrite les structures de reproduction telles que les lamelles et l'hyménium."
+                class="form-control border-0" id="hat" rows="3" name="hat">
+            </textarea>
         </div>
 
         <!-- LAMELLE -->
-        <div class="mb-3">
-            <label for="lamella" class="form-label">Lamelle</label>
-            <textarea [(ngModel)]="mushroom.lamella" class="form-control" id="lamella" rows="3"
-                name="lamella"></textarea>
+        <div class="h4 fw-semibold pb-2 mb-4 border-bottom border-secondary">
+            <label for="lamella" class="form-label">Hyménium</label>
+            <textarea [(ngModel)]="mushroom.lamella"
+                placeholder="L'hyménium est la surface fertile d'un champignon, comprenant généralement les lamelles, où les spores sont produites et libérées."
+                class="form-control border-0" id="lamella" rows="3" name="lamella">
+            </textarea>
         </div>
 
-        <!-- TYPE DE LAMELLE -->
+        <!-- ////// TYPE DE LAMELLE ////// -->
         <div class="mb-3">
             <label for="lamellatype" class="form-label">Type de lamelles</label>
-            <select class="form-select" [(ngModel)]="mushroom?.lamellatype.id" name="lamellatype" id="lamellatype">
-                <option value="0" selected>Choisir...</option>
+            <select class="form-select" [(ngModel)]="mushroom.lamellatype" name="lamellatype" id="lamellatype">
+                <option [value]="{id: 0}" selected>Choisir...</option>
                 <option *ngFor="let lamellatype of lamellaTypes" [value]="lamellatype?.id">{{ lamellatype?.name }}</option>
             </select>
         </div>
 
         <!-- PIED -->
-        <div class="mb-3">
+        <div class="h4 fw-semibold pb-2 mb-4 border-bottom border-secondary">
             <label for="foot" class="form-label">Pied</label>
-            <textarea [(ngModel)]="mushroom.foot" class="form-control" id="foot" rows="3" name="foot"></textarea>
+            <textarea [(ngModel)]="mushroom.foot"
+                placeholder="Le pied est une partie cylindrique qui s'étend depuis la base jusqu'au chapeau et peut présenter des variations de couleur, de texture et de taille selon les espèces."
+                class="form-control border-0" id="foot" rows="3" name="foot">
+            </textarea>
         </div>
 
         <!-- HABITAT -->
-        <div class="mb-3">
-            <label for="habitat" class="form-label">habitat</label>
-            <textarea [(ngModel)]="mushroom.habitat" class="form-control" id="habitat" rows="3"
-                name="habitat"></textarea>
+        <div class="h4 fw-semibold pb-2 mb-4 border-bottom border-secondary">
+            <label for="habitat" class="form-label">Habitat</label>
+            <textarea [(ngModel)]="mushroom.habitat"
+                placeholder="L'habitat fait référence à son environnement naturel où il pousse, tel que les forêts, les prairies humides ou les zones décomposant des matières organiques."
+                class="form-control border-0" id="habitat" rows="3" name="habitat">
+            </textarea>
         </div>
 
         <!-- COMMENTAIRE -->
-        <div class="mb-3">
+        <div class="h4 fw-semibold pb-2 mb-4 border-bottom border-secondary">
             <label for="comment" class="form-label">Commentaire</label>
-            <textarea [(ngModel)]="mushroom.comment" class="form-control" id="comment" rows="3"
-                name="comment"></textarea>
+            <textarea [(ngModel)]="mushroom.comment" placeholder="Commentaire" class="form-control border-0"
+                id="comment" rows="3" name="comment"></textarea>
         </div>
 
         <!-- <input type="hidden" [(ngModel)]="mushroom.id" name="idtest" id="'id"> -->

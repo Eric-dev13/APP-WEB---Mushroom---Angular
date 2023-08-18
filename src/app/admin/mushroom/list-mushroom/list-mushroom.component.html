@@ -1,59 +1,60 @@
 <div class="container py-3">
-    <h1 class="text-center">Liste de champignons</h1>
+    <h1 class="text-center mb-5">Liste de champignons</h1>
     <table class="table table-dark table-striped">
         <thead>
             <tr>
                 <th scope="col">Id</th>
                 <th scope="col">Photo</th>
                 <th scope="col">Nom commun</th>
-                <th scope="col">Consommable</th>
+                <th scope="col">Appréciation gustative et toxicité</th>
                 <th scope="col">Publier</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let mushroom of mushrooms">
-                <td scope="row">{{mushroom.id}}</td>
+            <tr class="table-secondary" *ngFor="let mushroom of mushrooms">
+                <td scope="row">{{mushroom?.id}}</td>
                 <td>
-                    <a [routerLink]="['/admin/champignon/description', mushroom.id]" href="" class="" title="Voir la description">
+                    <a [routerLink]="['/admin/champignon/description', mushroom?.id]" href="" class="" title="Voir la description">
                         <div class="containerImg">
                             <img class="zoom img-fluid" 
-                                *ngIf="mushroom.medias.length > 0; else default" 
-                                [src]="API_URL_GET_FILE_MUSHROOM + mushroom.medias[0].path" 
-                                alt="{{mushroom.commonname}}"
+                                *ngIf="mushroom?.medias?.length > 0; else default" 
+                                [src]="API_URL_GET_FILE_MUSHROOM + mushroom?.medias[0]?.path" 
+                                alt="{{mushroom?.commonname}}"
                             >
                         </div>
                         <ng-template #default>
-                            <img class="zoom rounded img-fluid" src="assets/images/icones/default.png" alt="{{mushroom.commonname}}">
+                            <img class="zoom rounded img-fluid" src="assets/images/icones/default.png" alt="{{mushroom?.commonname}}">
                         </ng-template>
                     </a>
                 </td>
-                <td>{{mushroom.commonname}}</td>
-                <td>{{ mushroom.edibility?.name }}</td>
+                <td>{{mushroom?.commonname}}</td>
                 <td>
-                    <a *ngIf="mushroom.visibility; else notPublish" (click)="activate(mushroom.id, mushroom.visibility)"
-                        class="btn btn-outline-light me-2">
+                    <img [src]="API_URL_GET_FILE_EDIBILITY + mushroom?.edibility?.path" alt="?" height="45" style ="filter:invert(.7)">
+                    <p>{{ mushroom?.edibility?.name }}</p></td>
+                <td>
+                    <a *ngIf="mushroom?.visibility; else notPublish" (click)="activate(mushroom?.id, mushroom?.visibility)"
+                        class="btn btn-dark me-2">
                         <fa-icon title="Masquer" [icon]="faThumbsDown"></fa-icon>
                     </a>
                     <ng-template #notPublish>
-                        <a (click)="activate(mushroom.id, mushroom.visibility)" class="btn btn-outline-secondary me-2">
+                        <a (click)="activate(mushroom?.id, mushroom?.visibility)" class="btn btn-secondary me-2">
                             <fa-icon title="Publier" [icon]="faThumbsUp"></fa-icon>
-
                         </a>
                     </ng-template>
 
                 </td>
                 <td>
                     <div class="d-flex">
-                        <a [routerLink]="['/admin/champignon/description', mushroom.id]" href=""
+                        <a [routerLink]="['/admin/champignon/description', mushroom?.id]" href=""
                             class="btn btn-outline-success me-2" title="Voir la description">
                             <fa-icon [icon]="faCircleInfo"></fa-icon>
                         </a>
-                        <a [routerLink]="['/admin/champignon/editer', mushroom.id]" href=""
+                        <a [routerLink]="['/admin/champignon/editer', mushroom?.id]" href=""
                             class="btn btn-outline-success me-2" title="Editer">
                             <fa-icon [icon]="faEdit"></fa-icon>
                         </a>
-                        <a (click)="delete(mushroom.id)" class="btn btn-outline-danger" title="Supprimer">
+                        <a (click)="delete(mushroom?.id)" class="btn btn-outline-danger" title="Supprimer">
                             <fa-icon [icon]="faTrash"></fa-icon>
                         </a>
                     </div>

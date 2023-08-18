@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { API_BASE_URL, API_URL_GET_FILE_MUSHROOM } from '../../../environments/config';
+import { API_BASE_URL, API_URL_GET_FILE_MUSHROOM, API_URL_GET_FILE_EDIBILITY, API_URL_GET_FILE_LAMELLATYPE } from '../../../environments/config';
 
 
 @Component({
@@ -20,6 +20,9 @@ export class MushromComponent implements OnInit {
   // Déclaration de constantes
   readonly API_BASE_URL: string = API_BASE_URL;
   readonly API_URL_GET_FILE_MUSHROOM: string = API_URL_GET_FILE_MUSHROOM;
+  readonly API_URL_GET_FILE_EDIBILITY: string = API_URL_GET_FILE_EDIBILITY;
+  readonly API_URL_GET_FILE_LAMELLATYPE: string = API_URL_GET_FILE_LAMELLATYPE
+
 
   // Variables
   slug_mushroom: any;

@@ -1,0 +1,50 @@
+<div class="container py-3">
+  <div class="d-flex align-items-center">
+    <div>
+      <a [routerLink]="['/admin/champignon/Liste-des-champignons']" href="" class="btn btn-info" title="Retour"><fa-icon
+          class="text-light" [icon]="faRotateLeft"></fa-icon></a>
+    </div>
+    <div class="flex-grow-1">
+      <h1 class="text-center my-5">Goût et Risque Toxicologique des Champignons</h1>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Fichier</th>
+        <th scope="col">Image</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let edibility of edibilities">
+        <th scope="row">{{ edibility.id }}</th>
+        <td>{{ edibility?.name }}</td>
+        <td>
+          {{ edibility?.path }}
+        </td>
+        <td>
+          <img [src]="API_URL_GET_FILE_EDIBILITY + edibility?.path" alt="?" style="filter: invert(1);" height="35">
+        </td>
+        <td>
+          <div class="d-flex">
+            <!-- <a [routerLink]="['/admin/comestibilite/description', edibility?.id]" href=""
+                    class="btn btn-outline-success me-2" title="Voir la description">
+                    <fa-icon [icon]="faCircleInfo"></fa-icon>
+                </a> -->
+            <a [routerLink]="['/admin/comestibilite/editer', edibility?.id]" href=""
+              class="btn btn-outline-success me-2" title="Editer">
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </a>
+            <a (click)="delete(edibility?.id)" class="btn btn-outline-danger" title="Supprimer">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

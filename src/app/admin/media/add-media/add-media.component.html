@@ -1,15 +1,20 @@
-<div class="mb-3 p-2 border">
-    <h5 class="mb-3 fw-bold">Importer des photos (format autoriser: jpg, png, gif)</h5>
-
-    <div class="mb-3">
-        <label for="name" class="form-label fw-semibold">Nom du média</label>
-        <input class="form-control" #name id="name" name="name">
+<div class="mb-3 p-3 border rounded">
+    <div class="input-group flex-nowrap mb-3">
+        <span class="input-group-text bg-primary bg-opacity-25" id="addon-wrapping">Nom du média</span>
+        <input type="text" class="form-control" #name id="name" name="name" placeholder="Facultatif">
     </div>
 
-    <div class="mb-3">
-        <label for="path" class="form-label fw-semibold">Sélectionnez un fichier</label>
-        <input type="file" class="form-control mb-3" #path id="path" name="path">
+    <div class="input-group flex-nowrap mb-3">
+        <span class="input-group-text bg-primary bg-opacity-25" id="addon-wrapping">Sélectionnez un fichier</span>
+        <input type="file" class="form-control" #path id="path" name="path" (change)="onFileSelected($event)">
     </div>
+
+    <div class="input-group flex-nowrap mb-3">
+        <!-- Affichage de l'image -->
+        <img *ngIf="selectedImage" [src]="selectedImage" alt="Image sélectionnée" height="200">
+    </div>
+
+
 
     <div (click)="addMedia(name.value, path.value)" class="btn btn-outline-primary">Ajouter</div>
 </div>

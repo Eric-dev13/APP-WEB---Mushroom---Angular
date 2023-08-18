@@ -1,5 +1,7 @@
-@import "../../../../../node_modules/rfs/scss";
-
 h1 {
-    @include font-size(3.5rem);
+    font-size: 4.5em;
+}
+
+h2 {
+    font-size: 1.5rem;
 }

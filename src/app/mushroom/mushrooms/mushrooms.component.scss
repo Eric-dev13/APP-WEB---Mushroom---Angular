@@ -1,14 +1,13 @@
-@import "../../../../node_modules/rfs/scss";
 
 .listMushrooms {
 
     h1 {
-        @include font-size(5rem);
+        font-size: 4.5rem;
         letter-spacing: 10px;
     }
 
     h2 {
-        @include font-size(1.5rem);
+       font-size: 1.5rem;
 
     }
 

@@ -1,10 +1,14 @@
-<div class="mb-3 p-2 border">
-    <h5 class="mb-3 fw-bold">Dénominations régionales de l'espèce.</h5>
-
-    <div class="mb-3">
-        <label for="name" class="form-label fw-semibold">Nom</label>
-        <input class="form-control" #name id="name" name="name">
-    </div>
-
-    <div (click)="addLocalname(name.value)" class="btn btn-outline-primary">Ajouter</div>
+<div>
+    <label for="name" class="form-label">Nom vernaculaire / nom local</label>
+    <div class="input-group">
+        <button (click)="addLocalname(name.value)" class="btn btn-outline-primary" type="button" id="button-addon1">Ajouter</button>
+        <input 
+            type="text" 
+            class="form-control border-0" 
+            placeholder="Le nom vernaculaire fait référence au terme utilisé dans une région spécifique pour désigner une espèce." 
+            #name 
+            id="name" 
+            name="name"
+        >
+      </div>
 </div>
