@@ -32,7 +32,7 @@
                     <div class="carousel-inner">
                         <div *ngFor="let media of mushroom?.medias; index as i" class="carousel-item"
                             [class.active]="i === 0" id="conteneur_image">
-                            <img [src]="API_URL_GET_FILE_MUSHROOM  + media?.path" class="d-block w-100" [alt]="media?.path" />
+                            <img [src]="PUBLIC_URL_GET_FILE_MUSHROOM  + media?.path" class="d-block w-100" [alt]="media?.path" />
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -56,7 +56,7 @@
         <!-- Comestibilité -->
         <div class="col-12 col-md-12 order-md-2 col-lg-6 order-lg-1 col-xl-5 order-xl-1 mt-2 d-flex justify-content-center align-items-end descriptionMushroom__eat">
             <div class="text-center font-weight-bold text-light txtShadow--dark">
-                <img [src]="API_URL_GET_FILE_EDIBILITY + mushroom?.edibility?.path" alt="?">
+                <img [src]="PUBLIC_URL_GET_FILE_EDIBILITY + mushroom?.edibility?.path" alt="?">
                 <p>{{ mushroom?.edibility?.name }}</p>
             </div>
         </div>
@@ -70,14 +70,15 @@
                 </ng-template>
             </p>
 
+            <!-- Chapeau -->
             <p *ngIf="mushroom?.hat">
                 <span class="fw-bold">Chapeau</span><br>
                 {{ mushroom?.hat }}
             </p>
 
-            <div class="d-block" *ngIf="mushroom?.lamellatype">
-                <img [src]="API_URL_GET_FILE_LAMELLATYPE + mushroom?.lamellatype?.path" class="float-right" alt="?"
-                    width="50">
+            <!-- Lamelle et type de lamelle -->
+            <div class="d-block">
+                <!-- <img *ngIf="mushroom?.lamellatype" [src]="API_URL_GET_FILE_LAMELLATYPE + mushroom?.lamellatype?.path" class="float-right" alt="?" width="50"> -->
                 <p *ngIf="mushroom?.lamella">
                     <span class="fw-bold">Hyménium</span>
                     (Lames - Tubes - Plis - Aiguillons - Pores)<br>
@@ -85,22 +86,25 @@
                 </p>
             </div>
 
+            <!-- Pied -->
             <p *ngIf="mushroom?.foot">
                 <span class="fw-bold">Pied</span><br>
                 {{ mushroom?.foot }}
             </p>
 
+            <!-- Chair -->
             <p *ngIf="mushroom?.flesh">
                 <span class="fw-bold">Chair</span><br>
                 {{ mushroom?.flesh }}
             </p>
 
-
+            <!-- Habitat -->
             <p *ngIf="mushroom?.habitat">
                 <span class="fw-bold">Habitat</span><br>
                 {{ mushroom?.habitat }}
             </p>
 
+            <!-- Commentaire -->
             <p *ngIf="mushroom?.comment">
                 <span class="fw-bold">Remarques</span><br>
                 {{ mushroom?.comment }}

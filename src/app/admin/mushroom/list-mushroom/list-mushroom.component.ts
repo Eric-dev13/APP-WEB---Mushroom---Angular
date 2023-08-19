@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { faEdit,faTrash, faCircleInfo, faThumbsUp, faThumbsDown,faEye } from '@fortawesome/free-solid-svg-icons';
 import { Router, ActivatedRoute } from '@angular/router';
-import { API_ADMIN_BASE_URL, API_URL_GET_FILE_MUSHROOM, API_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
+import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
 
 
 @Component({
@@ -23,8 +23,8 @@ export class ListMushroomComponent implements OnInit {
 
     // Déclaration de constantes
     readonly API_ADMIN_BASE_URL: string = API_ADMIN_BASE_URL;
-    readonly API_URL_GET_FILE_MUSHROOM: string = API_URL_GET_FILE_MUSHROOM;
-    readonly API_URL_GET_FILE_EDIBILITY: string = API_URL_GET_FILE_EDIBILITY;
+    readonly PUBLIC_URL_GET_FILE_MUSHROOM: string = PUBLIC_URL_GET_FILE_MUSHROOM;
+    readonly PUBLIC_URL_GET_FILE_EDIBILITY: string = PUBLIC_URL_GET_FILE_EDIBILITY;
 
   // GET
   mushrooms: any;

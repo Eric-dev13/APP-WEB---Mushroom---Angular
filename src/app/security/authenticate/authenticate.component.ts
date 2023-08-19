@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { API_BASE_URL, API_URL_GET_FILE_MUSHROOM, API_URL_GET_FILE, API_URL_AUTH } from '../../../environments/config';
+import { API_URL_AUTH } from '../../../environments/config';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, map, Observable, throwError } from 'rxjs';
@@ -10,14 +10,10 @@ import { catchError, map, Observable, throwError } from 'rxjs';
   templateUrl: './authenticate.component.html',
   styleUrls: ['./authenticate.component.scss']
 })
-export class AuthenticateComponent {
+export class AuthenticateComponent implements OnInit {
 
   // Déclaration de constantes
   readonly API_URL_AUTH: string = API_URL_AUTH;
-  readonly API_BASE_URL: string = API_BASE_URL;
-  readonly API_URL_GET_FILE: string = API_URL_GET_FILE + 'mushrooms/'
-  readonly API_URL_GET_FILE_MUSHROOM: string = API_URL_GET_FILE_MUSHROOM;
-
 
   constructor(private http: HttpClient,
     private router: Router,

@@ -42,21 +42,24 @@
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Nom commun</div>
         <div class="col-9 border-top py-2">
-            {{mushroom?.commonname}}
+            {{ mushroom?.commonname }}
         </div>
     </div>
 
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Nom scientifique</div>
         <div class="col-9 border-top py-2">
-            {{mushroom?.latinname}}
+            {{ mushroom?.latinname }}
         </div>
     </div>
 
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Nom locale</div>
         <div class="col-9 border-top py-2">
-            {{mushroom?.localname ?? "Aucun nom n'a été renseigné!"}}
+            <ng-template [ngIf]="mushroom?.localnames" [ngIfElse]="message" *ngFor="let localname of mushroom?.localnames; index as i;">
+                {{ localname?.name }}<span *ngIf="i < mushroom?.localnames?.length - 1">, </span>
+            </ng-template>
+            <ng-template #message>Aucun nom n'a été renseigné!</ng-template>
         </div>
     </div>
 
@@ -96,7 +99,7 @@
                 <tbody>
                     <tr *ngFor="let media of mushroom?.medias">
                         <td>
-                            <img class="rounded" [src]="API_URL_GET_FILE_MUSHROOM + media?.path"
+                            <img class="rounded" [src]="PUBLIC_URL_GET_FILE_MUSHROOM + media?.path"
                                 alt="{{mushroom?.commonname}}" width="100">
                         </td>
                         <td>
@@ -117,12 +120,12 @@
         </div>
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-2 border-top py-2 me-1">Type de lamelle</div>
         <div class="col-9 border-top py-2">
             {{mushroom?.lamellaType}}
         </div>
-    </div>
+    </div> -->
 
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Lamelle</div>
@@ -162,7 +165,7 @@
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Appréciation Culinaire</div>
         <div class="col-9 border-top py-2">
-            <img [src]="API_URL_GET_FILE_EDIBILITY + mushroom?.edibility?.path" alt="?" style="filter: invert(1);"
+            <img *ngIf=" mushroom?.edibility" [src]="PUBLIC_URL_GET_FILE_EDIBILITY + mushroom?.edibility?.path" alt="?" style="filter: invert(1);"
                 height="50">
         </div>
     </div>

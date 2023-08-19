@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { API_ADMIN_BASE_URL, API_URL_GET_FILE_MUSHROOM } from 'src/environments/config';
+import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM } from 'src/environments/config';
 import { faEdit, faTrash, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { EdibilityInterface } from 'src/app/admin/edibility/edibility-interface';
 import { MushroomInterface } from '../mushroom-interface';
@@ -21,7 +21,7 @@ export class FormMushroomComponent implements OnInit {
   // POST
   // Déclaration de constantes
   readonly API_ADMIN_BASE_URL: string = API_ADMIN_BASE_URL;
-  readonly API_URL_GET_FILE_MUSHROOM: string = API_URL_GET_FILE_MUSHROOM;
+  readonly PUBLIC_URL_GET_FILE_MUSHROOM: string = PUBLIC_URL_GET_FILE_MUSHROOM;
 
   constructor(
     private http: HttpClient,
@@ -33,7 +33,8 @@ export class FormMushroomComponent implements OnInit {
   faTrash = faTrash;
   faRotateLeft = faRotateLeft;
 
-  edibilities: any;  // listes a charger dans les selectBox
+  // edibilities!: EdibilityInterface[];  // listes a charger dans les selectBox
+  edibilities:any;
   lamellaTypes: any; // listes a charger dans les selectBox
 
   selectedFile: any;
@@ -42,25 +43,8 @@ export class FormMushroomComponent implements OnInit {
   id_mushroom: any; // id de l'enregistrement recherche transmis dans l'URL
 
   // Représente la table principal (mushroom) dont la structure est représenté dans une interface.
-  //  mushroom!: MushroomInterface;
-  // mushroom: any = {
-  //   id: 0,
-  //   commonname: "",
-  //   latinname: "",
-  //   flesh: "",
-  //   hat: "",
-  //   lamella: "",
-  //   foot: "",
-  //   habitat: "",
-  //   comment: "",
-  //   lamellatype: { id: 0 }, // Definit une valeur par defaut id: 0, si aucun choix dans le select alors on id:0 et on renvoie lamellatype: null a l'api sinon on renvoi lamellatype: {id: id_selected}
-  //   edibility: { id: 0 },
-  //   localnames: [],
-  //   medias: []
-  // }
-
   mushroom: MushroomInterface = {
-    id: 0, // id de l'enregistrement remplacé dans le cas d'une modification d'enregistrement
+    id: 0,
     commonname: "",
     latinname: "",
     flesh: "",
@@ -69,22 +53,39 @@ export class FormMushroomComponent implements OnInit {
     foot: "",
     habitat: "",
     comment: "",
-    lamellatype: { id: 0 },
-    edibility: { id: 0 },
+    // lamellatype: { id: 0 }, 
+    edibility: { id: 0 }, // Definit une valeur par defaut id: 0, si aucun choix dans le select alors on id:0 et on renvoie edibility: null a l'api sinon on renvoi edibility: {id: id_selected}
     localnames: [],
     medias: []
   }
 
-
-
-  // mushroom:any;
+  // mushroom: any = {
+  //   id: 0, // id de l'enregistrement remplacé dans le cas d'une modification d'enregistrement
+  //   commonname: "",
+  //   latinname: "",
+  //   flesh: "",
+  //   hat: "",
+  //   lamella: "",
+  //   foot: "",
+  //   habitat: "",
+  //   comment: "",
+  //   lamellatype: { id: 0 },
+  //   edibility: { id: 0 }, // Definit une valeur par defaut id: 0, si aucun choix dans le select alors on id:0 et on renvoie edibility: null a l'api sinon on renvoi edibility: {id: id_selected}
+  //   localnames: [],
+  //   medias: []
+  // }
 
 
   load() {
     // Requete vers api pour recupèrer edibility et afficher dans un select box 
     // GET : findAll edibilityEntity
-    this.http.get(this.API_ADMIN_BASE_URL + "edibility").subscribe((res) => {
-      this.edibilities = res;
+    this.http.get<any>(this.API_ADMIN_BASE_URL + "edibility").subscribe({
+      next: (data) => {
+        console.log(data);
+        this.edibilities = data;
+      },
+      error: (err) => console.log('Observer got an error: ' + err),
+      complete: () => console.log('Enregistrement ajouté!')
     });
 
     // GET : findAll LamellatypeEntity
@@ -130,6 +131,7 @@ export class FormMushroomComponent implements OnInit {
   }
 
 
+
   send(form: NgForm) {
     // Validation du formulaire
     if (form?.invalid) {
@@ -145,11 +147,11 @@ export class FormMushroomComponent implements OnInit {
     }
 
     // si la propriété "lamellatype" n'est pas renseignée elles doit renvoyées NULL sinon un objet pour renseigner la cle étrangere corespondant à l'ID lamellatype.
-    if (form.value.lamellatype.id === 0) {
-      form.value.lamellatype = null;
-    } else {
-      form.value.lamellatype = {id: form.value.lamellatype};
-    }
+    // if (form.value.lamellatype.id === 0) {
+    //   form.value.lamellatype = null;
+    // } else {
+    //   form.value.lamellatype = {id: form.value.lamellatype};
+    // }
 
     // si la propriété mushroom.localnames contient des objets (collection de nom) je les transfert dans l'objet form.
     if (this.mushroom?.localnames) {
@@ -173,7 +175,7 @@ export class FormMushroomComponent implements OnInit {
           this.router.navigate(["admin/champignon/Liste-des-champignons"]);
         },
         error: (err) => console.log('Observer got an error: ' + err),
-        complete: () => console.log('Observer got a complete notification')
+        complete: () => console.log('Enregistrement modifié!')
       });
     } else {
       // POST - Ajoute le nouvel enregistrement
@@ -184,7 +186,7 @@ export class FormMushroomComponent implements OnInit {
           this.router.navigate(["admin/champignon/Liste-des-champignons"]);
         },
         error: (err) => console.log('Observer got an error: ' + err),
-        complete: () => console.log('Observer got a complete notification')
+        complete: () => console.log('Enregistrement ajouté!')
       });
     }
   }

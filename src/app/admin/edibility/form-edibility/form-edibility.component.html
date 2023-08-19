@@ -10,8 +10,8 @@
         </div>
     </div>
 
-
-    <form #form="ngForm" (submit)="send(form)" class="fw-bold" enctype="multipart/form-data">
+    <!-- <img *ngIf="edibility.path" src="http://127.0.0.1:9000/" style="width: 250px"/> -->
+    <form #form="ngForm" (ngSubmit)="send(form)" class="fw-bold" enctype="multipart/form-data">
         <!-- NOM -->
         <div class="h4 fw-semibold pb-2 mb-4 border-bottom border-dark">
             <label for="name" class="form-label">Titre affiché.</label>
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="col-auto">
-                <img *ngIf="edibility.id !== 0" [src]="API_URL_GET_FILE_EDIBILITY + edibility.path" alt="edibility.name"
+                <img *ngIf="edibility.id !== 0" [src]="PUBLIC_URL_GET_FILE_EDIBILITY + edibility.path" alt="edibility.name"
                     style="filter: invert(1);" height="50">
             </div>
         </div>

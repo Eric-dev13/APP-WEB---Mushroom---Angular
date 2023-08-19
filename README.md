@@ -115,27 +115,51 @@ export class NavComponent {
   ++ faCoffee = faCoffee;
 }
 ````
-Environnement
-ng generate environments
+
+
+## Variables d' environnement
+
+`ng generate environments` 
+
+L'utilisation de constantes pour stocker les URL de base et les URL spécifiques dans un fichier de configuration comme `config.ts` présente plusieurs avantages :
+
+1. **Facilité de maintenance :** En regroupant toutes les URL en un seul endroit, il est plus facile de les gérer et de les mettre à jour en cas de besoin. Cela réduit le risque d'erreurs dues à des URL incorrectes ou mal orthographiées dans différentes parties de votre application.
+
+2. **Réutilisabilité :** En stockant les URL en tant que constantes, vous pouvez les réutiliser dans tout le code de votre application. Cela permet de garantir la cohérence des URL utilisées dans différentes parties de votre application, ce qui facilite la maintenance et la compréhension du code.
+
+3. **Clarté et lisibilité :** L'utilisation de noms de constantes significatifs pour les URL rend votre code plus lisible et compréhensible. Plutôt que d'avoir des URL directement dans le code, les noms de constantes fournissent une description concise de ce que chaque URL représente.
+
+4. **Gestion centralisée des changements :** Si vous devez changer une URL, vous n'avez qu'à la modifier dans le fichier de configuration `config.ts`, plutôt que de rechercher toutes les occurrences de cette URL dans le code. Cela simplifie la gestion des changements et réduit les risques d'erreurs.
+
+5. **Sécurité :** En utilisant des constantes pour stocker les URL, vous évitez d'exposer directement les URL sensibles ou spécifiques à l'application dans le code source distribué. Cela peut contribuer à la sécurité de votre application.
+
+En résumé, l'utilisation de constantes pour gérer les URL dans un fichier de configuration centralisé améliore la cohérence, la maintenance, la lisibilité et la sécurité de votre code. C'est une pratique recommandée pour la gestion des URL dans les applications Web.
+
+````
+// config.ts
+export const API_BASE_URL = 'http://localhost:9000/api/v1/';
+
+export const API_ADMIN_BASE_URL =  API_BASE_URL +'admin/';
+
+export const API_URL_AUTH = API_BASE_URL + 'auth/';
+
+// Serveur de fichiers, peux être sécurisé.
+export const API_URL_GET_FILE_MUSHROOM = API_BASE_URL + 'upload/mushrooms/';
+export const API_URL_GET_FILE_EDIBILITY = API_BASE_URL + 'upload/edibility/';
+export const API_URL_GET_FILE_LAMELLATYPE = API_BASE_URL + 'upload/lamellatype/';
+export const API_URL_GET_FILE_USER = API_BASE_URL + 'upload/users/';
+
+// Acces publique
+export const PUBLIC_BASE_URL = 'http://localhost:9000/upload/';
+export const PUBLIC_URL_GET_FILE_MUSHROOM = PUBLIC_BASE_URL + 'mushrooms/';
+export const PUBLIC_URL_GET_FILE_EDIBILITY = PUBLIC_BASE_URL + 'edibility/';
+export const PUBLIC_URL_GET_FILE_LAMELLATYPE = PUBLIC_BASE_URL + 'lamellatype/';
+export const PUBLIC_URL_GET_FILE_USER = PUBLIC_BASE_URL + 'users/';
+````
 
 
 
 
-## RFS (redimensionnement auto des polices)
-
-RFS est un moteur de redimensionnement d'unité qui a été initialement développé pour redimensionner les tailles de police (d'où son abréviation pour Responsive Font Sizes). De nos jours, RFS est capable de redimensionner pratiquement toutes les valeurs de n'importe quelle propriété CSS avec des unités, telles que margin, padding, border-radius ou même box-shadow.
-
-```
-npm install rfs
-```
-
-Usage:
-
-```
-// scss/main.scss
-
-@import "../node_modules/rfs/scss";
-```
 
 
 
@@ -367,3 +391,23 @@ ACTION SUR LE CRUD ADMIN
 ```
 
 En Angular, le symbole `?` est utilisé pour définir une variable en option dans des modèles de liaison (templates) lorsque vous traitez avec des propriétés potentiellement nulles ou indéfinies. Cette fonctionnalité est appelée le "safe navigation operator" ou "Elvis operator". Il vous permet d'accéder à une propriété d'un objet tout en évitant des erreurs si l'objet lui-même ou la propriété que vous essayez d'accéder est nul(le) ou indéfini(e).
+
+
+
+ Pour déclarer une propriété facultative, le point d'interrogation (?) à la fin du nom de la propriété est utilisé lors de la déclaration.
+
+l'interface *Personne* a deux propriétés facultatives avec le "?", tandis que les trois autres propriétés sont les propriétés requises.
+
+
+
+## Directive 
+
+### ngIf
+
+````
+ <ng-template [ngIf]="mushroom?.localnames" [ngIfElse]="message" *ngFor="let localname of mushroom.localnames; index as i;">
+	{{ localname.name }} <span *ngIf="i < mushroom.localnames.length - 1">, </span>
+</ng-template>
+<ng-template #message>Aucun nom n'a été renseigné!</ng-template>
+````
+

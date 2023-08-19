@@ -19,7 +19,7 @@
                         <div class="containerImg">
                             <img class="zoom img-fluid" 
                                 *ngIf="mushroom?.medias?.length > 0; else default" 
-                                [src]="API_URL_GET_FILE_MUSHROOM + mushroom?.medias[0]?.path" 
+                                [src]="PUBLIC_URL_GET_FILE_MUSHROOM + mushroom?.medias[0]?.path" 
                                 alt="{{mushroom?.commonname}}"
                             >
                         </div>
@@ -30,7 +30,7 @@
                 </td>
                 <td>{{mushroom?.commonname}}</td>
                 <td>
-                    <img [src]="API_URL_GET_FILE_EDIBILITY + mushroom?.edibility?.path" alt="?" height="45" style ="filter:invert(.7)">
+                    <img *ngIf="mushroom.edibility" [src]="PUBLIC_URL_GET_FILE_EDIBILITY + mushroom?.edibility?.path" alt="?" height="45" style ="filter:invert(.7)">
                     <p>{{ mushroom?.edibility?.name }}</p></td>
                 <td>
                     <a *ngIf="mushroom?.visibility; else notPublish" (click)="activate(mushroom?.id, mushroom?.visibility)"

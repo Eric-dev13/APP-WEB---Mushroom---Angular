@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faEdit, faTrash, faCircleInfo, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
-import { API_BASE_URL, API_ADMIN_BASE_URL, API_URL_GET_FILE_MUSHROOM, API_URL_GET_FILE_EDIBILITY } from '../../../../environments/config'
+import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY } from '../../../../environments/config'
 
 @Component({
   selector: 'app-detail-mushroom',
@@ -25,8 +25,9 @@ export class DetailMushroomComponent implements OnInit {
 
   // Déclaration de constantes
   readonly API_ADMIN_BASE_URL:string = API_ADMIN_BASE_URL;
-  readonly API_URL_GET_FILE_MUSHROOM:string = API_URL_GET_FILE_MUSHROOM;
-  readonly API_URL_GET_FILE_EDIBILITY: string = API_URL_GET_FILE_EDIBILITY;
+  readonly PUBLIC_URL_GET_FILE_MUSHROOM:string = PUBLIC_URL_GET_FILE_MUSHROOM;
+  readonly PUBLIC_URL_GET_FILE_EDIBILITY: string = PUBLIC_URL_GET_FILE_EDIBILITY;
+
 
   readonly headers:any  = { 'Authorization': `Bearer ${sessionStorage.getItem("access_token")}` };
 

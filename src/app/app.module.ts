@@ -27,8 +27,8 @@ import { AddMediaComponent } from './admin/media/add-media/add-media.component';
 import { AuthenticateComponent } from './security/authenticate/authenticate.component';
 import { AddLocalnameComponent } from './admin/localname/add-localname/add-localname.component';
 import { EdibilitiesComponent } from './admin/edibility/edibilities/edibilities.component';
-import { EdibilityComponent } from './admin/edibility/edibility/edibility.component';
 import { FormEdibilityComponent } from './admin/edibility/form-edibility/form-edibility.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -51,8 +51,8 @@ import { FormEdibilityComponent } from './admin/edibility/form-edibility/form-ed
     AuthenticateComponent,
     AddLocalnameComponent,
     EdibilitiesComponent,
-    EdibilityComponent,
-    FormEdibilityComponent
+    FormEdibilityComponent,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule,

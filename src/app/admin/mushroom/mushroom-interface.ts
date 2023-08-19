@@ -13,7 +13,7 @@ export interface MushroomInterface {
     foot?: string;
     habitat?: string;
     comment?: string;
-    edibility?: EdibilityInterface | null; // Représente un objet et peux être vide
+    edibility?: EdibilityInterface; // Représente un objet et peux être vide
     lamellatype?: LamellatypeInterface; // Représente un objet et peux être vide
     localnames?: LocalnameInterface[]; // tableau d'objets peux être vide
     medias?: MediaInterface[]; // tableau d'objets
