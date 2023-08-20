@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { faEdit,faTrash, faCircleInfo, faThumbsUp, faThumbsDown,faEye } from '@fortawesome/free-solid-svg-icons';
 import { Router, ActivatedRoute } from '@angular/router';
 import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
+import { MushroomInterface } from '../mushroom-interface';
 
 
 @Component({

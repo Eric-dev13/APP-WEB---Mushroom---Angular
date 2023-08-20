@@ -179,14 +179,14 @@ export class FormMushroomComponent implements OnInit {
       });
     } else {
       // POST - Ajoute le nouvel enregistrement
-      this.http.post(this.API_ADMIN_BASE_URL + 'mushroom/', form.value).subscribe({
-        next: (data) => {
-          console.log('Champignon ajouté: ', data);
-          // redirige vers la liste
-          this.router.navigate(["admin/champignon/Liste-des-champignons"]);
-        },
-        error: (err) => console.log('Observer got an error: ' + err),
-        complete: () => console.log('Enregistrement ajouté!')
+      this.http.post(this.API_ADMIN_BASE_URL + 'mushroom/', form.value).subscribe((res)=>{
+        this.router.navigate(["admin/champignon/Liste-des-champignons"]);
+        // next: (data) => {
+        //   console.log('Champignon ajouté: ', data);
+        //   this.router.navigate(["admin/champignon/Liste-des-champignons"]);
+        // },
+        // error: (err) => console.log('Observer got an error: ' + err),
+        // complete: () => console.log('Enregistrement ajouté!')
       });
     }
   }

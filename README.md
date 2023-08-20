@@ -1,4 +1,4 @@
-# Angular - Royaume des champignons
+# sAngular - Royaume des champignons
 
 
 
@@ -330,10 +330,6 @@ Prêt à plonger dans ce monde mystérieux et fascinant ? Rejoignez-nous au Roya
 
 ## Routage
 
-Externe
-
-Interne
-
 ````
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -342,61 +338,6 @@ constructor(private router: Router, private route: ActivatedRoute) { }
 ...
 this.router.navigate(['admin/champignons/Liste-des-champignons']);
 ````
-
-
-
-
-
-
-
-HTTP Angular
-
-app.module.ts importer **httpClientModule**
-
-Dans le composant pour les requete vers l’api
-
-import **httpClient , onInit**
-
-implementer  **onInit** sur la classe
-
-Déclarer dans la classe les variables string qui pointe vers l’url de l’api
-
-mushroom : string = url-api
-
-dans constructeur injecte http
-
-constructor( private http:HttpClient){ }
-
-dans méthode ngOnInit(){
-
-
-
-
-
-```
-# RESTE A FAIRE
-
-Activer l'authentification avec gestion des roles.
-- Afficher masquer liens de navbar
-- Afficher masquer liens de footer
-- Parcourir les pages avec la console du navigateur pour corriger les erreurs.
-- Construire une page avec un slide bar latérale pour le menu administration ()
-
-
-ACTION SUR LE CRUD ADMIN
-- regler l'envoi des medias (ajoute les enregistrements vides)
-- Gèrer l'upload front envoi l'image vers l'api qui la recupère la renomme (random) et la stocke dans dossier upload
-- La methode put OU patch non fonctionnelle.
-- G
-```
-
-En Angular, le symbole `?` est utilisé pour définir une variable en option dans des modèles de liaison (templates) lorsque vous traitez avec des propriétés potentiellement nulles ou indéfinies. Cette fonctionnalité est appelée le "safe navigation operator" ou "Elvis operator". Il vous permet d'accéder à une propriété d'un objet tout en évitant des erreurs si l'objet lui-même ou la propriété que vous essayez d'accéder est nul(le) ou indéfini(e).
-
-
-
- Pour déclarer une propriété facultative, le point d'interrogation (?) à la fin du nom de la propriété est utilisé lors de la déclaration.
-
-l'interface *Personne* a deux propriétés facultatives avec le "?", tandis que les trois autres propriétés sont les propriétés requises.
 
 
 
@@ -410,4 +351,62 @@ l'interface *Personne* a deux propriétés facultatives avec le "?", tandis que 
 </ng-template>
 <ng-template #message>Aucun nom n'a été renseigné!</ng-template>
 ````
+
+
+
+## Validateur
+
+````
+<!-- HTML -->
+
+<input [(ngModel)]="edibility.path" 
+	placeholder="Nom français utilisé pour identifier l'espèce."
+    type="file" 
+    class="form-control" 
+    id="path" 
+    name="path" 
+    (change)="onFileSelected($event)"
+    required
+>
+````
+
+````
+// Type Script - Validation du formulaire
+
+if (form?.invalid) {
+    console.log('Le formulaire est invalide.');
+    return;
+}
+````
+
+
+
+# A FAIRE
+
+```
+# RESTE A FAIRE
+
+Activer l'authentification avec gestion des roles.
+- Afficher masquer liens de navbar
+- Afficher masquer liens de footer
+- Parcourir les pages avec la console du navigateur pour corriger les erreurs.
+- Construire une page avec un slide bar latérale pour le menu administration ()
+
+
+ACTION SUR LE CRUD  ADMIN : MUSHROOM, EDIBILITY, LAMELLATYPE 
+- Gèrer pour MUSHROOM, EDIBILITY, LAMELLATYPE  l'ajout d'un nouvel enregistrement avec envoi des fichiers images renommage avec nom unique.
+- Gèrer pour MUSHROOM, EDIBILITY, LAMELLATYPE la mise à jour, gestion des images
+
+
+```
+
+En Angular, le symbole `?` est utilisé pour définir une variable en option dans des modèles de liaison (templates) lorsque vous traitez avec des propriétés potentiellement nulles ou indéfinies. Cette fonctionnalité est appelée le "safe navigation operator" ou "Elvis operator". Il vous permet d'accéder à une propriété d'un objet tout en évitant des erreurs si l'objet lui-même ou la propriété que vous essayez d'accéder est nul(le) ou indéfini(e).
+
+
+
+ Pour déclarer une propriété facultative, le point d'interrogation (?) à la fin du nom de la propriété est utilisé lors de la déclaration.
+
+l'interface *Personne* a deux propriétés facultatives avec le "?", tandis que les trois autres propriétés sont les propriétés requises.
+
+
 

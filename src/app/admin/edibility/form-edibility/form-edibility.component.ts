@@ -66,55 +66,52 @@ export class FormEdibilityComponent implements OnInit {
     }
   }
 
+
   send(form: NgForm) {
     // Validation du formulaire
-    if (form?.invalid) {
-      console.log('Le formulaire est invalide.');
-      return;
-    }
+    // if (form?.invalid) {
+    //   console.log('Le formulaire est invalide.');
+    //   return;
+    // }
 
-    if (this.selectedFile) {
+    if (this.edibility.id != 0) {
+      // PATCH - Modification de l'enregistrement 
       const formData = new FormData();
       formData.append('file', this.selectedFile);
       formData.append('name', form.value.name);
 
-      console.log("formData: ", formData)
-      console.log("formValue: ", form.value);
-      
-      
-      this.http.post(this.API_ADMIN_BASE_URL + "edibility/test", formData).subscribe(
-        {
-          next: (response) => console.log('Réponse : ', response),
-          error: (err) => console.error('Erreur lors du téléchargement du fichier.', err),
-          complete: () => console.log('Fichier téléchargé avec succès.')
-        });
+      this.http.patch(this.API_ADMIN_BASE_URL + 'edibility/' + this.id_edibility, formData).subscribe({
+        next: (response) => {
+          console.log('message: ', response);
+          // redirige vers la liste
+          this.router.navigate(["admin/comestibilite/liste"]);
+        },
+        error: (err) => console.log('Observer got an error: ' + err),
+        complete: () => console.log('Observer got a complete notification')
+      });
+    } else {
+      // POST - Ajoute un nouvel enregistrement 
+      if (this.selectedFile) {
+        const formData = new FormData();
+        formData.append('file', this.selectedFile);
+        formData.append('name', form.value.name);
+
+        console.log("formData: ", formData)
+
+        this.http.post(this.API_ADMIN_BASE_URL + "edibility/", formData).subscribe(
+          {
+            next: (response) => {
+              console.log('message: ', response);
+              // redirige vers la liste
+              this.router.navigate(["admin/comestibilite/liste"]);
+            },
+            error: (err) => console.error('Erreur lors du téléchargement du fichier.', err),
+            complete: () => console.log('Fichier téléchargé avec succès.')
+          });
+      } else {
+        console.log('Le formulaire est invalide.');
+      }
     }
-
-
-
-    //   if (this.edibility.id != 0) {
-    //     // PATCH - Modification de l'enregistrement 
-    //     this.http.patch(this.API_ADMIN_BASE_URL + 'edibility/', form.value).subscribe({
-    //       next: (data) => {
-    //         console.log('Enregistrement modifié: ', data);
-    //         // redirige vers la liste
-    //         this.router.navigate(["admin/edibility/liste"]);
-    //       },
-    //       error: (err) => console.log('Observer got an error: ' + err),
-    //       complete: () => console.log('Observer got a complete notification')
-    //     });
-    //   } else {
-    //     // POST - Ajoute le nouvel enregistrement
-    //     this.http.post(this.API_ADMIN_BASE_URL + 'edibility/', form.value).subscribe({
-    //       next: (data) => {
-    //         console.log('Enregistrement ajouté: ', data);
-    //         // redirige vers la liste
-    //         this.router.navigate(["admin/edibility/liste"]);
-    //       },
-    //       error: (err) => console.log('Observer got an error: ' + err),
-    //       complete: () => console.log('Observer got a complete notification')
-    //     });
-    //   }
   }
 
   onFileSelected(event: any) {
