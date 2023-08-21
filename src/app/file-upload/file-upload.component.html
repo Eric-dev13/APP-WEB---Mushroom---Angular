@@ -2,7 +2,7 @@
 
     <label for="path" class="form-label" title="Saisie obligatoire">Nom du fichier<span
             class="text-danger">*</span></label>
-    <input (ngModel)="image.path" placeholder="Nom français utilisé pour identifier l'espèce." type="file"
+    <input (ngModel)="image.filename" placeholder="Nom français utilisé pour identifier l'espèce." type="file"
         class="form-control" id="path" name="path" (change)="onFileSelected($event)" required>
 
     <button class="btn btn-primary">Envoyer</button>

@@ -9,12 +9,12 @@ export class AddMediaComponent {
   selectedFile: any;
   selectedImage: any;
 
-  media:any = {};
+  media: any = {};
   @Output() mediaEvent: EventEmitter<any> = new EventEmitter<any>();
 
   addMedia(name: string, path: string) {
     this.media.name = name;
-    this.media.path = path;
+    this.media.filename = path;
     this.mediaEvent.emit(this.media);
   }
 

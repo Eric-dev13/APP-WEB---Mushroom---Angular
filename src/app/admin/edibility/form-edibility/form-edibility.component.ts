@@ -30,7 +30,7 @@ export class FormEdibilityComponent implements OnInit {
   edibility: EdibilityInterface = {
     id: 0,
     name: '',
-    path: ''
+    filename: ''
   };
 
   id_edibility: any;

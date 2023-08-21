@@ -24,10 +24,10 @@
         <th scope="row">{{ edibility.id }}</th>
         <td>{{ edibility?.name }}</td>
         <td>
-          {{ edibility?.path }}
+          {{ edibility?.filename }}
         </td>
         <td>
-          <img [src]="PUBLIC_URL_GET_FILE_EDIBILITY + edibility?.path" alt="edibility?.path" height="35">
+          <img [src]="PUBLIC_URL_GET_FILE_EDIBILITY + edibility?.filename" alt="edibility?.filename" height="35">
         </td>
         <td>
           <div class="d-flex">

@@ -15,26 +15,29 @@
             <tr class="table-secondary" *ngFor="let mushroom of mushrooms">
                 <td scope="row">{{mushroom?.id}}</td>
                 <td>
-                    <a [routerLink]="['/admin/champignon/description', mushroom?.id]" href="" class="" title="Voir la description">
+                    <a [routerLink]="['/admin/champignon/description', mushroom?.id]" href="" class=""
+                        title="Voir la description">
                         <div class="containerImg">
-                            <img class="zoom img-fluid" 
-                                *ngIf="mushroom?.medias?.length > 0; else default" 
-                                [src]="PUBLIC_URL_GET_FILE_MUSHROOM + mushroom?.medias[0]?.path" 
-                                alt="{{mushroom?.commonname}}"
-                            >
+                            <img class="zoom img-fluid" *ngIf="mushroom?.medias?.length > 0; else default"
+                                [src]="PUBLIC_URL_GET_FILE_MUSHROOM + mushroom?.medias[0]?.filename"
+                                alt="{{mushroom?.commonname}}">
                         </div>
                         <ng-template #default>
-                            <img class="zoom rounded img-fluid" src="assets/images/icones/default.png" alt="{{mushroom?.commonname}}">
+                            <img class="zoom rounded img-fluid" src="assets/images/icones/default.png"
+                                alt="{{mushroom?.commonname}}">
                         </ng-template>
                     </a>
                 </td>
                 <td>{{mushroom?.commonname}}</td>
                 <td>
-                    <img *ngIf="mushroom.edibility" [src]="PUBLIC_URL_GET_FILE_EDIBILITY + mushroom?.edibility?.path" alt="?" height="45" style ="filter:invert(.7)">
-                    <p>{{ mushroom?.edibility?.name }}</p></td>
+                    <img *ngIf="mushroom.edibility"
+                        [src]="PUBLIC_URL_GET_FILE_EDIBILITY + mushroom?.edibility?.filename" alt="?" height="45"
+                        style="filter:invert(.7)">
+                    <p>{{ mushroom?.edibility?.name }}</p>
+                </td>
                 <td>
-                    <a *ngIf="mushroom?.visibility; else notPublish" (click)="activate(mushroom?.id, mushroom?.visibility)"
-                        class="btn btn-dark me-2">
+                    <a *ngIf="mushroom?.visibility; else notPublish"
+                        (click)="activate(mushroom?.id, mushroom?.visibility)" class="btn btn-dark me-2">
                         <fa-icon title="Masquer" [icon]="faThumbsDown"></fa-icon>
                     </a>
                     <ng-template #notPublish>

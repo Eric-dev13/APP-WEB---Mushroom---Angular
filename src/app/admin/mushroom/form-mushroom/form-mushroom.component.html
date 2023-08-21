@@ -6,7 +6,8 @@
                 title="Retour"><fa-icon class="text-light" [icon]="faRotateLeft"></fa-icon></a>
         </div>
         <div class="flex-grow-1">
-            <h1 class="text-center my-3">{{mushroom.commonname && mushroom.commonname !='' ? 'Editer: ' + mushroom.commonname : 'Ajouter nouvelle espèce'}}</h1>
+            <h1 class="text-center my-3">{{mushroom.commonname && mushroom.commonname !='' ? 'Editer: ' +
+                mushroom.commonname : 'Ajouter nouvelle espèce'}}</h1>
         </div>
     </div>
 
@@ -72,28 +73,28 @@
                             <td>
                                 <!-- Affichage de l'image -->
                                 <!-- <img *ngIf="selectedImage" [src]="selectedImage" alt="Image sélectionnée" height="200"> -->
-                                <img class="rounded" [src]="PUBLIC_URL_GET_FILE_MUSHROOM + media?.path"
-                                    alt="{{ media?.path}}" width="100">
+                                <img class="rounded" [src]="PUBLIC_URL_GET_FILE_MUSHROOM + media?.filename"
+                                    alt="{{ media?.filename}}" width="100">
                             </td>
                             <td>
                                 {{ media.name }}
                             </td>
                             <td>
-                                {{ media.path }}
+                                {{ media.filename }}
                             </td>
                             <td>
                                 <div class="d-flex">
                                     <ng-template [ngIf]="media.id" [ngIfElse]="add">
                                         <a [routerLink]="['/admin/media/editer/', media?.id]" href=""
-                                        class="btn btn-outline-success me-2" title="Editer">
-                                        <fa-icon [icon]="faEdit"></fa-icon>
+                                            class="btn btn-outline-success me-2" title="Editer">
+                                            <fa-icon [icon]="faEdit"></fa-icon>
                                         </a>
                                         <a (click)="delete(media?.id)" class="btn btn-outline-danger" title="Supprimer">
                                             <fa-icon [icon]="faTrash"></fa-icon>
                                         </a>
                                     </ng-template>
                                     <ng-template #add>
-                                        <!-- <a (click)="deleteMedia(media?.path)" class="btn btn-outline-danger" title="Supprimer">
+                                        <!-- <a (click)="deleteMedia(media?.filename)" class="btn btn-outline-danger" title="Supprimer">
                                             <fa-icon [icon]="faTrash"></fa-icon>
                                         </a> -->
                                     </ng-template>

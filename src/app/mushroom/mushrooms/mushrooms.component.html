@@ -5,7 +5,8 @@
     <div class="row">
         <header class="col text-light text-center">
             <h1 class="pt-3">Guide des champignons</h1>
-            <p>Guide des champignons : Explorez la biodiversité fongique. Identifiez, apprenez et appréciez les champignons avec notre guide complet. Parcourez les formes, couleurs et habitats fascinants.</p>
+            <p>Guide des champignons : Explorez la biodiversité fongique. Identifiez, apprenez et appréciez les
+                champignons avec notre guide complet. Parcourez les formes, couleurs et habitats fascinants.</p>
         </header>
     </div>
 
@@ -13,17 +14,23 @@
         <section class="col d-flex justify-content-center" *ngFor="let mushroom of mushrooms">
             <div class="listMushrooms__card box-shadow-down">
                 <a [routerLink]="['/champignon', mushroom.id]">
-                    <div class="listMushrooms__card__eat d-flex justify-content-center align-items-center" *ngIf="mushroom.edibility != '' && mushroom.edibility != null">
+                    <div class="listMushrooms__card__eat d-flex justify-content-center align-items-center"
+                        *ngIf="mushroom.edibility != '' && mushroom.edibility != null">
                         <div class="text-center">
-                            <img class="listMushrooms__card__eat__img" [src]="PUBLIC_URL_GET_FILE_EDIBILITY + mushroom.edibility.path" alt="?">
+                            <img class="listMushrooms__card__eat__img"
+                                [src]="PUBLIC_URL_GET_FILE_EDIBILITY + mushroom.edibility.filename" alt="?">
                             <p class="text-light">{{ mushroom.edibility.name }}</p>
                         </div>
                     </div>
                     <div class="listMushrooms__card__bloc-img">
                         <div class="listMushrooms__card__bloc-img__opacity"></div>
-                        <img class="listMushrooms__card__bloc-img__image" *ngIf="mushroom.medias.length > 0; else default" [src]="PUBLIC_URL_GET_FILE_MUSHROOM + mushroom.medias[0].path" alt="{{mushroom.commonname}}">
+                        <img class="listMushrooms__card__bloc-img__image"
+                            *ngIf="mushroom.medias.length > 0; else default"
+                            [src]="PUBLIC_URL_GET_FILE_MUSHROOM + mushroom.medias[0].filename"
+                            alt="{{mushroom.commonname}}">
                         <ng-template #default>
-                             <img class="listMushrooms__card__bloc-img__image" src="assets/images/icones/default.png" alt="{{mushroom.commonname}}">
+                            <img class="listMushrooms__card__bloc-img__image" src="assets/images/icones/default.png"
+                                alt="{{mushroom.commonname}}">
                         </ng-template>
                     </div>
                     <div class="listMushrooms__card__titre d-flex flex-row justify-content-center align-items-center">

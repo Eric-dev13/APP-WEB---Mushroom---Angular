@@ -277,13 +277,13 @@ HTML
                 <a [routerLink]="['/champignon', mushroom.id]">
                     <div class="listMushrooms__card__eat d-flex justify-content-center align-items-center" *ngIf="mushroom.edibilityEntity != null">
                         <div class="text-center">
-                            <img class="listMushrooms__card__eat__img" [src]="'assets/images/edibility/' + mushroom.edibilityEntity.path" alt="?">
+                            <img class="listMushrooms__card__eat__img" [src]="'assets/images/edibility/' + mushroom.edibilityEntity.filename" alt="?">
                             <p class="text-light">{{ mushroom.edibilityEntity.name }}</p>
                         </div>
                     </div>
                     <div class="listMushrooms__card__bloc-img">
                         <div class="listMushrooms__card__bloc-img__opacity"></div>
-                        <img class="listMushrooms__card__bloc-img__image" *ngIf="mushroom.mediaEntities.length > 0; else default" [src]="'upload/mushrooms/' + mushroom.mediaEntities[0].path" alt="{{mushroom.commonname}}">
+                        <img class="listMushrooms__card__bloc-img__image" *ngIf="mushroom.mediaEntities.length > 0; else default" [src]="'upload/mushrooms/' + mushroom.mediaEntities[0].filename" alt="{{mushroom.commonname}}">
                         <ng-template #default>
                              <img class="listMushrooms__card__bloc-img__image" src="assets/images/icones/default.png" alt="{{mushroom.commonname}}">
                         </ng-template>
@@ -359,7 +359,7 @@ this.router.navigate(['admin/champignons/Liste-des-champignons']);
 ````
 <!-- HTML -->
 
-<input [(ngModel)]="edibility.path" 
+<input [(ngModel)]="edibility.filename" 
 	placeholder="Nom français utilisé pour identifier l'espèce."
     type="file" 
     class="form-control" 

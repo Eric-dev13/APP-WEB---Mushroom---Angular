@@ -6,7 +6,7 @@ import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM } from 'src/environmen
 import { faEdit, faTrash, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { EdibilityInterface } from 'src/app/admin/edibility/edibility-interface';
 import { MushroomInterface } from '../mushroom-interface';
-import {LamellatypeInterface} from 'src/app/admin/lamellatype/lamellatype-interface';
+import { LamellatypeInterface } from 'src/app/admin/lamellatype/lamellatype-interface';
 
 
 
@@ -34,7 +34,7 @@ export class FormMushroomComponent implements OnInit {
   faRotateLeft = faRotateLeft;
 
   // edibilities!: EdibilityInterface[];  // listes a charger dans les selectBox
-  edibilities:any;
+  edibilities: any;
   lamellaTypes: any; // listes a charger dans les selectBox
 
   selectedFile: any;
@@ -126,7 +126,7 @@ export class FormMushroomComponent implements OnInit {
   addMedia(event: any) {
     this.mushroom?.medias?.push({
       name: event.name,
-      path: event.path
+      filename: event.filename
     })
   }
 
@@ -143,7 +143,7 @@ export class FormMushroomComponent implements OnInit {
     if (form.value.edibility.id === 0) {
       form.value.edibility = null;
     } else {
-      form.value.edibility = {id: form.value.edibility};
+      form.value.edibility = { id: form.value.edibility };
     }
 
     // si la propriété "lamellatype" n'est pas renseignée elles doit renvoyées NULL sinon un objet pour renseigner la cle étrangere corespondant à l'ID lamellatype.
@@ -179,7 +179,7 @@ export class FormMushroomComponent implements OnInit {
       });
     } else {
       // POST - Ajoute le nouvel enregistrement
-      this.http.post(this.API_ADMIN_BASE_URL + 'mushroom/', form.value).subscribe((res)=>{
+      this.http.post(this.API_ADMIN_BASE_URL + 'mushroom/', form.value).subscribe((res) => {
         this.router.navigate(["admin/champignon/Liste-des-champignons"]);
         // next: (data) => {
         //   console.log('Champignon ajouté: ', data);

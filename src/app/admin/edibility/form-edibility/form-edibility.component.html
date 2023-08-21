@@ -17,7 +17,7 @@
     </ng-template>
     <ng-template #showOriginal>
         <div *ngIf="edibility.id !== 0" class="d-flex justify-content-center border py-4 mb-3 bg-dark rounded shadow">
-            <img [src]="PUBLIC_URL_GET_FILE_EDIBILITY + edibility.path" alt="edibility.name" height="200" >
+            <img [src]="PUBLIC_URL_GET_FILE_EDIBILITY + edibility.filename" alt="edibility.name" height="200">
         </div>
     </ng-template>
 
@@ -34,8 +34,9 @@
             <label for="path" class="form-label" title="Saisie obligatoire">Choisir une image
                 <span class="text-danger">*</span>
             </label>
-            <input [(ngModel)]="edibility.path" placeholder="Nom français utilisé pour identifier l'espèce." type="file"
-                class="form-control" id="path" name="path" (change)="onFileSelected($event)">
+            <input [(ngModel)]="edibility.filename" placeholder="Nom français utilisé pour identifier l'espèce."
+                type="file" class="form-control" id="path" name="path" accept="image/png, image/jpeg"
+                (change)="onFileSelected($event)">
         </div>
         <button class="btn btn-primary">Envoyer</button>
     </form>
