@@ -57,7 +57,7 @@ export class FormEdibilityComponent implements OnInit {
         {
           next: (data) => {
             this.edibility = data;
-            console.log('update mushroom: ', this.edibility)
+            console.log('Rafraichissement composant: ', this.edibility)
           },
           error: (err) => console.log('Observer got an error: ' + err),
           complete: () => console.log('Observer got a complete notification')

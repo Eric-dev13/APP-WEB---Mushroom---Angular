@@ -7,6 +7,7 @@ import { faEdit, faTrash, faRotateLeft } from '@fortawesome/free-solid-svg-icons
 import { EdibilityInterface } from 'src/app/admin/edibility/edibility-interface';
 import { MushroomInterface } from '../mushroom-interface';
 import { LamellatypeInterface } from 'src/app/admin/lamellatype/lamellatype-interface';
+import { MediaInterface } from '../../media/media-interface';
 
 
 
@@ -37,10 +38,11 @@ export class FormMushroomComponent implements OnInit {
   edibilities: any;
   lamellaTypes: any; // listes a charger dans les selectBox
 
-  selectedFile: any;
-  selectedImage: any;
+  // Image a afficher lors de l'ajout d'un média.
+  selectedImage: Array<String> = [];
 
-  id_mushroom: any; // id de l'enregistrement recherche transmis dans l'URL
+
+  id_mushroom: any; // id de l'enregistrement (mushroom) transmis dans l'URL.
 
   // Représente la table principal (mushroom) dont la structure est représenté dans une interface.
   mushroom: MushroomInterface = {
@@ -59,33 +61,19 @@ export class FormMushroomComponent implements OnInit {
     medias: []
   }
 
-  // mushroom: any = {
-  //   id: 0, // id de l'enregistrement remplacé dans le cas d'une modification d'enregistrement
-  //   commonname: "",
-  //   latinname: "",
-  //   flesh: "",
-  //   hat: "",
-  //   lamella: "",
-  //   foot: "",
-  //   habitat: "",
-  //   comment: "",
-  //   lamellatype: { id: 0 },
-  //   edibility: { id: 0 }, // Definit une valeur par defaut id: 0, si aucun choix dans le select alors on id:0 et on renvoie edibility: null a l'api sinon on renvoi edibility: {id: id_selected}
-  //   localnames: [],
-  //   medias: []
-  // }
+  // Represente un tableau de medias.
+  medias: MediaInterface[] = [];
 
 
   load() {
-    // Requete vers api pour recupèrer edibility et afficher dans un select box 
     // GET : findAll edibilityEntity
-    this.http.get<any>(this.API_ADMIN_BASE_URL + "edibility").subscribe({
+    this.http.get(this.API_ADMIN_BASE_URL + "edibility").subscribe({
       next: (data) => {
         console.log(data);
         this.edibilities = data;
       },
       error: (err) => console.log('Observer got an error: ' + err),
-      complete: () => console.log('Enregistrement ajouté!')
+      complete: () => console.log('Actualiser')
     });
 
     // GET : findAll LamellatypeEntity
@@ -109,11 +97,6 @@ export class FormMushroomComponent implements OnInit {
     this.load();
   }
 
-  // onFileSelected(event: any) {
-  //   this.selectedFile = event.target.files[0];
-  //   this.selectedImage = URL.createObjectURL(this.selectedFile); // Crée l'URL pour l'image sélectionnée
-  // }
-
   // Ajouter des noms - Form Emitter
   addLocalname(event: any) {
     this.mushroom?.localnames?.push({
@@ -122,12 +105,17 @@ export class FormMushroomComponent implements OnInit {
   }
 
   // Ajouter des photos - Form Emitter
-
   addMedia(event: any) {
-    this.mushroom?.medias?.push({
-      name: event.name,
-      filename: event.filename
-    })
+    // stocke le chemin d'acces au fichier pour l'afficher dans le front.
+    this.selectedImage[this.medias.length] = URL.createObjectURL(event.file);
+    // Conserve dans un tableau les infos saisies dans le formulaire.
+    this.medias.push(
+      {
+        name: event.name,
+        file: event.file,
+        filename: event.filename
+      });
+    // puis on vide le formulaire
   }
 
 
@@ -159,36 +147,64 @@ export class FormMushroomComponent implements OnInit {
     }
 
     // si la propriété mushroom.medias contient des objets (collection de nom) je les transfert dans l'objet form.
-    if (this.mushroom?.medias) {
-      form.value.medias = this.mushroom?.medias;
-    }
+    // if (this.mushroom?.medias) {
+    //   form.value.medias = this.mushroom?.medias;
+    // }
 
-    console.table("Form:", form.value)
-    console.log("Form Mushroom:", this.mushroom);
+    // console.table("Form:", form.value)
+    // console.log("Form Mushroom:", this.mushroom);
+    // console.log("medias", this.medias);
+
 
     if (this.mushroom.id != 0) {
+
       // PATCH - Modification de l'enregistrement 
-      this.http.patch(this.API_ADMIN_BASE_URL + 'mushroom/', form.value).subscribe({
+      this.http.patch(this.API_ADMIN_BASE_URL + 'mushroom/', form.value,).subscribe({
         next: (data) => {
           console.log('Champignon modifié: ', data);
+          // Ajoute les medias via une deuxieme requete
+
           // redirige vers la liste
           this.router.navigate(["admin/champignon/Liste-des-champignons"]);
         },
         error: (err) => console.log('Observer got an error: ' + err),
         complete: () => console.log('Enregistrement modifié!')
       });
+
     } else {
-      // POST - Ajoute le nouvel enregistrement
-      this.http.post(this.API_ADMIN_BASE_URL + 'mushroom/', form.value).subscribe((res) => {
-        this.router.navigate(["admin/champignon/Liste-des-champignons"]);
-        // next: (data) => {
-        //   console.log('Champignon ajouté: ', data);
-        //   this.router.navigate(["admin/champignon/Liste-des-champignons"]);
-        // },
-        // error: (err) => console.log('Observer got an error: ' + err),
-        // complete: () => console.log('Enregistrement ajouté!')
+
+      // Crée une instance de FormData pour préparer la requête multipart
+      const formData: FormData = new FormData();
+      
+      // Parcourt chaque élément dans la liste des médias
+      for (const media of this.medias) {
+        // Ajoute le fichier média à FormData avec la clé 'mediasFiles'
+        formData.append('mediasFiles', media.file!);
+        // Ajoute le nom du média à FormData avec la clé 'mediasNames'
+        formData.append('mediasNames', media.name!);
+      }
+
+      // POST - Ajoute le nouvel enregistrement sans les images via un structure JSON
+      // définir le type de reponse dans la méthode http ici avec l'opérateur diamant <MushroomInterface> pour accèder aux propriétés de l 'objet renvoyé
+      this.http.post<MushroomInterface>(this.API_ADMIN_BASE_URL + 'mushroom/', form.value).subscribe({
+        next: (data) => {
+          // Envoie une deuxième requête POST pour ajouter les médias associés 
+          if (this.medias.length > 0) {
+            this.http.post(this.API_ADMIN_BASE_URL + 'media/' + data.id, formData).subscribe({
+              next: (data) => console.log('Medias: ', data),
+              error: (err) => console.log('Observer got an error: ' + err),
+              complete: () => console.log('Medias ajoutés!')
+            });
+          }
+
+          // Redirige l'utilisateur vers la liste des champignons après l'ajout
+          this.router.navigate(["admin/champignon/Liste-des-champignons"])
+        },
+        error: (err) => console.log('Observer got an error: ' + err),
+        complete: () => console.log('Champignon ajouté!')
       });
     }
+
   }
 
   delete(id: any) {
@@ -202,6 +218,5 @@ export class FormMushroomComponent implements OnInit {
       complete: () => console.log('Observer got a complete notification')
     })
   }
-
 
 }

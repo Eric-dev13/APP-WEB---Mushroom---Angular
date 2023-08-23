@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { MediaInterface } from '../media-interface';
 
 @Component({
   selector: 'app-add-media',
@@ -6,15 +7,18 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./add-media.component.scss']
 })
 export class AddMediaComponent {
-  selectedFile: any;
+  selectedFile!: File;
   selectedImage: any;
 
-  media: any = {};
+  media: MediaInterface = {};
   @Output() mediaEvent: EventEmitter<any> = new EventEmitter<any>();
 
-  addMedia(name: string, path: string) {
+  addMedia(name: string) {
     this.media.name = name;
-    this.media.filename = path;
+    this.media.file = this.selectedFile;
+    this.media.filename = this.selectedFile.name;
+
+    // Émettre l'événement vers le composant parent
     this.mediaEvent.emit(this.media);
   }
 
@@ -22,6 +26,7 @@ export class AddMediaComponent {
     this.selectedFile = event.target.files[0];
     this.selectedImage = URL.createObjectURL(this.selectedFile); // Crée l'URL pour l'image sélectionnée
   }
+
 
 
 }

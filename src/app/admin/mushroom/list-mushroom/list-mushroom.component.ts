@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { faEdit,faTrash, faCircleInfo, faThumbsUp, faThumbsDown,faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEdit,faTrash, faCircleInfo, faThumbsUp, faThumbsDown,faEye, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { Router, ActivatedRoute } from '@angular/router';
 import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
 import { MushroomInterface } from '../mushroom-interface';
@@ -15,12 +15,13 @@ export class ListMushroomComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
   
-  faEdit = faEdit;
-  faTrash = faTrash;
-  faCircleInfo = faCircleInfo;
+  faEdit=faEdit;
+  faTrash=faTrash;
+  faCircleInfo=faCircleInfo;
   faThumbsUp=faThumbsUp;
   faThumbsDown=faThumbsDown;
   faEye=faEye;
+  faSquarePlus=faSquarePlus;
 
     // Déclaration de constantes
     readonly API_ADMIN_BASE_URL: string = API_ADMIN_BASE_URL;

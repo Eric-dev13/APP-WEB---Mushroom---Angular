@@ -6,7 +6,7 @@
 
     <div class="input-group flex-nowrap mb-3">
         <span class="input-group-text bg-primary bg-opacity-25" id="addon-wrapping">Sélectionnez un fichier</span>
-        <input type="file" class="form-control" #path id="path" name="path" (change)="onFileSelected($event)">
+        <input type="file" class="form-control" #path id="filename" name="filename" (change)="onFileSelected($event)">
     </div>
 
     <div class="input-group flex-nowrap mb-3">
@@ -16,5 +16,5 @@
 
 
 
-    <div (click)="addMedia(name.value, path.value)" class="btn btn-outline-primary">Ajouter</div>
+    <div (click)="addMedia(name.value)" class="btn btn-outline-primary">Ajouter</div>
 </div>

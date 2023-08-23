@@ -1,5 +1,14 @@
 <div class="container py-3">
     <h1 class="text-center mb-5">Liste de champignons</h1>
+
+    <div class="d-flex p-4">
+        <h4 class="me-4">Ajouter une description</h4>
+        <a [routerLink]="['/admin/champignon/nouveau']" href=""
+            class="btn btn-outline-success me-2" title="Ajouter une nouvelle espèce">
+            <fa-icon [icon]="faSquarePlus"></fa-icon>
+        </a>
+    </div>
+    
     <table class="table table-dark table-striped">
         <thead>
             <tr>
