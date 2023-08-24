@@ -117,7 +117,23 @@ export class FormMushroomComponent implements OnInit {
       });
     // puis on vide le formulaire
   }
+  
+  deleteMediaExistant(id: any) {
+    this.http.delete(this.API_ADMIN_BASE_URL + 'media/' + id).subscribe({
+      next: () => {
+        console.log('Champignon supprimée: ');
+        // Actualise le composant
+        this.load();
+      },
+      error: (err) => console.log('Observer got an error: ' + err),
+      complete: () => console.log('Observer got a complete notification')
+    })
+  }
 
+  deleteNewMedia(id: any){
+    this.medias.splice(id,1)
+    console.log("delete media: ", id)
+  }
 
 
   send(form: NgForm) {
@@ -204,19 +220,7 @@ export class FormMushroomComponent implements OnInit {
         complete: () => console.log('Champignon ajouté!')
       });
     }
-
   }
 
-  delete(id: any) {
-    this.http.delete(this.API_ADMIN_BASE_URL + 'media/' + id).subscribe({
-      next: () => {
-        console.log('Champignon supprimée: ');
-        // Actualise le composant
-        this.load();
-      },
-      error: (err) => console.log('Observer got an error: ' + err),
-      complete: () => console.log('Observer got a complete notification')
-    })
-  }
 
 }

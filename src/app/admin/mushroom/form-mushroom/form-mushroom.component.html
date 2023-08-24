@@ -87,7 +87,7 @@
                                             class="btn btn-outline-success me-2" title="Editer">
                                             <fa-icon [icon]="faEdit"></fa-icon>
                                         </a> -->
-                                            <a (click)="delete(media?.id)" class="btn btn-outline-danger"
+                                            <a (click)="deleteMediaExistant(media?.id)" class="btn btn-outline-danger"
                                                 title="Supprimer">
                                                 <fa-icon [icon]="faTrash"></fa-icon>
                                             </a>
@@ -130,21 +130,13 @@
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    <ng-template [ngIf]="media.id" [ngIfElse]="add">
-                                        <a [routerLink]="['/admin/media/editer/', media?.id]" href=""
-                                            class="btn btn-outline-success me-2" title="Editer">
-                                            <fa-icon [icon]="faEdit"></fa-icon>
-                                        </a>
-                                        <a (click)="delete(media?.id)" class="btn btn-outline-danger" title="Supprimer">
-                                            <fa-icon [icon]="faTrash"></fa-icon>
-                                        </a>
-                                    </ng-template>
-                                    <ng-template #add>
-                                        <!-- <a (click)="deleteMedia(media?.filename)" class="btn btn-outline-danger" title="Supprimer">
-                                            <fa-icon [icon]="faTrash"></fa-icon>
-                                        </a> -->
-                                    </ng-template>
-
+                                    <!-- <a [routerLink]="['/admin/media/editer/', media?.id]" href=""
+                                        class="btn btn-outline-success me-2" title="Editer">
+                                        <fa-icon [icon]="faEdit"></fa-icon>
+                                    </a> -->
+                                    <a (click)="deleteNewMedia(i)" class="btn btn-outline-danger" title="Supprimer">
+                                        <fa-icon [icon]="faTrash"></fa-icon>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
