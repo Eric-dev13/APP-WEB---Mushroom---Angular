@@ -47,7 +47,7 @@
             <select class="form-select border-2 border-start-0 border-top-0 border-end-0"
                 [(ngModel)]="mushroom.edibility" name="edibility" id="edibility">
                 <option [value]="{id: 0}" selected>Choisir....</option>
-                <option *ngFor="let edibility of edibilities" [value]="edibility?.id">{{ edibility?.name }}</option>
+                <option *ngFor="let edibility of edibilities" [value]="edibility.id">{{ edibility.name }}</option>
             </select>
         </div>
 
@@ -55,7 +55,7 @@
         <div class="pb-2 mb-4 border-bottom border-secondary">
             <h4 class="fw-semibold mb-4">Photos / Images</h4>
             <!-- Liste des médias existants en mode modification donc mushroom.id est différent de 0-->
-            <ng-template [ngIf]="mushroom.id != 0">
+            <ng-template [ngIf]="mushroom.medias!.length > 0">
                 <h5 class="mb-3">Liste des images existantes</h5>
                 <div class="table-responsive mb-4">
                     <table class="table table-dark table-striped fw-normal">
@@ -102,47 +102,51 @@
 
             <!-- Composant pour ajouter des médias -->
             <h5 class="mb-3">Téléverser des images (format autoriser: jpg, png, gif)</h5>
+
             <app-add-media (mediaEvent)="addMedia($event)"></app-add-media>
-            <!-- Liste des médias ajouté -->
-            <p class="fw-semibold">Liste des médias ajoutés</p>
-            <div class="table-responsive">
-                <table class="table table-dark table-striped fw-normal">
-                    <thead>
-                        <tr>
-                            <th scope="col">Image</th>
-                            <th scope="col">Nom</th>
-                            <th scope="col">Fichier</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let media of medias; index as i" class="table-secondary">
-                            <td>
-                                <!-- Affichage de l'image -->
-                                <img *ngIf="selectedImage[i]" [src]="selectedImage[i]" alt="Image sélectionnée"
-                                    height="200">
-                            </td>
-                            <td>
-                                {{ media.name }}
-                            </td>
-                            <td>
-                                {{ media.filename }}
-                            </td>
-                            <td>
-                                <div class="d-flex">
-                                    <!-- <a [routerLink]="['/admin/media/editer/', media?.id]" href=""
+
+            <ng-template [ngIf]="medias.length > 0">
+                <!-- Liste des médias ajouté -->
+                <p class="fw-semibold">Liste des médias ajoutés</p>
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped fw-normal">
+                        <thead>
+                            <tr>
+                                <th scope="col">Image</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Fichier</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let media of medias; index as i" class="table-secondary">
+                                <td>
+                                    <!-- Affichage de l'image -->
+                                    <img *ngIf="selectedImage[i]" [src]="selectedImage[i]" alt="Image sélectionnée"
+                                        height="200">
+                                </td>
+                                <td>
+                                    {{ media.name }}
+                                </td>
+                                <td>
+                                    {{ media.filename }}
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <!-- <a [routerLink]="['/admin/media/editer/', media?.id]" href=""
                                         class="btn btn-outline-success me-2" title="Editer">
                                         <fa-icon [icon]="faEdit"></fa-icon>
                                     </a> -->
-                                    <a (click)="deleteNewMedia(i)" class="btn btn-outline-danger" title="Supprimer">
-                                        <fa-icon [icon]="faTrash"></fa-icon>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                                        <a (click)="deleteNewMedia(i)" class="btn btn-outline-danger" title="Supprimer">
+                                            <fa-icon [icon]="faTrash"></fa-icon>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-template>
         </div>
 
         <!-- CHAIR -->

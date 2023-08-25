@@ -400,13 +400,24 @@ ACTION SUR LE CRUD  ADMIN : MUSHROOM, EDIBILITY, LAMELLATYPE
 
 ```
 
-En Angular, le symbole `?` est utilisé pour définir une variable en option dans des modèles de liaison (templates) lorsque vous traitez avec des propriétés potentiellement nulles ou indéfinies. Cette fonctionnalité est appelée le "safe navigation operator" ou "Elvis operator". Il vous permet d'accéder à une propriété d'un objet tout en évitant des erreurs si l'objet lui-même ou la propriété que vous essayez d'accéder est nul(le) ou indéfini(e).
+
+
+En Angular, le symbole `?` est utilisé pour définir une variable en option (déclarer une propriété facultative) dans des modèles de liaison (templates) lorsque vous traitez avec des propriétés potentiellement nulles ou indéfinies. Cette fonctionnalité est appelée le "safe navigation operator" ou "Elvis operator". Il vous permet d'accéder à une propriété d'un objet tout en évitant des erreurs si l'objet lui-même ou la propriété que vous essayez d'accéder est nul(le) ou indéfini(e).
 
 
 
- Pour déclarer une propriété facultative, le point d'interrogation (?) à la fin du nom de la propriété est utilisé lors de la déclaration.
+En Angular, le symbole `!` est utilisé pour indiquer au compilateur TypeScript qu'une variable est garantie de ne pas être nulle (non-nullable). Cela permet d'éviter les erreurs de compilation potentielles liées aux valeurs nulles ou indéfinies.
 
-l'interface *Personne* a deux propriétés facultatives avec le "?", tandis que les trois autres propriétés sont les propriétés requises.
-
-
+````
+// Crée une instance de FormData pour préparer la requête multipart
+      const formData: FormData = new FormData();
+      
+      // Parcourt chaque élément dans la liste des médias
+      for (const media of this.medias) {
+        // Ajoute le fichier média à FormData avec la clé 'mediasFiles'
+        formData.append('mediasFiles', media.file!);
+        // Ajoute le nom du média à FormData avec la clé 'mediasNames'
+        formData.append('mediasNames', media.name!);
+      }
+````
 

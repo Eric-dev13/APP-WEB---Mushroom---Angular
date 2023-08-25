@@ -34,15 +34,19 @@ export class FormMushroomComponent implements OnInit {
   faTrash = faTrash;
   faRotateLeft = faRotateLeft;
 
-  // edibilities!: EdibilityInterface[];  // listes a charger dans les selectBox
-  edibilities: any;
-  lamellaTypes: any; // listes a charger dans les selectBox
-
-  // Image a afficher lors de l'ajout d'un média.
-  selectedImage: Array<String> = [];
-
-
   id_mushroom: any; // id de l'enregistrement (mushroom) transmis dans l'URL.
+
+  edibility: EdibilityInterface = {
+    id: 0
+  };
+  lamellatype!: LamellatypeInterface;
+
+  edibilities: EdibilityInterface[] = []; // Represente la listes des choix (comestible ou pas) a charger dans les selectBox
+  lamellaTypes: LamellatypeInterface[] = []; // Represente la listes des choix (type de lamelles) a charger dans les selectBox
+
+  medias: MediaInterface[] = []; // Represente un tableau de medias a ajouter et lier avec le nouvel enregistrement de la table principal
+
+  selectedImage: Array<String> = [];  // Image a afficher sur la page web lors de la selection du fichier via le formulaire
 
   // Représente la table principal (mushroom) dont la structure est représenté dans une interface.
   mushroom: MushroomInterface = {
@@ -61,37 +65,46 @@ export class FormMushroomComponent implements OnInit {
     medias: []
   }
 
-  // Represente un tableau de medias.
-  medias: MediaInterface[] = [];
-
 
   load() {
-    // GET : findAll edibilityEntity
-    this.http.get(this.API_ADMIN_BASE_URL + "edibility").subscribe({
+    // GET []: Retourne un tableau edibilityEntity
+    this.http.get<EdibilityInterface[]>(this.API_ADMIN_BASE_URL + "edibility").subscribe({
       next: (data) => {
-        console.log(data);
         this.edibilities = data;
+        console.log(data);
       },
       error: (err) => console.log('Observer got an error: ' + err),
       complete: () => console.log('Actualiser')
     });
 
-    // GET : findAll LamellatypeEntity
-    this.http.get(this.API_ADMIN_BASE_URL + "lamellaType").subscribe((res) => {
-      this.lamellaTypes = res;
+    // GET []: Retourne un tableau  LamellatypeEntity
+    this.http.get<LamellatypeInterface[]>(this.API_ADMIN_BASE_URL + "lamellaType").subscribe({
+      next: (data) => {
+        this.lamellaTypes = data;
+        console.log(data);
+      },
+      error: (err) => console.log('Observer got an error: ' + err),
+      complete: () => console.log('Actualiser')
     });
 
     // POST ou PUT : Si un paramètre 'id' est présent dans l'URL nous sommes en mode mise à jour (PUT) sinon ajouter (POST)
-    // GET : Find By ID - le nom des propriétés de l'interface mushroom doivent correspondreavec les cles du JSON
+    // GET : Find By ID - le nom des propriétés de l'interface mushroom doivent correspondre avec les cles du JSON
     // 
     this.id_mushroom = this.route.snapshot.paramMap.get('id');
     if (this.id_mushroom) {
-      this.http.get(this.API_ADMIN_BASE_URL + "mushroom/" + this.id_mushroom).subscribe((res) => {
-        this.mushroom = res;
-        console.log('update mushroom: ', this.mushroom)
+      this.http.get<MushroomInterface>(this.API_ADMIN_BASE_URL + "mushroom/" + this.id_mushroom).subscribe({
+        next: (data) => {
+          this.mushroom = data;
+          this.edibility = data.edibility!;
+          console.log('put mushroom: ', this.mushroom)
+          console.log('put edibility: ', this.edibility)
+        },
+        error: (err) => console.log('Observer got an error: ' + err),
+        complete: () => console.log('fiche n° ' + this.id_mushroom + ' chargée!')
       });
     }
   }
+
 
   ngOnInit(): void {
     this.load();
@@ -117,7 +130,7 @@ export class FormMushroomComponent implements OnInit {
       });
     // puis on vide le formulaire
   }
-  
+
   deleteMediaExistant(id: any) {
     this.http.delete(this.API_ADMIN_BASE_URL + 'media/' + id).subscribe({
       next: () => {
@@ -130,11 +143,12 @@ export class FormMushroomComponent implements OnInit {
     })
   }
 
-  deleteNewMedia(id: any){
-    this.medias.splice(id,1)
-    console.log("delete media: ", id)
-  }
+  deleteNewMedia(id: any) {
+    console.log("Va supprimer le media: ", id, this.medias[id]);
+    // supprime 1 élément à partir de l'index défini par l'id
+    this.medias.splice(id, 1);
 
+  }
 
   send(form: NgForm) {
     // Validation du formulaire
@@ -158,24 +172,15 @@ export class FormMushroomComponent implements OnInit {
     // }
 
     // si la propriété mushroom.localnames contient des objets (collection de nom) je les transfert dans l'objet form.
-    if (this.mushroom?.localnames) {
-      form.value.localnames = this.mushroom?.localnames;
+    if (this.mushroom.localnames) {
+      form.value.localnames = this.mushroom.localnames;
     }
 
-    // si la propriété mushroom.medias contient des objets (collection de nom) je les transfert dans l'objet form.
-    // if (this.mushroom?.medias) {
-    //   form.value.medias = this.mushroom?.medias;
-    // }
-
-    // console.table("Form:", form.value)
-    // console.log("Form Mushroom:", this.mushroom);
-    // console.log("medias", this.medias);
-
-
     if (this.mushroom.id != 0) {
-
-      // PATCH - Modification de l'enregistrement 
-      this.http.patch(this.API_ADMIN_BASE_URL + 'mushroom/', form.value,).subscribe({
+      console.log(form.value);
+      
+      // PATCH - MODIFICATION DE L'ENREGISTREMENT
+      this.http.patch<MushroomInterface>(this.API_ADMIN_BASE_URL + 'mushroom/' + this.id_mushroom, form.value).subscribe({
         next: (data) => {
           console.log('Champignon modifié: ', data);
           // Ajoute les medias via une deuxieme requete
@@ -189,9 +194,10 @@ export class FormMushroomComponent implements OnInit {
 
     } else {
 
+      // POST - AJOUTE LE NOUVEL ENREGISTRMENT
       // Crée une instance de FormData pour préparer la requête multipart
       const formData: FormData = new FormData();
-      
+
       // Parcourt chaque élément dans la liste des médias
       for (const media of this.medias) {
         // Ajoute le fichier média à FormData avec la clé 'mediasFiles'

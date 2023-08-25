@@ -53,7 +53,7 @@ export class FormEdibilityComponent implements OnInit {
     this.id_edibility = this.route.snapshot.paramMap.get('id');
     if (this.id_edibility) {
       // GET : Find By ID
-      this.http.get(this.API_ADMIN_BASE_URL + "edibility/" + this.id_edibility).subscribe(
+      this.http.get<EdibilityInterface>(this.API_ADMIN_BASE_URL + "edibility/" + this.id_edibility).subscribe(
         {
           next: (data) => {
             this.edibility = data;
