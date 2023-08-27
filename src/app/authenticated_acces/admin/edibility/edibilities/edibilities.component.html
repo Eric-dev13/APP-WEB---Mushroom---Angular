@@ -1,0 +1,53 @@
+<div class="edibility">
+
+  <h1 class="text-center my-5">Goût et Risque Toxicologique des Champignons</h1>
+
+  <div class="d-flex justify-content-start align-items-end text-bg-dark p-2 border-bottom">
+    <a [routerLink]="['/admin/comestibilite/nouveau']" href="" class="btn btn-outline-success me-2"
+      title="Ajouter une nouvelle espèce">
+      <fa-icon [icon]="faSquarePlus"></fa-icon>
+      <span class="ms-2">Ajouter une nouvelle saveur ou toxicité</span>
+    </a>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">Nom</th>
+          <th scope="col">Fichier</th>
+          <th scope="col">Image</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let edibility of edibilities">
+          <th scope="row">{{ edibility.id }}</th>
+          <td>{{ edibility?.name }}</td>
+          <td>
+            {{ edibility?.filename }}
+          </td>
+          <td>
+            <img [src]="PUBLIC_URL_GET_FILE_EDIBILITY + edibility?.filename" alt="edibility?.filename" height="35">
+          </td>
+          <td>
+            <div class="d-flex">
+              <!-- <a [routerLink]="['/admin/comestibilite/description', edibility?.id]" href=""
+                    class="btn btn-outline-success me-2" title="Voir la description">
+                    <fa-icon [icon]="faCircleInfo"></fa-icon>
+                </a> -->
+              <a [routerLink]="['/admin/comestibilite/editer', edibility?.id]" href=""
+                class="btn btn-outline-success me-2" title="Editer">
+                <fa-icon [icon]="faEdit"></fa-icon>
+              </a>
+              <a (click)="delete(edibility?.id)" class="btn btn-outline-danger" title="Supprimer">
+                <fa-icon [icon]="faTrash"></fa-icon>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

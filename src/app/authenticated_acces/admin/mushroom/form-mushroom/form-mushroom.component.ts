@@ -4,9 +4,9 @@ import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM } from 'src/environments/config';
 import { faEdit, faTrash, faRotateLeft, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
-import { EdibilityInterface } from 'src/app/admin/edibility/edibility-interface';
+import { EdibilityInterface } from 'src/app/authenticated_acces/admin/edibility/edibility-interface';
 import { MushroomInterface } from '../mushroom-interface';
-import { LamellatypeInterface } from 'src/app/admin/lamellatype/lamellatype-interface';
+import { LamellatypeInterface } from 'src/app/authenticated_acces/admin/lamellatype/lamellatype-interface';
 import { MediaInterface } from '../../media/media-interface';
 import { LocalnameInterface } from '../../localname/localname-interface';
 

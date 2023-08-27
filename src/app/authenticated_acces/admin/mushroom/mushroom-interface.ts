@@ -1,7 +1,7 @@
-import {LocalnameInterface} from 'src/app/admin/localname/localname-interface';
-import {EdibilityInterface} from 'src/app/admin/edibility/edibility-interface';
-import {LamellatypeInterface} from 'src/app/admin/lamellatype/lamellatype-interface';
-import {MediaInterface} from 'src/app/admin/media/media-interface';
+import {LocalnameInterface} from 'src/app/authenticated_acces/admin/localname/localname-interface';
+import {EdibilityInterface} from 'src/app/authenticated_acces/admin/edibility/edibility-interface';
+import {LamellatypeInterface} from 'src/app/authenticated_acces/admin/lamellatype/lamellatype-interface';
+import {MediaInterface} from 'src/app/authenticated_acces/admin/media/media-interface';
 
 export interface MushroomInterface {
     id?: number;

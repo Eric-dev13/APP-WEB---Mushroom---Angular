@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
+  isSidebarActive: boolean = false;
 
+  toggleSidebar() {
+    console.log(this.isSidebarActive);
+    this.isSidebarActive = !this.isSidebarActive;
+  }
 }
