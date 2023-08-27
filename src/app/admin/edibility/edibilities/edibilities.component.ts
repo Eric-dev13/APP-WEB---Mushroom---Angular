@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EdibilityInterface } from '../edibility-interface';
 import { API_ADMIN_BASE_URL, API_URL_GET_FILE_EDIBILITY, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
-import { faEdit, faTrash, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash, faRotateLeft, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -21,6 +21,7 @@ export class EdibilitiesComponent implements OnInit {
   faEdit = faEdit;
   faTrash = faTrash;
   faRotateLeft = faRotateLeft;
+  faSquarePlus=faSquarePlus;
 
   edibilities: EdibilityInterface[] = []; // type du tableau d'objets
   // edibilities!: any;

@@ -1,0 +1,267 @@
+
+.sideNav {
+    font-family: 'Roboto Condensed Bold';
+    background: rgb(250, 250, 250);
+
+    #sidebar {
+        p {
+            font-weight: 300;
+            line-height: 1.7em;
+            color: #999;
+        }
+
+        a,
+        a:hover,
+        a:focus {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+    }
+
+    // Bouton masquer afficher la sideBar
+    .collapsed-btn {
+        margin-top: 1px;
+        box-shadow: none;
+        outline: none !important;
+        border-width: 2px 2px 2px 0;
+        border-radius: 0 10px 10px 0;
+        border-style: solid;
+        border-color: #212529;
+    }
+
+    // Diviser
+    .line {
+        width: 100%;
+        height: 1px;
+        border-bottom: 1px dashed #ddd;
+        margin: 40px 0;
+    }
+
+    /* ---------------------------------------------------
+        SIDEBAR STYLE
+    ----------------------------------------------------- */
+
+    .wrapper {
+        display: flex;
+        width: 100%;
+        align-items: stretch;
+        perspective: 1500px;
+    }
+
+    // Menu de navigation
+    #sidebar {
+        min-width: 250px;
+        max-width: 250px;
+        background: #212529;
+        color: #fff;
+        transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
+        transform-origin: bottom left;
+
+        &.active {
+            margin-left: -250px;
+            transform: rotateY(100deg);
+        }
+        // Titre
+        .sidebar-header {
+            padding: 20px;
+            background: #2d3238;
+        }
+
+        ul {
+            // composant de navigation
+            &.components {
+                padding: 20px 0;
+                // border-bottom: 1px solid #434549;
+            }
+
+            p {
+                color: #fff;
+                padding: 10px;
+            }
+
+            li {
+                a {
+                    padding: 10px;
+                    font-size: 1em;
+                    display: block;
+                }
+                // Survol sur les liens de navigation
+                a:hover {
+                    color: #76f123;
+                    background: #2d3238;
+                }
+
+                &.active>a,
+                a[aria-expanded="true"] {
+                    color: #fff;
+                    background: #191c1f;
+                }
+            }
+        }
+    }
+
+    // Affiche icone du menu déroulant
+    a[data-bs-toggle="collapse"] {
+        position: relative;
+    }
+
+    .dropdown-toggle::after {
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+    }
+
+    ul {
+        ul a {
+            font-size: .9em !important;
+            padding-left: 30px !important;
+            background: #212529;
+        }
+
+        &.CTAs {
+            padding: 20px;
+
+            a {
+                text-align: center;
+                font-size: 0.8em !important;
+                display: block;
+                border-radius: 5px;
+                margin-bottom: 5px;
+            }
+        }
+
+    }
+
+    a {
+        &.download {
+            background: #fff;
+            color: green;
+        }
+
+        &.article,
+        a.article:hover {
+            background: #212529cc !important;
+            color: #fff !important;
+        }
+    }
+
+
+    /* ---------------------------------------------------
+        CONTENT STYLE
+    ----------------------------------------------------- */
+    #content {
+        display:flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 100vh;
+        transition: all 0.3s;
+
+        #child-component {
+            flex-grow: 1;
+            width: 100%;
+            padding: 20px;
+            min-height: 100vh;
+            transition: all 0.3s;
+            font-family: 'Roboto Condensed Regular';
+        }
+
+        // Masquer / afficher la navigation
+        #sidebarCollapse {
+            width: 40px;
+            height: 40px;
+            background: #f5f5f5;
+            // background: #2d3238;
+            cursor: pointer;
+
+            span {
+                width: 80%;
+                height: 2px;
+                margin: 0 auto;
+                display: block;
+                background: #555;
+                // background: #ffffff;
+                transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+                transition-delay: 0.2s;
+
+                &:first-of-type {
+                    transform: rotate(45deg) translate(2px, 2px);
+                }
+
+                &:nth-of-type(2) {
+                    opacity: 0;
+                }
+
+                &:last-of-type {
+                    transform: rotate(-45deg) translate(1px, -1px);
+                }
+            }
+
+            &.active span {
+                transform: none;
+                opacity: 1;
+                margin: 5px auto;
+            }
+        }
+    }
+
+    /* ---------------------------------------------------
+        MEDIAQUERIES
+    ----------------------------------------------------- */
+    @media (max-width: 576px) {
+        #sidebar {
+            margin-left: -250px;
+            ul li a {
+                font-size: 0.7em !important;
+            }
+
+            p{
+                font-size: 0.7em !important;
+            }
+
+            ul {
+                ul a {
+                    font-size: 0.7em !important;
+                }
+            }
+        }
+    }
+    @media (max-width: 768px) {
+        #sidebar {
+            margin-left: -250px;
+            transform: rotateY(90deg);
+        }
+
+        #sidebar.active {
+            margin-left: 0;
+            transform: none;
+        }                
+
+        #sidebarCollapse span:first-of-type,
+        #sidebarCollapse span:nth-of-type(2),
+        #sidebarCollapse span:last-of-type {
+            transform: none;
+            opacity: 1;
+            margin: 5px auto;
+        }
+
+        #sidebarCollapse.active span {
+            margin: 0 auto;
+        }
+
+        #sidebarCollapse.active span:first-of-type {
+            transform: rotate(45deg) translate(2px, 2px);
+        }
+
+        #sidebarCollapse.active span:nth-of-type(2) {
+            opacity: 0;
+        }
+
+        #sidebarCollapse.active span:last-of-type {
+            transform: rotate(-45deg) translate(1px, -1px);
+        }
+
+    }
+}

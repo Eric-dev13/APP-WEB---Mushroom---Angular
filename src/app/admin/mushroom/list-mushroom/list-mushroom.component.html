@@ -1,11 +1,11 @@
-<div class="container py-3">
-    <h1 class="text-center mb-5">Liste de champignons</h1>
+<div>
+    <h1 class="text-center mb-3">Liste de champignons</h1>
 
-    <div class="d-flex p-4">
-        <h4 class="me-4">Ajouter une description</h4>
+    <div class="d-flex justify-content-start align-items-end text-bg-dark p-2 border-bottom">
         <a [routerLink]="['/admin/champignon/nouveau']" href=""
             class="btn btn-outline-success me-2" title="Ajouter une nouvelle espèce">
             <fa-icon [icon]="faSquarePlus"></fa-icon>
+            <span class="ms-2">Créer une nouvelle fiche</span>
         </a>
     </div>
     
@@ -54,7 +54,6 @@
                             <fa-icon title="Publier" [icon]="faThumbsUp"></fa-icon>
                         </a>
                     </ng-template>
-
                 </td>
                 <td>
                     <div class="d-flex">
@@ -74,5 +73,4 @@
             </tr>
         </tbody>
     </table>
-
 </div>

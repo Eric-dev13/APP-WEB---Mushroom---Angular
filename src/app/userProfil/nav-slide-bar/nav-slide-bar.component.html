@@ -1,0 +1,99 @@
+<div class="sideNav">
+    <div class="wrapper">
+        <!-- 
+        ----------------------------------------------------------- 
+                            SLIDEBAR
+        -----------------------------------------------------------                     
+        -->
+        <nav id="sidebar" [ngClass]="{'active': isSidebarActive}">
+            <!-- header sideBar -->
+            <div class="sidebar-header">
+                <h3>Espace admin</h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#homeSubmenu-1" data-bs-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Champignons</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu-1">
+                        <li>
+                            <a [routerLink]="['/admin/champignon/Liste-des-champignons']"  
+                                href="">Liste des champignons</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="['/admin/champignon/nouveau']" href="">Ajouter une nouvelle espèce</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="#homeSubmenu-2" data-bs-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Saveur et toxicité</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu-2">
+                        <li>
+                            <a [routerLink]="['/admin/comestibilite/liste']" href="" >Afficher la liste des saveurs et toxicités</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="['/admin/comestibilite/nouveau']" href="">Ajouter une nouvelle saveur ou toxicité</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- ************************ -->
+
+            <div class="sidebar-header">
+                <h3>Espace personnel</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="">Voir mon profil</a>
+                </li>
+                <li>
+                    <a href="">Modifier mes données personnelles</a>
+                </li>
+                <li>
+                    <a href="">Changer de mot de passe</a>
+                </li>
+                <li class="active">
+                    <a href="#homeSubmenu-3" data-bs-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Forum</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu-3">
+                        <li>
+                            <a href="">Mes questions</a>
+                        </li>
+                        <li>
+                            <a href="">Mes commentaires</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- 
+        ----------------------------------------------------------- 
+                            CONTENU DE LA PAGE
+        -----------------------------------------------------------                     
+        -->
+        <div id="content">
+            <div>
+                <button type="button" id="sidebarCollapse" class="collapsed-btn" data-toggle="tooltip"
+                    data-placement="top" title="Réduire / afficher la navigation" (click)="toggleSidebar()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+            <div id="child-component">
+                <!-- 
+                ----------------------------------------------------------- 
+                            AFFICHAGE DU COMPOSANT ENFANT
+                -----------------------------------------------------------                     
+                -->
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>
+
+

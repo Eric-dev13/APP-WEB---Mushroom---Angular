@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NgForm, FormBuilder, FormGroup } from '@angular/forms';
-import { faEdit, faTrash, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrash, faRotateLeft, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EdibilityInterface } from '../edibility-interface';
 import { API_ADMIN_BASE_URL, API_URL_GET_FILE_EDIBILITY, API_BASE_URL, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
@@ -39,11 +39,12 @@ export class FormEdibilityComponent implements OnInit {
   selectedImage: string | null | undefined;
 
 
-  faEdit = faEdit;
-  faTrash = faTrash;
-  faRotateLeft = faRotateLeft;
+  faEdit=faEdit;
+  faTrash=faTrash;
+  faRotateLeft=faRotateLeft;
+  faSquarePlus=faSquarePlus;
 
-
+  
   ngOnInit(): void {
     this.load();
   }

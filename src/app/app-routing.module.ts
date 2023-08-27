@@ -12,31 +12,37 @@ import { DetailMushroomComponent } from './admin/mushroom/detail-mushroom/detail
 import { AuthenticateComponent } from './security/authenticate/authenticate.component';
 import { EdibilitiesComponent } from './admin/edibility/edibilities/edibilities.component';
 import { FormEdibilityComponent } from './admin/edibility/form-edibility/form-edibility.component';
-import { FileUploadComponent } from './file-upload/file-upload.component';
+import { NavSlideBarComponent } from './userProfil/nav-slide-bar/nav-slide-bar.component';
+// import { SlideBarComponent } from './userProfil/slide-bar/slide-bar.component';
 
 
 const routes: Routes = [
   // ROUTES PUBLIQUES
-  { path:"", component: HomeComponent },
-  { path:"guide-des-champignons",component: MushroomsComponent },
-  { path:"champignon/:id",component: MushromComponent },
-  { path:"champignon/description/:slug",component: MushromComponent },
-  { path:"forum", component: ForumComponent },
-  // ROUTES PROTEGES - ADMIN - mushroom
-  { path:"admin/champignon/Liste-des-champignons", component: ListMushroomComponent },
-  { path:"admin/champignon/description/:id", component: DetailMushroomComponent },
-  { path:"admin/champignon/nouveau", component: FormMushroomComponent },
-  { path:"admin/champignon/editer/:id", component: FormMushroomComponent },
-  // ROUTES PROTEGES - ADMIN - edibility
-  { path:"admin/comestibilite/liste", component: EdibilitiesComponent },
-  { path:"admin/comestibilite/nouveau", component: FormEdibilityComponent },
-  { path:"admin/comestibilite/editer/:id", component: FormEdibilityComponent },
-  // ROUTE D'AUTHENTIFICATION
-  { path:"securite/authentification", component: AuthenticateComponent },
+  { path: "", component: HomeComponent },
+  { path: "guide-des-champignons", component: MushroomsComponent },
+  { path: "champignon/:id", component: MushromComponent },
+  { path: "champignon/description/:slug", component: MushromComponent },
+  { path: "forum", component: ForumComponent },
 
-  { path:"file", component: FileUploadComponent },
+  {
+    path: 'admin', component: NavSlideBarComponent, children: [
+      // ROUTES PROTEGES - ADMIN - mushroom
+      { path: "champignon/Liste-des-champignons", component: ListMushroomComponent },
+      { path: "champignon/description/:id", component: DetailMushroomComponent },
+      { path: "champignon/nouveau", component: FormMushroomComponent },
+      { path: "champignon/editer/:id", component: FormMushroomComponent },
+      // ROUTES PROTEGES - ADMIN - edibility
+      { path: "comestibilite/liste", component: EdibilitiesComponent },
+      { path: "comestibilite/nouveau", component: FormEdibilityComponent },
+      { path: "comestibilite/editer/:id", component: FormEdibilityComponent },
+    ]
+  },
+
+  // ROUTE D'AUTHENTIFICATION
+  { path: "securite/authentification", component: AuthenticateComponent },
+
   // TOUTES LES AUTRES ROUTES = NOT FOUND
-  { path: "**", component: NotFoundComponent} // Page d'erreur 404
+  { path: "**", component: NotFoundComponent } // Page d'erreur 404
 ];
 
 @NgModule({

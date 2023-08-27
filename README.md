@@ -1,4 +1,4 @@
-# sAngular - Royaume des champignons
+# Angular - Royaume des champignons
 
 
 
@@ -419,5 +419,66 @@ En Angular, le symbole `!` est utilisé pour indiquer au compilateur TypeScript 
         // Ajoute le nom du média à FormData avec la clé 'mediasNames'
         formData.append('mediasNames', media.name!);
       }
+````
+
+
+
+## Gestion de liaison model et formulaire
+
+````
+HTML
+
+<div class="h4 fw-semibold pb-2 mb-4 border-bottom border-secondary">
+    <label for="edibility" class="form-label">Comestibilité</label>
+    <select class="form-select border-2 border-start-0 border-top-0 border-end-0"
+        [(ngModel)]="mushroom!.edibility!.id" name="edibility" id="edibility">
+        <option [value]="0" selected>Choisir....</option>
+        <option *ngFor="let edibility of edibilities" [value]="edibility.id">{{ edibility.name }}</option>
+    </select>
+</div>
+````
+
+````
+TYPESCRIPT
+
+...
+ngOnInit(){
+	...
+	/* POST ou PUT : Si un paramètre 'id' est présent dans l'URL nous sommes en mode mise à jour (PUT) 
+		sinon ajouter (POST) */
+    this.id_mushroom = this.route.snapshot.paramMap.get('id');
+    if (this.id_mushroom) {
+      /* GET : Find By ID - le nom des propriétés de l'interface mushroom doivent correspondre avec les cles 			du JSON renvoyé par l'API
+      this.http.get<MushroomInterface>(this.API_ADMIN_BASE_URL + "mushroom/" + this.id_mushroom).subscribe({
+        next: (data) => {
+          /* 
+          Pour eviter que TS remonte des erreurs (les champs ne peuvent etre vide) lors de la liaison avec 				les champs de formulaire (ngModel) 
+          Si il n'y a pas d'enregistrement associée (propriété edibility ==null) on renvoie un objet 					edibility = {id:0}
+          */
+          if(!data.edibility) { 
+            data.edibility = {id:0};
+          }
+          this.mushroom = data;
+          console.log('put mushroom: ', this.mushroom)
+        },
+        error: (err) => console.log('Observer got an error: ' + err),
+        complete: () => console.log('fiche n° ' + this.id_mushroom + ' chargée!')
+      });
+    }
+    ...
+}
+
+send(form: NgForm) {
+	...
+	/* si la propriété "edibility" n'est pas renseignée elles doit renvoyées NULL
+	sinon un objet pour renseigner la cle étrangere corespondant à l'ID edibility. */
+    if (form.value.edibility === 0) {
+      form.value.edibility = null;
+    } else {
+      form.value.edibility = {id: form.value.edibility};
+    }
+    ...
+}
+...
 ````
 

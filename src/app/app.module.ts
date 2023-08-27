@@ -28,7 +28,10 @@ import { AuthenticateComponent } from './security/authenticate/authenticate.comp
 import { AddLocalnameComponent } from './admin/localname/add-localname/add-localname.component';
 import { EdibilitiesComponent } from './admin/edibility/edibilities/edibilities.component';
 import { FormEdibilityComponent } from './admin/edibility/form-edibility/form-edibility.component';
-import { FileUploadComponent } from './file-upload/file-upload.component';
+import { ProfilComponent } from './userProfil/profil/profil.component';
+import { EditerProfilComponent } from './userProfil/editer-profil/editer-profil.component';
+import { EditerPasswordComponent } from './userProfil/editer-password/editer-password.component';
+import { NavSlideBarComponent } from './userProfil/nav-slide-bar/nav-slide-bar.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,10 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     AddLocalnameComponent,
     EdibilitiesComponent,
     FormEdibilityComponent,
-    FileUploadComponent
+    ProfilComponent,
+    EditerProfilComponent,
+    EditerPasswordComponent,
+    NavSlideBarComponent,
   ],
   imports: [
     BrowserModule,

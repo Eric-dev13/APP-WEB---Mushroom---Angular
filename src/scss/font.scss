@@ -20,8 +20,13 @@
 }
 
 @font-face {
-    font-family: 'Roboto Condensed';
+    font-family: 'Roboto Condensed Bold';
     src: url('../assets/fonts/Roboto_Condensed/RobotoCondensed-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto Condensed Regular';
+    src: url('../assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf') format('truetype');
 }
 
 @font-face {
@@ -41,44 +46,60 @@
         @include font-size(2rem);
     }
 
+    &-19 {
+        @include font-size(1.9rem);
+    }
+
+    &-18 {
+        @include font-size(1.8rem);
+    }
+
     &-17 {
         @include font-size(1.7rem);
-        font-size: 1.7rem;
     }
 
     &-15 {
         @include font-size(1.5rem);
-        // font-size: 1.5rem;
+    }
+
+    &-14 {
+        @include font-size(1.4rem);
+    }
+
+    &-13 {
+        @include font-size(1.3rem);
     }
 
     &-12 {
         @include font-size(1.2rem);
-        // font-size: 1.2rem;
+    }
+
+    &-11 {
+        @include font-size(1.1rem);
     }
 
     &-10 {
         @include font-size(1rem);
-        // font-size: 1rem;
     }
 
     &-9 {
         @include font-size(.9rem);
-        // font-size: .9rem;
     }
 
     &-8 {
         @include font-size(.8rem);
-        // font-size: .8rem;
     }
 
     &-7 {
-        @include font-size(2rem);
-        // font-size: .7rem;
+        @include font-size(.7rem);
+    }
+
+    &-6 {
+        @include font-size(.6rem);
     }
 
     &-5 {
-        @include font-size(2rem);
-        // font-size: .5rem;
+        @include font-size(.5rem);
     }
 }
 

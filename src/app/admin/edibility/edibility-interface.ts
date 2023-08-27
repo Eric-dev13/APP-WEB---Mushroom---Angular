@@ -1,5 +1,5 @@
 export interface EdibilityInterface {
-    id?: number;
+    id: number;
     name?: string;
     filename?: string;
 }
