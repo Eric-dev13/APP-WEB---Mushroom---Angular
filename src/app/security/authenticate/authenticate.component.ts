@@ -3,7 +3,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { API_URL_AUTH } from '../../../environments/config';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
+import { AuthenticationService } from '../authentication.service';
+
+
 
 @Component({
   selector: 'app-authenticate',
@@ -17,8 +20,17 @@ export class AuthenticateComponent implements OnInit {
 
   constructor(private http: HttpClient,
     private router: Router,
-    private route: ActivatedRoute,) { }
+    private route: ActivatedRoute,
+    protected authentication: AuthenticationService) { }
 
+  /*
+  S'enregistrer server renvoi un token
+  On enregistre dans le local storage
+  Si on accede a des route securisée on envoie notre token
+  Verifier si on possede un token is_auth
+  Tester la validité du token 
+
+  */
 
   currentUser = {};
 
@@ -46,45 +58,26 @@ export class AuthenticateComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  authentication(formAuth: NgForm) {
+
+  loggedIn(formAuth: NgForm) {
     // POST :  Si l'utilisateur est enregistrer dans la base de données le serveur lui renverra un token
     // a chaque fois que l'on souhaite acceder a une route privée on dois envoyer le token
     // le serveur decode le token verifie la validité de la signature puis renvoie les infos demandées
     if (formAuth.valid) {
-      this.http.post(this.API_URL_AUTH + "authenticate", formAuth.value).subscribe((res) => {
-        this.access_token = res;
-        sessionStorage.setItem("access_token", this.access_token.token);
-        console.log(sessionStorage.getItem("access_token"));
-        // redirect vers page d'accueil
-        this.router.navigate(["/"]);
+      this.http.post<any>(this.API_URL_AUTH + "authenticate", formAuth.value).subscribe((res) => {
+        // Enregistre le token et redirige vers la page d'acceuil
+        this.authentication.doLogged(res.token);
       });
     }
   }
 
   registration(formRegister: NgForm) {
     // POST :  findAll
-    this.http.post(this.API_URL_AUTH + "register", formRegister.value).subscribe((res) => {
-      this.access_token = res;
-      sessionStorage.setItem("access_token", this.access_token);
-      console.log(this.access_token.token);
-      // redirect vers page d'accueil
-      this.router.navigate(["/"]);
-    });
-  }
-
-  getToken() {
-    return sessionStorage.getItem('access_token');
-  }
-
-  get isLoggedIn(): boolean {
-    let authToken = sessionStorage.getItem('access_token');
-    return authToken !== null ? true : false;
-  }
-
-  doLogout() {
-    let removeToken = sessionStorage.removeItem('access_token');
-    if (removeToken == null) {
-      this.router.navigate(['log-in']);
+    if (formRegister.valid) {
+      this.http.post<any>(this.API_URL_AUTH + "register", formRegister.value).subscribe((res) => {
+         // Envoi l'email et password pour l'inscription puis stocke en retour le token et enfin redirige vers la page d'acceuil
+         this.authentication.doLogged(res.token);
+      });
     }
   }
 
@@ -101,8 +94,5 @@ export class AuthenticateComponent implements OnInit {
     return throwError(() => msg);
   }
 
-  public deconnecter() {
-    localStorage.removeItem('access_token');
-  }
 
 }

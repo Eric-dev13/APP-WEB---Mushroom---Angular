@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { faAlignJustify } from '@fortawesome/free-solid-svg-icons';
+import { AuthenticationService } from '../security/authentication.service';
+
 
 
 @Component({
@@ -7,35 +9,46 @@ import { faAlignJustify } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss']
 })
-export class NavComponent {
+export class NavComponent implements OnInit {
+
+  constructor(protected authenticated: AuthenticationService) { }
 
   faAlignJustify = faAlignJustify;
 
-  access_token!:string|null ;
-  is_auth!:boolean;
-  is_valid!:boolean;
-  hasRole_admin!: boolean;
-  hasRole_user!: boolean;
-  userDetail!: {avatarFilename: string, pseudo: string, username:string };
-   
+ 
+  isAuthenticated!: boolean; // utilisateur authentifié == token dans le session storage
+  access_token!: string | null; // Récupère et transmettre le jeton dans l'en tete de la requete pour accèder aux routes sécurisées.
 
-  ngOnInit(){
+  userDetail!: { avatarFilename: string, pseudo: string, username: string };  // Données personnelles de l'utilisateur connecté.
 
-    // Si le token existe
-    this.access_token = sessionStorage.getItem("access_token");
-    if (sessionStorage.getItem("access_token")){
-      // je recupere le profil utilisateur
-      this.is_auth = true;
+  /// Détermine le role accordé a l'utilisateur
+  isAdmin!: boolean;
+  isUser!: boolean;
+
+
+
+  ngOnInit() {
+    // this.isAuthenticated = this.authentication.isAuth();
+  
+
+    if (this.authenticated) {
+      console.log("L'utilisateur est authentifié.");
+    } else {
+      console.log("L'utilisateur n'est pas authentifié.");
     }
-    
-    this.is_auth = true;
-    this.hasRole_admin = true ;
-    this.hasRole_user = true ;
-    this.userDetail =  {
-      avatarFilename: './../../assets/images/icones/connexion.png',
+
+    this.isAdmin = true;
+    this.isUser = true;
+    this.userDetail = {
+      avatarFilename: 'http://localhost:9000/upload/users/61c6411de4211620488497.png',
       pseudo: 'Eric',
       username: 'eric'
     }
+  }
+
+  // Deconnexion
+  logout(){
+    this.authenticated.doLogout();
   }
 
 

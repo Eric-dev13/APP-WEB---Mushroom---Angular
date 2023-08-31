@@ -23,8 +23,8 @@ const routes: Routes = [
   { path: "champignon/description/:slug", component: MushromComponent },
   { path: "forum", component: ForumComponent },
 
-  {
-    path: 'admin', component: DashboardComponent, children: [
+  
+  {path: 'admin', component: DashboardComponent, children: [
       // ROUTES PROTEGES - ADMIN - mushroom
       { path: "champignon/Liste-des-champignons", component: ListMushroomComponent },
       { path: "champignon/description/:id", component: DetailMushroomComponent },

@@ -26,17 +26,19 @@
       <div class="form-content">
         <div class="login-form">
           <div class="title">S'authentifier</div>
-          <form action="#" #formAuth="ngForm" (submit)="authentication(formAuth)">
+          <form action="#" #formAuth="ngForm" (submit)="loggedIn(formAuth)">
             <div class="input-boxes">
               <div class="input-box">
                 <i class="fas fa-envelope"></i>
-                <input [(ngModel)]="userAuthentication.email" name="email" type="email" placeholder="Entrez votre email" required>
+                <input [(ngModel)]="userAuthentication.email" name="email" type="email" placeholder="Entrez votre email"
+                  required>
               </div>
               <div class="input-box">
                 <i class="fas fa-lock"></i>
-                <input [(ngModel)]="userAuthentication.password" name="password" type="password" placeholder="Entrez votre mot de passe" required>
+                <input [(ngModel)]="userAuthentication.password" name="password" type="password"
+                  placeholder="Entrez votre mot de passe" required>
               </div>
-              <div class="text"><a href="#">Mot de passe oublié?</a></div>
+              <div class="text"><a>Mot de passe oublié?</a></div>
               <div class="button input-box">
                 <input type="submit" value="Me connecter">
               </div>
@@ -47,19 +49,22 @@
         </div>
         <div class="signup-form">
           <div class="title">S'inscrire</div>
-          <form action="#"  #formRegister="ngForm" (submit)="registration(formRegister)">
+          <form action="#" #formRegister="ngForm" (submit)="registration(formRegister)">
             <div class="input-boxes">
               <div class="input-box">
                 <i class="fas fa-user"></i>
-                <input [(ngModel)]="userRegistration.pseudo" name="pseudo" type="text" placeholder="Entrez votre pseudo" required>
+                <input [(ngModel)]="userRegistration.pseudo" name="pseudo" type="text" placeholder="Entrez votre pseudo"
+                  required>
               </div>
               <div class="input-box">
                 <i class="fas fa-envelope"></i>
-                <input [(ngModel)]="userRegistration.email" name="email" type="email" placeholder="Entrez votre email" required>
+                <input [(ngModel)]="userRegistration.email" name="email" type="email" placeholder="Entrez votre email"
+                  required>
               </div>
               <div class="input-box">
                 <i class="fas fa-lock"></i>
-                <input [(ngModel)]="userRegistration.password" name="passsword" type="password" placeholder="Entrez votre mot de passe" required>
+                <input [(ngModel)]="userRegistration.password" name="passsword" type="password"
+                  placeholder="Entrez votre mot de passe" required>
               </div>
               <div class="button input-box">
                 <input type="submit" value="M'inscrire">

@@ -2,8 +2,7 @@
     <h1 class="text-center mb-3">Liste de champignons</h1>
 
     <div class="d-flex justify-content-start align-items-end text-bg-dark p-2 border-bottom">
-        <a [routerLink]="['/admin/champignon/nouveau']" href=""
-            class="btn btn-outline-success me-2" title="Ajouter une nouvelle espèce">
+        <a [routerLink]="['/admin/champignon/nouveau']" class="btn btn-outline-success me-2" title="Ajouter une nouvelle espèce">
             <fa-icon [icon]="faSquarePlus"></fa-icon>
             <span class="ms-2">Créer une nouvelle fiche</span>
         </a>
@@ -24,7 +23,7 @@
             <tr class="table-secondary" *ngFor="let mushroom of mushrooms">
                 <td scope="row">{{mushroom?.id}}</td>
                 <td>
-                    <a [routerLink]="['/admin/champignon/description', mushroom?.id]" href="" class=""
+                    <a [routerLink]="['/admin/champignon/description', mushroom?.id]" class=""
                         title="Voir la description">
                         <div class="containerImg">
                             <img class="zoom img-fluid" *ngIf="mushroom?.medias?.length > 0; else default"
@@ -57,11 +56,11 @@
                 </td>
                 <td>
                     <div class="d-flex">
-                        <a [routerLink]="['/admin/champignon/description', mushroom?.id]" href=""
+                        <a [routerLink]="['/admin/champignon/description', mushroom?.id]"
                             class="btn btn-outline-success me-2" title="Voir la description">
                             <fa-icon [icon]="faCircleInfo"></fa-icon>
                         </a>
-                        <a [routerLink]="['/admin/champignon/editer', mushroom?.id]" href=""
+                        <a [routerLink]="['/admin/champignon/editer', mushroom?.id]"
                             class="btn btn-outline-success me-2" title="Editer">
                             <fa-icon [icon]="faEdit"></fa-icon>
                         </a>
