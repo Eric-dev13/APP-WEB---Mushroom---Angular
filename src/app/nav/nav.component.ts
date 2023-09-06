@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { faAlignJustify } from '@fortawesome/free-solid-svg-icons';
 import { AuthenticationService } from '../security/authentication.service';
+import { PUBLIC_URL_GET_FILE_USER } from '../../environments/config';
 
 
 
@@ -13,43 +14,16 @@ export class NavComponent implements OnInit {
 
   constructor(protected authenticated: AuthenticationService) { }
 
-  faAlignJustify = faAlignJustify;
+  readonly PUBLIC_URL_GET_FILE_USER = PUBLIC_URL_GET_FILE_USER; //constante d'environnement
+  faAlignJustify = faAlignJustify; // icon Font Awesome
 
- 
-  isAuthenticated!: boolean; // utilisateur authentifié == token dans le session storage
-  access_token!: string | null; // Récupère et transmettre le jeton dans l'en tete de la requete pour accèder aux routes sécurisées.
-
-  userDetail!: { avatarFilename: string, pseudo: string, username: string };  // Données personnelles de l'utilisateur connecté.
-
-  /// Détermine le role accordé a l'utilisateur
-  isAdmin!: boolean;
-  isUser!: boolean;
-
-
-
-  ngOnInit() {
-    // this.isAuthenticated = this.authentication.isAuth();
-  
-
-    if (this.authenticated) {
-      console.log("L'utilisateur est authentifié.");
-    } else {
-      console.log("L'utilisateur n'est pas authentifié.");
-    }
-
-    this.isAdmin = true;
-    this.isUser = true;
-    this.userDetail = {
-      avatarFilename: 'http://localhost:9000/upload/users/61c6411de4211620488497.png',
-      pseudo: 'Eric',
-      username: 'eric'
-    }
+  ngOnInit(): void {
+    
   }
 
   // Deconnexion
   logout(){
     this.authenticated.doLogout();
   }
-
 
 }

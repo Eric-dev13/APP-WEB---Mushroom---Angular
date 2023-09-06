@@ -29,12 +29,12 @@
           <form action="#" #formAuth="ngForm" (submit)="loggedIn(formAuth)">
             <div class="input-boxes">
               <div class="input-box">
-                <i class="fas fa-envelope"></i>
+                <fa-icon [icon]="faEnvelope" class="text-success"></fa-icon>
                 <input [(ngModel)]="userAuthentication.email" name="email" type="email" placeholder="Entrez votre email"
                   required>
               </div>
               <div class="input-box">
-                <i class="fas fa-lock"></i>
+                <fa-icon [icon]="faLock" class="text-success"></fa-icon>
                 <input [(ngModel)]="userAuthentication.password" name="password" type="password"
                   placeholder="Entrez votre mot de passe" required>
               </div>
@@ -52,19 +52,18 @@
           <form action="#" #formRegister="ngForm" (submit)="registration(formRegister)">
             <div class="input-boxes">
               <div class="input-box">
-                <i class="fas fa-user"></i>
+                <fa-icon [icon]="faUser" class="text-success"></fa-icon>
                 <input [(ngModel)]="userRegistration.pseudo" name="pseudo" type="text" placeholder="Entrez votre pseudo"
                   required>
               </div>
               <div class="input-box">
-                <i class="fas fa-envelope"></i>
+                <fa-icon [icon]="faEnvelope" class="text-success"></fa-icon>
                 <input [(ngModel)]="userRegistration.email" name="email" type="email" placeholder="Entrez votre email"
                   required>
               </div>
               <div class="input-box">
-                <i class="fas fa-lock"></i>
-                <input [(ngModel)]="userRegistration.password" name="passsword" type="password"
-                  placeholder="Entrez votre mot de passe" required>
+                <fa-icon [icon]="faLock" class="text-success"></fa-icon>
+                <input [(ngModel)]="userRegistration.password" name="password" type="password" placeholder="Entrez votre mot de passe" required>
               </div>
               <div class="button input-box">
                 <input type="submit" value="M'inscrire">

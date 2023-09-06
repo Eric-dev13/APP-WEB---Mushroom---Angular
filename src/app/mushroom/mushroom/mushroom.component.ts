@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { API_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY, PUBLIC_URL_GET_FILE_LAMELLATYPE } from '../../../environments/config';
+import { MushroomInterface } from 'src/app/authenticated_acces/admin/mushroom/mushroom-interface';
 
 
 @Component({

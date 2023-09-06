@@ -23,14 +23,14 @@ const routes: Routes = [
   { path: "champignon/description/:slug", component: MushromComponent },
   { path: "forum", component: ForumComponent },
 
-  
+  // ROUTES PROTEGES
   {path: 'admin', component: DashboardComponent, children: [
-      // ROUTES PROTEGES - ADMIN - mushroom
+      // ADMIN - mushroom
       { path: "champignon/Liste-des-champignons", component: ListMushroomComponent },
       { path: "champignon/description/:id", component: DetailMushroomComponent },
       { path: "champignon/nouveau", component: FormMushroomComponent },
       { path: "champignon/editer/:id", component: FormMushroomComponent },
-      // ROUTES PROTEGES - ADMIN - edibility
+      // ADMIN - edibility
       { path: "comestibilite/liste", component: EdibilitiesComponent },
       { path: "comestibilite/nouveau", component: FormEdibilityComponent },
       { path: "comestibilite/editer/:id", component: FormEdibilityComponent },

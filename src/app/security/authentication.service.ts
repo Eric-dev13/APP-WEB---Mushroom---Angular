@@ -1,24 +1,40 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserInterface } from './user-interface';
+
 
 @Injectable({
   providedIn: 'root' // Le service est disponible dans toute l'application
 })
 export class AuthenticationService {
 
-
   // Injection du service Router via le constructeur
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
 
   // Méthode pour vérifier si un utilisateur est authentifié
   isAuth(): boolean {
+    const token = this.getToken();
     // Si le token est présent, l'utilisateur est authentifié, sinon il ne l'est pas
-    return this.getToken() !== null ? true : false;
+    return token !== null ? true : false;
   }
 
-  doLogged(token: string) {
-    this.setToken(token);
+  isAdmin(): boolean {
+    // Récupère l'objet utilisateur à partir du session storage
+    const user = this.getUser();
+    // Vérifie si un utilisateur a été récupéré
+    if (user) {
+      // Utilise Array.some() pour vérifier si au moins un rôle a l'autorité "ADMIN"
+      return user.roles.some(role => role.authority === "ADMIN");
+    }
+    // Si aucun utilisateur n'a été récupéré ou si l'utilisateur n'a pas le rôle "ADMIN", retourne false
+    return false;
+  }
+
+  // Après une inscription ou authentification réussi
+  doLogged(data: any) {
+    this.setToken(data.token)
+    this.setUser(data.user)
     this.router.navigate([""]);
   }
 
@@ -33,33 +49,30 @@ export class AuthenticationService {
     }
   }
 
-  // Méthode pour obtenir le token d'accès
   getToken(): String | null {
     return sessionStorage.getItem('access_token');
   }
 
   setToken(token: string) {
-    try {
-      sessionStorage.setItem("access_token", token);
-      return true;
-    } catch (error) {
-      return false;
-    }
+    sessionStorage.setItem("access_token", token);
   }
 
-  /*
-  Création d'un Service d'Authentification : Commencez par créer un service dédié à l'authentification.
-    - gérer les requêtes d'inscription
-    - gérer les requêtes de connexion et de déconnexion vers l'API
-    - stocker et gérer le token.
-  Déconnexion de l'Utilisateur : Lorsque l'utilisateur choisit de se déconnecter, vous devez supprimer le token du stockage local.
-  Gestion des Erreurs : Gérez les erreurs d'authentification, comme les informations d'identification incorrectes, les expirations de token, etc. Affichez des messages d'erreur appropriés pour informer l'utilisateur de ce qui s'est passé.
-  
-  is_auth : je suis connecté
-  is_admin : j'ai le role admin
-  is_user : j'ai le role user
-  */
+  getUser(): UserInterface | null {
+    // Récupérez la chaîne JSON du sessionStorage
+    const userJSON = sessionStorage.getItem('user');
+    if (userJSON) {
+      // Désérialisez la chaîne JSON en un objet JavaScript
+      return JSON.parse(userJSON);
+    }
+    return null;
+  }
 
+  setUser(user: any) {
+    // Sérialisez l'objet utilisateur en JSON
+    const userJSON = JSON.stringify(user);
 
+    // Stockez la chaîne JSON dans le sessionStorage
+    sessionStorage.setItem("user", userJSON);
+  }
 
 }
