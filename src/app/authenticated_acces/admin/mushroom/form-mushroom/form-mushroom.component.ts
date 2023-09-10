@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM } from 'src/environments/config';
@@ -9,7 +9,7 @@ import { MushroomInterface } from '../mushroom-interface';
 import { LamellatypeInterface } from 'src/app/authenticated_acces/admin/lamellatype/lamellatype-interface';
 import { MediaInterface } from '../../media/media-interface';
 import { LocalnameInterface } from '../../localname/localname-interface';
-
+import { AuthenticationService } from 'src/app/security/authentication.service';
 
 
 
@@ -28,7 +28,8 @@ export class FormMushroomComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authentication: AuthenticationService 
   ) { }
 
   faEdit = faEdit;
@@ -70,7 +71,9 @@ export class FormMushroomComponent implements OnInit {
 
   load() {
     // GET []: Retourne un tableau edibilityEntity
-    this.http.get<EdibilityInterface[]>(this.API_ADMIN_BASE_URL + "edibility").subscribe({
+    // Créez un en-tête d'autorisation avec le jeton Bearer
+
+    this.http.get<EdibilityInterface[]>(this.API_ADMIN_BASE_URL + "edibility", { headers: new HttpHeaders({'Authorization': `Bearer ${this.authentication.getToken()}`,'Content-Type': 'application/json'})}).subscribe({
       next: (data) => {
         this.edibilities = data;
         console.log(data);
@@ -80,7 +83,7 @@ export class FormMushroomComponent implements OnInit {
     });
 
     // GET []: Retourne un tableau  LamellatypeEntity
-    this.http.get<LamellatypeInterface[]>(this.API_ADMIN_BASE_URL + "lamellaType").subscribe({
+    this.http.get<LamellatypeInterface[]>(this.API_ADMIN_BASE_URL + "lamellaType", { headers: new HttpHeaders({'Authorization': `Bearer ${this.authentication.getToken()}`, 'Content-Type': 'application/json'})}).subscribe({
       next: (data) => {
         this.lamellaTypes = data;
         console.log(data);
@@ -93,7 +96,7 @@ export class FormMushroomComponent implements OnInit {
     this.id_mushroom = this.route.snapshot.paramMap.get('id');
     if (this.id_mushroom) {
       // GET : Find By ID - le nom des propriétés de l'interface mushroom doivent correspondre avec les cles du JSON renvoyé par l'API
-      this.http.get<MushroomInterface>(this.API_ADMIN_BASE_URL + "mushroom/" + this.id_mushroom).subscribe({
+      this.http.get<MushroomInterface>(this.API_ADMIN_BASE_URL + "mushroom/" + this.id_mushroom, { headers: new HttpHeaders({'Authorization': `Bearer ${this.authentication.getToken()}`, 'Content-Type': 'application/json'})}).subscribe({
         next: (data) => {
           /* 
           Pour eviter que TS remonte des erreurs (les champs ne peuvent etre vide) lors de la liaison avec les champs de formulaire (ngModel) 
@@ -143,10 +146,10 @@ export class FormMushroomComponent implements OnInit {
 
   send(form: NgForm) {
     // Validation du formulaire
-    if (form?.invalid) {
-      console.log('Le formulaire est invalide.');
-      return;
-    }
+    // if (form?.invalid) {
+    //   console.log('Le formulaire est invalide.');
+    //   return;
+    // }
 
     // CREE UNE INSTANCE DE FORM DATA POUR PREPARER LA REQUETE MULTIPART
     const formData: FormData = new FormData();
@@ -180,7 +183,7 @@ export class FormMushroomComponent implements OnInit {
 
     // PATCH - MODE UPDATE (modifier un enregistrement existant )
     if (this.mushroom!.id != 0) {
-      this.http.patch<MushroomInterface>(this.API_ADMIN_BASE_URL + 'mushroom/' + this.id_mushroom, form.value).subscribe({
+      this.http.patch<MushroomInterface>(this.API_ADMIN_BASE_URL + 'mushroom/' + this.id_mushroom, form.value, { headers: new HttpHeaders({'Authorization': `Bearer ${this.authentication.getToken()}`,'Content-Type': 'application/json'})}).subscribe({
         next: (data) => {
           console.log('Champignon modifié: ', data);
           // Envoie une deuxième requête POST avec l'ID de l'enregistrement champignon correspondant pour ajouter les médias associés 
@@ -207,11 +210,19 @@ export class FormMushroomComponent implements OnInit {
 
 
       // définir le type de reponse dans la méthode http ici avec l'opérateur diamant <MushroomInterface> pour accèder aux propriétés de l 'objet renvoyé
-      this.http.post<MushroomInterface>(this.API_ADMIN_BASE_URL + 'mushroom/', form.value).subscribe({
+      this.http.post<MushroomInterface>(this.API_ADMIN_BASE_URL + 'mushroom/', form.value, { headers: new HttpHeaders({'Authorization': `Bearer ${this.authentication.getToken()}`,
+      'Content-Type': 'application/json'
+      })}).subscribe({
         next: (data) => {
           // Envoie une deuxième requête POST avec l'ID de l'enregistrement champignon correspondant pour ajouter les médias associés 
           if (this.medias.length > 0) {
-            this.http.post(this.API_ADMIN_BASE_URL + 'media/' + data.id, formData).subscribe({
+            this.http.post(this.API_ADMIN_BASE_URL + 'media/' + data.id, formData, { 
+              headers: new HttpHeaders({
+                'Authorization': `Bearer ${this.authentication.getToken()}`,
+                'Content-Type': 'application/json'
+              })
+            }
+            ).subscribe({
               next: (data) => console.log('Medias: ', data),
               error: (err) => console.log('Observer got an error: ' + err),
               complete: () => console.log('Medias ajoutés!')
@@ -228,7 +239,12 @@ export class FormMushroomComponent implements OnInit {
   }
 
   deleteMediaExistant(id: any) {
-    this.http.delete(this.API_ADMIN_BASE_URL + 'media/' + id).subscribe({
+    this.http.delete(this.API_ADMIN_BASE_URL + 'media/' + id, { 
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.authentication.getToken()}`,
+        'Content-Type': 'application/json'
+      })
+    }).subscribe({
       next: () => {
         console.log('Champignon supprimée: ');
         // Actualise le composant

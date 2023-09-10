@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { EdibilityInterface } from '../edibility-interface';
 import { API_ADMIN_BASE_URL, API_URL_GET_FILE_EDIBILITY, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
 import { faEdit, faTrash, faRotateLeft, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/security/authentication.service';
 
 
 @Component({
@@ -26,7 +27,10 @@ export class EdibilitiesComponent implements OnInit {
   edibilities: EdibilityInterface[] = []; // type du tableau d'objets
   // edibilities!: any;
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, 
+    private router: Router, 
+    private route: ActivatedRoute,
+    private authentication: AuthenticationService) { }
 
   ngOnInit(): void {
     this.load();
@@ -34,7 +38,12 @@ export class EdibilitiesComponent implements OnInit {
 
   load() {
     // GET : findAll
-    this.http.get<EdibilityInterface[]>(this.API_ADMIN_BASE_URL + "edibility").subscribe({
+    this.http.get<EdibilityInterface[]>(this.API_ADMIN_BASE_URL + "edibility", { 
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.authentication.getToken()}`,
+        'Content-Type': 'application/json'
+      })
+    }).subscribe({
       next: (res) => {
         this.edibilities = res;
         console.log("list edibility: ", this.edibilities);
@@ -46,7 +55,12 @@ export class EdibilitiesComponent implements OnInit {
 
   delete(id: any) {
     // DELETE
-    this.http.delete(this.API_ADMIN_BASE_URL + 'edibility/' + id).subscribe({
+    this.http.delete(this.API_ADMIN_BASE_URL + 'edibility/' + id, { 
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.authentication.getToken()}`,
+        'Content-Type': 'application/json'
+      })
+    }).subscribe({
       next: (data) => this.load(),
       error: (err) => console.log('Observer got an error: ' + err),
       complete: () => console.log('L\'enregistrement a été supprimé')

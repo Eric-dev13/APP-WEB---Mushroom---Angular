@@ -12,6 +12,10 @@ import { AuthenticateComponent } from './security/authenticate/authenticate.comp
 import { EdibilitiesComponent } from './authenticated_acces/admin/edibility/edibilities/edibilities.component';
 import { FormEdibilityComponent } from './authenticated_acces/admin/edibility/form-edibility/form-edibility.component';
 import { DashboardComponent } from './authenticated_acces/dashboard/dashboard.component';
+import { EditerPasswordComponent } from './authenticated_acces/user/editer-password/editer-password.component';
+import { EditerProfilComponent } from './authenticated_acces/user/editer-profil/editer-profil.component';
+import { ProfilComponent } from './authenticated_acces/user/profil/profil.component';
+
 
 
 
@@ -20,11 +24,10 @@ const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "guide-des-champignons", component: MushroomsComponent },
   { path: "champignon/:id", component: MushromComponent },
-  { path: "champignon/description/:slug", component: MushromComponent },
   { path: "forum", component: ForumComponent },
 
   // ROUTES PROTEGES
-  {path: 'admin', component: DashboardComponent, children: [
+  {path: 'back-office/admin', component: DashboardComponent, children: [
       // ADMIN - mushroom
       { path: "champignon/Liste-des-champignons", component: ListMushroomComponent },
       { path: "champignon/description/:id", component: DetailMushroomComponent },
@@ -34,8 +37,17 @@ const routes: Routes = [
       { path: "comestibilite/liste", component: EdibilitiesComponent },
       { path: "comestibilite/nouveau", component: FormEdibilityComponent },
       { path: "comestibilite/editer/:id", component: FormEdibilityComponent },
+      //  ADMIN - USER ACCESS
+       //{ path: "admin/utilisateur/profils", component:  },
+      //{ path: "admin/utilisateur/profil/:id", component:  },
     ]
   },
+  {path: 'back-office/utilisateur', component: DashboardComponent, children: [
+    // USER
+    { path: "profil", component: ProfilComponent },
+    { path: "profil/editer/:id", component: EditerProfilComponent },
+  ]
+},
 
   // ROUTE D'AUTHENTIFICATION
   { path: "securite/authentification", component: AuthenticateComponent },

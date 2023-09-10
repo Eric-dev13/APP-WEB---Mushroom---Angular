@@ -57,33 +57,76 @@
                 <hr class="bg-secondary">
                 <h5 class="text-secondary fw-bold ftsz-10">Le royaume des champignons</h5>
                 <li>
-                    <a class="" routerLink="['/guide-des-champignons']">Guide des champignons</a>
+                    <a class="" [routerLink]="['/guide-des-champignons']">Guide des champignons</a>
                 </li>
                 <li class="">
-                    <a>Discussion
+                    <a [routerLink]="['/forum']">Discussion
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="">
-                    <a>Actualités
+                    <a [routerLink]="['/actualite']">Actualités
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <hr class="bg-secondary">
-                <h5 class="text-secondary fw-bold ftsz-10">Accès administrateur</h5>
-                <li><a>Back office administrateur</a></li>
-                <!-- {% if app.user %} Si authentifié --> 
-                <hr class="bg-secondary">
-                <h5 class="text-secondary fw-bold ftsz-10">Accès membre</h5>
-                <!-- {% if is_granted('ROLE_ADMIN') %} Si role administrateur -->
-                <!-- {% endif %} -->
-                <li><a class="">Modifer mon profil</a></li>
-                <li><a>Me déconnecter</a></li>
-                <!-- {% else %} -->
-                <li><a class="">S'incrire</a></li>
-                <li><a class="">Se connecter</a></li>
-                <!-- {% endif %} -->
-                <hr class="bg-secondary">
+                <ng-template [ngIf]="this.authenticated.isAuth()" [ngIfElse]="login">
+                    <!-- Espace admin -->
+                    <ng-template [ngIf]="authenticated.isAdmin()">
+                        <hr class="bg-secondary">
+                        <h5 class="text-secondary fw-bold ftsz-10">Accès administrateur</h5>
+                        <li>
+                            <a class="dropdown-item ftsz-9"
+                                [routerLink]="['/back-office/admin/champignon/Liste-des-champignons']">Liste des
+                                champignons</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item ftsz-9" [routerLink]="['/back-office/admin/champignon/nouveau']">Ajouter
+                                une nouvelle espèce</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item ftsz-9"
+                                [routerLink]="['/back-office/admin/comestibilite/liste']">Afficher la liste des saveurs et
+                                toxicités</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item ftsz-9"
+                                [routerLink]="['/back-office/admin/comestibilite/nouveau']">Ajouter une nouvelle saveur ou
+                                toxicité</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item ftsz-9" [routerLink]="['/back-office/admin/comestibilite/liste']">Liste
+                                type de lamelle</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item ftsz-9"
+                                [routerLink]="['/back-office/admin/comestibilite/nouveau']">Ajouter nouveau type</a>
+                        </li>
+                    </ng-template>
+
+                    <!-- Espace user -->
+                    <hr class="bg-secondary">
+                    <h5 class="text-secondary fw-bold ftsz-10">Accès membre</h5>
+                    <li>
+                        <a class="dropdown-item ftsz-9" [routerLink]="['/utilisateur/profil']">Afficher mon
+                            profil</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item ftsz-9" [routerLink]="['/utilisateur/edit-profil']">Mettre à
+                            jour mon profil</a>
+                    </li>
+                    <li><a (click)="logout()" href="#">Me déconnecter</a></li>
+                    <hr class="bg-secondary">
+                </ng-template>
+
+                <ng-template #login>
+                    <li><a class="">Se connecter / S'incrire</a></li>
+                </ng-template>
                 <li><a>Mentions légales</a></li>
                 <li><a class="" id="showBoxCookiesManager">Cookies</a></li>
             </ul>

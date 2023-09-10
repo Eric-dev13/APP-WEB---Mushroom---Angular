@@ -1,10 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NgForm, FormBuilder, FormGroup } from '@angular/forms';
 import { faEdit, faTrash, faRotateLeft, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EdibilityInterface } from '../edibility-interface';
 import { API_ADMIN_BASE_URL, API_URL_GET_FILE_EDIBILITY, API_BASE_URL, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
+import { AuthenticationService } from 'src/app/security/authentication.service';
+
+
 
 @Component({
   selector: 'app-form-edibility',
@@ -23,7 +26,8 @@ export class FormEdibilityComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authentication: AuthenticationService
   ) { }
 
 
@@ -54,7 +58,12 @@ export class FormEdibilityComponent implements OnInit {
     this.id_edibility = this.route.snapshot.paramMap.get('id');
     if (this.id_edibility) {
       // GET : Find By ID
-      this.http.get<EdibilityInterface>(this.API_ADMIN_BASE_URL + "edibility/" + this.id_edibility).subscribe(
+      this.http.get<EdibilityInterface>(this.API_ADMIN_BASE_URL + "edibility/" + this.id_edibility, { 
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${this.authentication.getToken()}`,
+          'Content-Type': 'application/json'
+        })
+      }).subscribe(
         {
           next: (data) => {
             this.edibility = data;
@@ -81,7 +90,12 @@ export class FormEdibilityComponent implements OnInit {
       formData.append('file', this.selectedFile);
       formData.append('name', form.value.name);
 
-      this.http.patch(this.API_ADMIN_BASE_URL + 'edibility/' + this.id_edibility, formData).subscribe({
+      this.http.patch(this.API_ADMIN_BASE_URL + 'edibility/' + this.id_edibility, formData, { 
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${this.authentication.getToken()}`,
+          'Content-Type': 'application/json'
+        })
+      }).subscribe({
         next: (response) => {
           console.log('message: ', response);
           // redirige vers la liste
@@ -99,7 +113,12 @@ export class FormEdibilityComponent implements OnInit {
 
         console.log("formData: ", formData)
 
-        this.http.post(this.API_ADMIN_BASE_URL + "edibility/", formData).subscribe(
+        this.http.post(this.API_ADMIN_BASE_URL + "edibility/", formData, { 
+          headers: new HttpHeaders({
+            'Authorization': `Bearer ${this.authentication.getToken()}`,
+            'Content-Type': 'application/json'
+          })
+        }).subscribe(
           {
             next: (response) => {
               console.log('message: ', response);

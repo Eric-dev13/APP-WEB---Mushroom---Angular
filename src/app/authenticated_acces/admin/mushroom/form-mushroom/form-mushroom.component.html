@@ -3,7 +3,7 @@
         mushroom!.commonname : 'Ajouter nouvelle espèce'}}</h1>
 
     <div class="mb-3">
-        <a [routerLink]="['/admin/champignon/Liste-des-champignons']" class="btn btn-info me-4" title="Retour">
+        <a [routerLink]="['/back-office/admin/champignon/Liste-des-champignons']" class="btn btn-info me-4" title="Retour">
             <fa-icon class="text-light" [icon]="faRotateLeft"></fa-icon>
             <span class="ms-2">Retour vers la liste des champignons</span>
         </a>
@@ -81,7 +81,7 @@
                                 <td>
                                     <div class="d-flex">
                                         <ng-template [ngIf]="media.id">
-                                            <!-- <a [routerLink]="['/admin/media/editer/', media?.id]"
+                                            <!-- <a [routerLink]="['/back-office/admin/media/editer/', media?.id]"
                                             class="btn btn-outline-success me-2" title="Editer">
                                             <fa-icon [icon]="faEdit"></fa-icon>
                                         </a> -->
@@ -131,7 +131,7 @@
                                 </td>
                                 <td>
                                     <div class="d-flex">
-                                        <!-- <a [routerLink]="['/admin/media/editer/', media?.id]"
+                                        <!-- <a [routerLink]="['/back-office/admin/media/editer/', media?.id]"
                                         class="btn btn-outline-success me-2" title="Editer">
                                         <fa-icon [icon]="faEdit"></fa-icon>
                                     </a> -->

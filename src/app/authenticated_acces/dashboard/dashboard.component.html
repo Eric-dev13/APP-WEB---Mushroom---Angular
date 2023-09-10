@@ -12,27 +12,25 @@
             </div>
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="homeSubmenu-1" data-bs-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Champignons</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu-1">
+                    <a data-bs-toggle="collapse" data-bs-target="#listeChampi"  aria-expanded="false" class="dropdown-toggle">Champignons</a>
+                    <ul class="collapse list-unstyled" id="listeChampi">
                         <li>
-                            <a [routerLink]="['/admin/champignon/Liste-des-champignons']"  
-                                href="">Liste des champignons</a>
+                            <a [routerLink]="['/back-office/admin/champignon/Liste-des-champignons']">Liste des champignons</a>
                         </li>
                         <li>
-                            <a [routerLink]="['/admin/champignon/nouveau']">Ajouter une nouvelle espèce</a>
+                            <a [routerLink]="['/back-office/admin/champignon/nouveau']">Ajouter une nouvelle espèce</a>
                         </li>
                     </ul>
                 </li>
                 <li class="active">
-                    <a href="homeSubmenu-2" data-bs-toggle="collapse" aria-expanded="false"
+                    <a  data-bs-toggle="collapse" data-bs-target="#saveurToxicite"  aria-expanded="false"
                         class="dropdown-toggle">Saveur et toxicité</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu-2">
+                    <ul class="collapse list-unstyled" id="saveurToxicite">
                         <li>
-                            <a [routerLink]="['/admin/comestibilite/liste']">Afficher la liste des saveurs et toxicités</a>
+                            <a [routerLink]="['/back-office/admin/comestibilite/liste']">Afficher la liste des saveurs et toxicités</a>
                         </li>
                         <li>
-                            <a [routerLink]="['/admin/comestibilite/nouveau']">Ajouter une nouvelle saveur ou toxicité</a>
+                            <a [routerLink]="['/back-office/admin/comestibilite/nouveau']">Ajouter une nouvelle saveur ou toxicité</a>
                         </li>
                     </ul>
                 </li>

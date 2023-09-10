@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faEdit, faTrash, faCircleInfo, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY } from '../../../../../environments/config'
+import { AuthenticationService } from 'src/app/security/authentication.service';
+
+
 
 @Component({
   selector: 'app-detail-mushroom',
@@ -14,7 +17,8 @@ export class DetailMushroomComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private authentication: AuthenticationService 
   ) { }
 
   faEdit = faEdit;
@@ -42,7 +46,12 @@ export class DetailMushroomComponent implements OnInit {
       //Le paramètre est une chaîne de caractères (slug)
       console.log('Paramètre id:', this.id_mushroom);
       // Traitement GET : findBySlug
-      this.http.get(this.API_ADMIN_BASE_URL + "mushroom/" + this.id_mushroom).subscribe((res) => {
+      this.http.get(this.API_ADMIN_BASE_URL + "mushroom/" + this.id_mushroom,{ 
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${this.authentication.getToken()}`,
+          'Content-Type': 'application/json'
+        })
+      }).subscribe((res) => {
         this.mushroom = res;
         console.log("GET: ", this.mushroom);
       });

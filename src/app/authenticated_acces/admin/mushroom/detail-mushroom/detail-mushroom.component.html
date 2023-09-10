@@ -2,12 +2,12 @@
     <h1 class="text-center my-3">{{mushroom?.commonname}}</h1>
 
     <div class="d-flex mb-3">
-        <a [routerLink]="['/admin/champignon/Liste-des-champignons']" class="btn btn-info me-5" title="Retour">
+        <a [routerLink]="['/back-office/admin/champignon/Liste-des-champignons']" class="btn btn-info me-5" title="Retour">
             <fa-icon class="text-light" [icon]="faRotateLeft"></fa-icon>
             <span class="ms-2">Retour vers la liste des champignons</span>
         </a>
         <div>
-            <a [routerLink]="['/admin/champignon/editer', mushroom?.id]" class="btn btn-outline-success me-2"
+            <a [routerLink]="['/back-office/admin/champignon/editer', mushroom?.id]" class="btn btn-outline-success me-2"
                 title="Editer">
                 <fa-icon [icon]="faEdit"></fa-icon>
                 <span class="ms-2">Ajouter une nouvelle espèce</span>

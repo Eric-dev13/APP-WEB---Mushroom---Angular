@@ -32,7 +32,8 @@
                         <a class="noUnderline text-light dropdown-toggle px-3" role="button" id="dropdownMenuLink"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <ng-template [ngIf]="authenticated.getUser()?.filename" [ngIfElse]="defaultAvatar">
-                                <img [src]="PUBLIC_URL_GET_FILE_USER + authenticated.getUser()?.filename" alt="Avatar" height="50" class="rounded mr-4" />
+                                <img [src]="PUBLIC_URL_GET_FILE_USER + authenticated.getUser()?.filename" alt="Avatar"
+                                    height="50" class="rounded mr-4" />
                             </ng-template>
 
                             <ng-template #defaultAvatar>
@@ -47,14 +48,16 @@
                             <div>
                                 <h6 class="dropdown-header">Connecté en tant que</h6>
                                 <li>
-                                    <p class="px-2 ftsz-9 text-center text-secondary">{{authenticated.getUser()?.username}}</p>
+                                    <p class="px-2 ftsz-9 text-center text-secondary">
+                                        {{authenticated.getUser()?.username}}</p>
                                 </li>
                             </div>
 
                             <!-- USER PROFIL -->
-                            <a
+                            <span
                                 class="dropdown-item bg-info bg-opacity-10 border border-info border-start-0 border-end-0 py-2 fw-semibold">Espace
-                                personnel</a>
+                                personnel
+                            </span>
                             <li>
                                 <a class="dropdown-item ftsz-9" [routerLink]="['/']">Afficher mon
                                     profil</a>
@@ -66,22 +69,17 @@
 
                             <!-- BACK OFFICE ADMINISTRATEUR -->
                             <ng-template [ngIf]="authenticated.isAdmin()">
-                                <!-- <li>
-                                    <hr class="dropdown-divider">
-                                </li> -->
-                                <a
+                                <span
                                     class="dropdown-item bg-info bg-opacity-10 border border-info border-start-0 border-end-0 py-2 fw-semibold">Espace
-                                    administrateur</a>
-                                <!-- <li>
-                                    <hr class="dropdown-divider">
-                                </li> -->
+                                    administrateur
+                                </span>
                                 <li>
                                     <a class="dropdown-item ftsz-9"
-                                        [routerLink]="['/admin/champignon/Liste-des-champignons']">Liste des
+                                        [routerLink]="['/back-office/admin/champignon/Liste-des-champignons']">Liste des
                                         champignons</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item ftsz-9" [routerLink]="['/admin/champignon/nouveau']">Ajouter
+                                    <a class="dropdown-item ftsz-9" [routerLink]="['/back-office/admin/champignon/nouveau']">Ajouter
                                         une nouvelle espèce</a>
                                 </li>
                                 <li>
@@ -89,24 +87,24 @@
                                 </li>
                                 <li>
                                     <a class="dropdown-item ftsz-9"
-                                        [routerLink]="['/admin/comestibilite/liste']">Afficher la liste des saveurs et
+                                        [routerLink]="['/back-office/admin/comestibilite/liste']">Afficher la liste des saveurs et
                                         toxicités</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item ftsz-9"
-                                        [routerLink]="['/admin/comestibilite/nouveau']">Ajouter une nouvelle saveur ou
+                                        [routerLink]="['/back-office/admin/comestibilite/nouveau']">Ajouter une nouvelle saveur ou
                                         toxicité</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item ftsz-9" [routerLink]="['/admin/comestibilite/liste']">Liste
+                                    <a class="dropdown-item ftsz-9" [routerLink]="['/back-office/admin/comestibilite/liste']">Liste
                                         type de lamelle</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item ftsz-9"
-                                        [routerLink]="['/admin/comestibilite/nouveau']">Ajouter nouveau type</a>
+                                        [routerLink]="['/back-office/admin/comestibilite/nouveau']">Ajouter nouveau type</a>
                                 </li>
                             </ng-template>
 
