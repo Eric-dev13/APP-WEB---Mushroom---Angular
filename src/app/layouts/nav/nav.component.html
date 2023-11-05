@@ -1,0 +1,130 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="anchor">
+        <div class="container-fluid">
+            <a class="navbar-brand" [routerLink]="['/']"><img src="assets/images/icones/mushromLogo.png" alt="Logo"
+                    height="45"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <!-- <span class="navbar-toggler-icon"></span> -->
+                <fa-icon [icon]="faAlignJustify"></fa-icon>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item my-auto">
+                        <a class="nav-link text-uppercase active" aria-current="page" [routerLink]="['/']">Portail</a>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <a class="nav-link text-uppercase" [routerLink]="['/guide-des-champignons']">Guide des
+                            champignons</a>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <a class="nav-link text-uppercase" [routerLink]="['/forum']" forum>Discussion</a>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <a class="nav-link text-uppercase" [routerLink]="['/actualite']">Actualité</a>
+                    </li>
+                </ul>
+
+
+                <div class="navbar-nav d-flex me-3">
+                    <div *ngIf="authenticated.isAuth(); else login" class="d-flex flex-wrap flex-lg-nowrap">
+                        <a class="noUnderline text-light dropdown-toggle px-3" role="button" id="dropdownMenuLink"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <ng-template [ngIf]="authenticated.getUser()?.filename" [ngIfElse]="defaultAvatar">
+                                <img [src]="PUBLIC_URL_GET_FILE_USER + authenticated.getUser()?.filename" alt="Avatar"
+                                    height="50" class="rounded mr-4" />
+                            </ng-template>
+
+                            <ng-template #defaultAvatar>
+                                <img src="assets/images/icones/connexion.png" alt="Avatar" height="50" class="mr-3">
+                            </ng-template>
+
+                            {{authenticated.getUser()?.pseudo}}
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
+                            aria-labelledby="dropdownMenuLink">
+                            <div>
+                                <h6 class="dropdown-header">Connecté en tant que</h6>
+                                <li>
+                                    <p class="px-2 ftsz-9 text-center text-secondary">
+                                        {{authenticated.getUser()?.username}}</p>
+                                </li>
+                            </div>
+
+                            <!-- USER PROFIL -->
+                            <span
+                                class="dropdown-item bg-info bg-opacity-10 border border-info border-start-0 border-end-0 py-2 fw-semibold">Espace
+                                personnel
+                            </span>
+                            <li>
+                                <a class="dropdown-item ftsz-9" [routerLink]="['/back-office/utilisateur/profil']">Afficher mon
+                                    profil</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item ftsz-9" [routerLink]="['/back-office/utilisateur/profil/editer']">Mettre à
+                                    jour mon profil</a>
+                            </li>
+
+                            <!-- BACK OFFICE ADMINISTRATEUR -->
+                            <ng-template [ngIf]="authenticated.isAdmin()">
+                                <span
+                                    class="dropdown-item bg-info bg-opacity-10 border border-info border-start-0 border-end-0 py-2 fw-semibold">Espace
+                                    administrateur
+                                </span>
+                                <li>
+                                    <a class="dropdown-item ftsz-9"
+                                        [routerLink]="['/back-office/admin/champignon/Liste-des-champignons']">Liste des
+                                        champignons</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item ftsz-9" [routerLink]="['/back-office/admin/champignon/nouveau']">Ajouter
+                                        une nouvelle espèce</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item ftsz-9"
+                                        [routerLink]="['/back-office/admin/comestibilite/liste']">Afficher la liste des saveurs et
+                                        toxicités</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item ftsz-9"
+                                        [routerLink]="['/back-office/admin/comestibilite/nouveau']">Ajouter une nouvelle saveur ou
+                                        toxicité</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item ftsz-9" [routerLink]="['/back-office/admin/comestibilite/liste']">Liste
+                                        type de lamelle</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item ftsz-9"
+                                        [routerLink]="['/back-office/admin/comestibilite/nouveau']">Ajouter nouveau type</a>
+                                </li>
+                            </ng-template>
+
+                            <!-- DECONNEXION -->
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item ftsz-9 fw-bold" href="#" (click)="logout()">Déconnexion</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <ng-template #login>
+                        <a [routerLink]="['/securite/authentification']">
+                            <img src="assets/images/icones/connexion.png" alt="Avatar" height="50">
+                        </a>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,41 @@
+
+<div class="container-fluid container-lg bgColor--whiteLight px-3 currentUser">
+    <header class="row border-bottom">
+        <h1 class="text-center">Profil</h1>
+        <p class="text-nowrap mt-5" *ngIf="user?.createdAt"> 
+            <span class="fw-bold">Date d'inscription :</span>
+            {{ user.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}
+        </p>
+    </header>
+    <div class="row pt-3">
+        <div class="col flex-grow-0">
+            <h3 class="mt-2 mt-sm-0 fw-bold" *ngIf="user?.pseudo">{{user.pseudo}}</h3>
+            <div *ngIf="user?.filename ; else iconUserByDefault">
+                <img [src]="PUBLIC_URL_GET_FILE_USER + user.filename" class="rounded" alt="Avatar" width="200"/>
+            </div>
+            <ng-template #iconUserByDefault>
+                 <img src="assets/images/icones/connexion.png" alt="Avatar"  class="">
+            </ng-template>
+            <div class="text-nowrap" *ngIf="user?.updatedAt">
+                <div class="col">
+                    <label class="mt-4 fw-bold text-nowrap">Dernière modification</label> 
+                    <p>{{user.updatedAt}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col flex-grow-1 mt-sm-5">
+            <ng-template [ngIf]="user?.lastname">
+                <span class="mt-5 mt-sm-0 fw-bold">Nom</span>
+                <p>{{user.lastname}}</p>
+            </ng-template>
+            <ng-template [ngIf]="user?.firstname">
+                <span class="mt-5 mt-sm-0 fw-bold">Prénom</span>
+                <p>{{user.firstname}}</p>
+            </ng-template>
+            <ng-template [ngIf]="user?.email">
+                <span class="mt-5 mt-sm-0 fw-bold">Email</span>
+                <p>{{user.email}}</p>
+            </ng-template>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,8 @@
-# Angular - Royaume des champignons
+# DOCUMENTATION AUGULAR
+
+
+
+## Royaume des champignons
 
 
 
@@ -6,16 +10,30 @@
 
 Installer `Node Js` pour bénéficier du gestionnaire de package`npm`
 
-`ng new nom-du-projet --style=scss --skip-tests=true`
+`ng new nom-du-projet --style=scss --skip-tests=true --routing`
+
+
+
+## Version d'angular
+
+````
+ng v
+````
 
 
 
 ## Demarrage du serveur
 
-````
 localhost:4200
+
+````
+ng serve --open
 ````
 
+
+## Génère et/ou modifie des fichiers
+
+https://angular.io/cli/generate#interface-command
 
 
 ## Création composant (controller)
@@ -25,7 +43,6 @@ ng generate component nom-du-composant
 OU
 ng g c nom-du-composant
 ````
-
 
 
 ## Création service
@@ -38,9 +55,29 @@ Mettre a disposition de méthode pour les traitements
 
 Exemple :CRUD
 
+## Création d'une interface
+
+````
+ng generate interface [name] [type]
+
+// ex: ng g i user interface
+````
+
+
+
 ## Bootstrap
 
-### Installation
+### Installation Bootstrap widgets - angular
+
+https://ng-bootstrap.github.io/#/getting-started
+
+````
+ng add @ng-bootstrap/ng-bootstrap
+````
+
+
+
+### Installation classic bootstrap
 
 ````
  npm i bootstrap
@@ -48,9 +85,44 @@ Exemple :CRUD
 
 ### Utilisation
 
-**Ajouter les liens vers les fichiers CSS et JS**
+**Ajouter dans le fichier `angular.json` les liens vers les fichiers CSS et JS**
 
 ![image-20230722232411952](.\assets.readme\image-20230722232411952.png)
+
+````
+...
+"options": {
+    "outputPath": "dist/mushroom-angular",
+    "index": "src/index.html",
+    "main": "src/main.ts",
+    "polyfills": [
+      "zone.js"
+    ],
+    "tsConfig": "tsconfig.app.json",
+    "inlineStyleLanguage": "scss",
+    "assets": [
+      "src/favicon.ico",
+      "src/assets/images/icones/mushromLogo.ico",
+      "src/assets"
+    ],
+    "styles": [
+      "src/styles.scss",
+      "node_modules/bootstrap/dist/css/bootstrap.min.css"
+    ],
+    "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"]
+  },
+````
+
+### Ou bien importer Bootstrap dans le fichier `styles.scss`
+
+````
+// styles.scss
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+````
+
+
 
 
 
@@ -159,7 +231,91 @@ export const PUBLIC_URL_GET_FILE_USER = PUBLIC_BASE_URL + 'users/';
 
 
 
+## Système de routage - naviguer entre les URLs
 
+````
+// src\app\app-routing.module.ts
+
+const routes: Routes = [
+  { path: "", component: HomeComponent }, // Ex route par défaut (page d'accueil),
+  ...
+  ]
+````
+
+
+
+En configurant l'intégralité du `Routing` de l'application dans le module `AppRoutingModule`, on serait amené à **importer tous les modules de l'application avant son démarrage**. A titre d'exemple, plus l'application sera riche, plus la page d'accueil sera lente à charger par effet de bord.
+
+### Configuration du Lazy Loading
+
+Le module de "Routing" `AppRoutingModule` peut **déléguer la gestion du "Routing" d'une partie de l'application à un autre module**. Ce module "Lazy Loaded" sera donc **chargé de façon asynchrone à la visite des "routes" dont il est en charge**.
+
+````
+ng generate module nom_module --route url_dans_app-routing_parent --module app.module
+````
+
+
+
+````
+// src\app\app-routing.module.ts
+
+const routes: Routes = [
+	// ROUTES PUBLIQUES
+      ...
+      { path: "", loadChildren: () => import('./pages/mushroom/mushroom.module').then(m => m.MushroomModule) },
+     ...
+````
+
+![image-20230910140216071](.\assets.readme\image-20230910140216071.png)
+
+````
+// src\app\pages\mushroom\mushroom.module.ts
+
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { MushroomRoutingModule } from './mushroom-routing.module';
+import { MushromComponent } from './mushroom/mushroom.component';
+import { MushroomsComponent } from './mushrooms/mushrooms.component';
+
+@NgModule({
+  declarations: [
+    MushromComponent,
+    MushroomsComponent
+  ],
+  imports: [
+    CommonModule,
+    MushroomRoutingModule
+  ]
+})
+export class MushroomModule { 
+
+}
+````
+
+````
+// src\app\pages\mushroom\mushroom-routing.module.ts
+
+
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { MushroomsComponent } from './mushrooms/mushrooms.component';
+import { MushromComponent } from './mushroom/mushroom.component';
+
+
+const mushroomRoute: Routes = [
+  { path: "guide-des-champignons", component: MushroomsComponent },
+  { path: "champignon/:id", component: MushromComponent },
+];
+
+@NgModule({
+  declarations: [],
+  imports: [RouterModule.forChild(mushroomRoute)],
+  exports: [RouterModule],
+})
+export class MushroomRoutingModule { }
+````
 
 
 
@@ -186,8 +342,6 @@ A chaque détection de changements, les *callbacks* déclanchées sont, dans l�
 ## Rafraichissement d'un composant de la page
 
 Pour actualiser une page sans devoir la recharger  il suffit de modifier les données et angular regénère le bloc incriminé.
-
-
 
 
 
@@ -341,7 +495,7 @@ this.router.navigate(['admin/champignons/Liste-des-champignons']);
 
 
 
-## Directive 
+## DIRECTIVE
 
 ### ngIf
 
@@ -354,7 +508,129 @@ this.router.navigate(['admin/champignons/Liste-des-champignons']);
 
 
 
-## Validateur
+## INTERCEPTOR
+
+Les intercepteurs HTTP sont des outils très utiles dans les applications Angular qui permettent de traiter les requêtes et les réponses HTTP  avant qu'elles ne soient envoyées ou reçues par le serveur. Ils peuvent  être utilisés pour ajouter, modifier ou supprimer des données dans les  entêtes de la requête ou de la réponse, pour ajouter un message de  chargement ou pour effectuer une action spécifique en cas d'erreur.
+
+- Ajout d'un token d'authentification dans les entêtes de la requête, comme dans l'exemple précédent.
+
+- Ajout d'un message de chargement lors de l'envoi d'une requête et de son masquage lors de la réception de la réponse.
+
+- Gestion des erreurs en cas d'échec de la requête, par exemple en affichant un  message d'erreur ou en redirigeant l'utilisateur vers une page d'erreur.
+
+- Modification des données de la requête avant qu'elles ne soient envoyées, par  exemple en ajoutant un préfixe à l'URL ou en convertissant les données  en format JSON.
+
+  ### Ajouter  le token d'authentification dans l'entête de la requete et gérer le code d'erreur retourné.
+
+Dans votre module principal, importez `HTTP_INTERCEPTORS` et `HttpClientModule`.
+
+````
+// app.module.js
+
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+````
+
+1. En utilisant `HTTP_INTERCEPTORS` dans la liste des  fournisseurs de votre module principal, vous indiquez à Angular que vous souhaitez utiliser un ou plusieurs intercepteurs pour traiter les  requêtes et les réponses HTTP de votre application.
+
+2. Créez un nouveau service, un fichier `auth-interceptor.service.ts` dans votre répertoire de services.
+
+   ![image-20230911234031084](C:\Users\Utilisateur\AppData\Roaming\Typora\typora-user-images\image-20230911234031084.png)
+
+   
+
+   ````
+   ng g interceptor services\auth-interceptor
+   ````
+
+   
+
+   ````
+   // src\app\services\auth-interceptor.service.ts
+   
+   import { Injectable } from '@angular/core';
+   import { 
+     HttpInterceptor, 
+     HttpRequest, 
+     HttpHandler, 
+     HttpEvent,
+     HttpHeaders,
+     HttpErrorResponse
+   } from '@angular/common/http';
+   import { Router } from '@angular/router';
+   import { Observable, catchError, throwError } from 'rxjs';
+   import { AuthenticationService } from './authentication.service';
+   
+   
+   @Injectable()
+   export class TokenInterceptor implements HttpInterceptor {
+   
+     constructor(
+       private auth: AuthenticationService,
+       private router: Router
+     ) { }
+   
+     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+       // Récupérez l'URL actuelle
+       const currentUrl: string = this.router.url;
+   
+       // Vérifiez si l'URL contient le segment "back-office"
+       if (currentUrl.includes('back-office')) {
+       // Récupération du token d'authentification
+       const token: string|null = this.auth.getToken();
+         // Ajout du token dans les entêtes de la requête
+         request = request.clone({
+           headers: new HttpHeaders({
+             'Authorization': `Bearer ${token}`,
+             'Content-Type': 'application/json'
+           })
+         });
+       }
+         // Envoi de la requête avec les nouvelles entêtes
+         return next.handle(request).pipe(
+           catchError((error: HttpErrorResponse) => {
+             const errorCode = error.status; // Récupérer le code d'erreur HTTP
+     
+             // Gestion du code d'erreur
+             console.log(`Code d'erreur HTTP : ${errorCode}`);
+     
+             // 
+             if(errorCode === 403 ) {
+               this.router.navigate(["/login"]);
+             }
+     
+             // Vous pouvez également propager l'erreur pour qu'elle soit gérée ailleurs dans l'application
+             return  throwError(() => error);
+           })
+         );
+     }
+   }
+   ````
+
+Lorsque vous appelez la méthode `intercept` de votre intercepteur, vous pouvez effectuer des modifications sur la requête en utilisant l'objet `HttpRequest` passé en paramètre;
+
+````
+// src\app\app.module.ts
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth-interceptor.service';
+
+@NgModule({
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ]
+})
+export class AppModule { }
+````
+
+Votre intercepteur est maintenant configuré et ajoutera le token  d'authentification dans les entêtes de toutes les requêtes HTTP  effectuées par votre application Angular.
+
+
+
+## VALIDATEUR
 
 ````
 <!-- HTML -->
@@ -378,6 +654,124 @@ if (form?.invalid) {
     return;
 }
 ````
+
+
+
+## Gérer le token
+
+```
+npm install jwt-decode
+```
+
+Créer un service pour gerer le token par exemple : `jwt-token.service.ts`
+
+````
+import { Injectable } from '@angular/core';
+import { jwtDecode } from 'jwt-decode';
+// import * as jwt_decode from 'jwt-decode';
+
+export interface  DecodeToken {
+  sub: string,
+  iat: number,
+  exp: number
+ 
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class JwtTokenService {
+
+  jwtToken!: string;
+  decodedToken!:DecodeToken
+  // decodedToken!: { [key: string]: string };
+
+  constructor() {
+  }
+
+  setToken(token: string): void {
+    if (token) {
+      this.jwtToken = token;
+    }
+  }
+
+  decodeToken() {
+    if (this.jwtToken) {
+    this.decodedToken = jwtDecode(this.jwtToken);
+    }
+  }
+
+  getDecodeToken() {
+    return jwtDecode(this.jwtToken);
+  }
+
+  getUser(): string|null {
+    this.decodeToken();
+    return this.decodedToken ? this.decodedToken.sub : null;
+  }
+
+  // getEmailId() {
+  //   this.decodeToken();
+  //   return this.decodedToken ? this.decodedToken.email : null;
+  // }
+
+  getExpiryTime() {
+    this.decodeToken();
+    return this.decodedToken ? this.decodedToken.exp : null;
+  }
+
+  isTokenExpired(): boolean {
+    const expiryTime: number|null = this.getExpiryTime();
+    if (expiryTime) {
+      return ((1000 * expiryTime) - (new Date()).getTime()) < 5000;
+    } else {
+      return false;
+    }
+  }
+}
+
+````
+
+Puis dans le service qui gère l'authentification on instancie le service `jwt-token`
+
+````
+import { JwtTokenService } from './jwt-token.service';
+
+@Injectable({
+  providedIn: 'root' // Le service est disponible dans toute l'application
+})
+export class AuthenticationService {
+...
+  // Injection des services dans le constructeur
+  constructor(
+    private router: Router, 
+    private http: HttpClient, 
+    private jwtTokenService: JwtTokenService
+  ) { }
+  
+    // Méthode pour vérifier si un utilisateur est authentifié
+  public isAuth = ():boolean => {
+    // Récupérez le token depuis le stockage
+    const token = this.getToken();
+
+    if(token) {
+      // Configurez le service de gestion des jetons avec le token récupéré
+      this.jwtTokenService.setToken(token)
+      
+      // Vérifiez si le token est expiré en utilisant le service de gestion des jetons
+      //console.log(this.jwtTokenService.isTokenExpired());
+
+      // Retournez true si le token n'est pas expiré, indiquant que l'utilisateur est authentifié
+      return !this.jwtTokenService.isTokenExpired();
+    }
+
+    // Retournez false si aucun token n'a été trouvé, indiquant que l'utilisateur n'est pas authentifié
+    return false;
+  }
+  
+````
+
+
 
 
 
@@ -480,5 +874,37 @@ send(form: NgForm) {
     ...
 }
 ...
+````
+
+
+
+## Gerer l'envoi des token via l'interceptor
+
+Ce composant va écouter les requête sortantes et on l'utilisera pour in jecter notre token vers API
+
+````
+ng g interceptor token
+````
+
+
+
+## CK EDITOR
+
+https://ckeditor.com/docs/ckeditor5/latest/installation/integrations/angular.html
+
+````
+npm install --save @ckeditor/ckeditor5-angular
+
+puis une des version prédéfini par exemple :
+
+npm install --save @ckeditor/ckeditor5-build-classic
+````
+
+
+
+````
+// app.module.ts
+
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 ````
 

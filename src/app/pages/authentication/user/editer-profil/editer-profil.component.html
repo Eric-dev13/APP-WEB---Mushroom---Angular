@@ -1,0 +1,50 @@
+<div class="container">
+    <div *ngIf="user.filename ; else iconUserByDefault" class="">
+        <img [src]="PUBLIC_URL_GET_FILE_USER + user.filename" alt="Avatar" class="rounded-circle p-1 bg-dark"
+            width="200" />
+    </div>
+    <ng-template #iconUserByDefault>
+        <img src="assets/images/icones/connexion.png" alt="Avatar">
+    </ng-template>
+    <p class="text-nowrap" *ngIf="user?.createdAt">
+        <span class="fw-bold">Inscrit depuis le </span>
+        {{ user.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}
+    </p>
+
+    <form #form="ngForm" (submit)="send(form)" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="pseudo" class="form-label">Pseudo</label>
+            <input [(ngModel)]="user.pseudo" type="text" class="form-control" id="nom" name="pseudo"
+                aria-describedby="pseudo">
+            <div id="pseudoHelp" class="form-text"></div>
+        </div>
+        <div class="mb-3">
+            <label for="lastname" class="form-label">Nom</label>
+            <input [(ngModel)]="user.lastname" type="text" class="form-control" id="lastname" name="lastname"
+                aria-describedby="lastname">
+            <div id="lastnameHelp" class="form-text"></div>
+        </div>
+        <div class="mb-3">
+            <label for="firstname" class="form-label">Prénom</label>
+            <input [(ngModel)]="user.firstname" type="text" class="form-control" id="firstname" name="firstname"
+                aria-describedby="firstname">
+            <div id="firstnameHelp" class="form-text"></div>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input [(ngModel)]="user.email" type="email" class="form-control" id="email" name="email"
+                aria-describedby="email">
+            <div id="emailHelp" class="form-text"></div>
+        </div>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Avatar</label>
+            <input class="form-control" type="file" id="formFile" (change)="onFileSelected($event)">
+        </div>
+        <div class="input-group flex-nowrap mb-3">
+            <!-- Affichage de l'image selectionner avec btn parcourir -->
+            <img *ngIf="selectedImage" [src]="selectedImage" alt="Image sélectionnée" height="200">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+    </form>
+</div>

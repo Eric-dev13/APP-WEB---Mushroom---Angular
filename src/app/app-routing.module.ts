@@ -1,56 +1,67 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { MushroomsComponent } from './mushroom/mushrooms/mushrooms.component';
-import { MushromComponent } from './mushroom/mushroom/mushroom.component';
-import { ForumComponent } from './forum/forum.component';
-import { ListMushroomComponent } from './authenticated_acces/admin/mushroom/list-mushroom/list-mushroom.component';
-import { FormMushroomComponent } from './authenticated_acces/admin/mushroom/form-mushroom/form-mushroom.component';
-import { NotFoundComponent } from './page-error/not-found/not-found.component';
-import { DetailMushroomComponent } from './authenticated_acces/admin/mushroom/detail-mushroom/detail-mushroom.component';
-import { AuthenticateComponent } from './security/authenticate/authenticate.component';
-import { EdibilitiesComponent } from './authenticated_acces/admin/edibility/edibilities/edibilities.component';
-import { FormEdibilityComponent } from './authenticated_acces/admin/edibility/form-edibility/form-edibility.component';
-import { DashboardComponent } from './authenticated_acces/dashboard/dashboard.component';
-import { EditerPasswordComponent } from './authenticated_acces/user/editer-password/editer-password.component';
-import { EditerProfilComponent } from './authenticated_acces/user/editer-profil/editer-profil.component';
-import { ProfilComponent } from './authenticated_acces/user/profil/profil.component';
+import { HomeComponent } from './pages/home/home.component';
 
+import { SubjectsComponent, } from './pages/forum/subjects/subjects.component';
+import { SubjectComponent } from './pages/forum/subject/subject.component';
 
+import { NotFoundComponent } from './pages/error/not-found/not-found.component';
+import { AuthenticateComponent } from './pages/security/authenticate/authenticate.component';
+
+import { DashboardComponent } from './pages/authentication/dashboard/dashboard.component';
+import { EditerProfilComponent } from './pages/authentication/user/editer-profil/editer-profil.component';
+import { ProfilComponent } from './pages/authentication/user/profil/profil.component';
+
+import { EdibilitiesComponent } from './pages/authentication/admin/edibility/edibilities/edibilities.component';
+import { FormEdibilityComponent } from './pages/authentication/admin/edibility/form-edibility/form-edibility.component';
+
+import { ListMushroomComponent } from './pages/authentication/admin/mushroom/list-mushroom/list-mushroom.component';
+import { DetailMushroomComponent } from './pages/authentication/admin/mushroom/detail-mushroom/detail-mushroom.component';
+import { FormMushroomComponent } from './pages/authentication/admin/mushroom/form-mushroom/form-mushroom.component';
 
 
 const routes: Routes = [
   // ROUTES PUBLIQUES
-  { path: "", component: HomeComponent },
-  { path: "guide-des-champignons", component: MushroomsComponent },
-  { path: "champignon/:id", component: MushromComponent },
-  { path: "forum", component: ForumComponent },
+  { path: "", component: HomeComponent }, // Route par défaut (page d'accueil)
+  { path: "", loadChildren: () => import('./pages/mushroom/mushroom.module').then(m => m.MushroomModule) },
+
+  { path: "forum", component: SubjectsComponent },
+
+
 
   // ROUTES PROTEGES
-  {path: 'back-office/admin', component: DashboardComponent, children: [
+
+  // { path: "admin/champignon/Liste-des-champignons", component: ListMushroomComponent },
+  {
+    path: 'back-office', component: DashboardComponent, children: [
       // ADMIN - mushroom
-      { path: "champignon/Liste-des-champignons", component: ListMushroomComponent },
-      { path: "champignon/description/:id", component: DetailMushroomComponent },
-      { path: "champignon/nouveau", component: FormMushroomComponent },
-      { path: "champignon/editer/:id", component: FormMushroomComponent },
+      //{ path: "admin/champignon", loadChildren: () => import('./pages/authentication/admin/mushroom/admin-mushroom.module').then(m => m.AdminMushroomModule) },
+      { path: "admin/champignon/Liste-des-champignons", component: ListMushroomComponent },
+      { path: "admin/champignon/description/:id", component: DetailMushroomComponent },
+      { path: "admin/champignon/nouveau", component: FormMushroomComponent },
+      { path: "admin/champignon/editer/:id", component: FormMushroomComponent },
+
       // ADMIN - edibility
-      { path: "comestibilite/liste", component: EdibilitiesComponent },
-      { path: "comestibilite/nouveau", component: FormEdibilityComponent },
-      { path: "comestibilite/editer/:id", component: FormEdibilityComponent },
+      //{ path: "comestibilite", loadChildren: () => import('./pages/authentication/admin/edibility/edibility.module').then(m => m.EdibilityModule) },
+      { path: "admin/comestibilite/liste", component: EdibilitiesComponent },
+      { path: "admin/comestibilite/nouveau", component: FormEdibilityComponent },
+      { path: "admin/comestibilite/editer/:id", component: FormEdibilityComponent },
+
       //  ADMIN - USER ACCESS
-       //{ path: "admin/utilisateur/profils", component:  },
-      //{ path: "admin/utilisateur/profil/:id", component:  },
+      // { path: "admin/utilisateur", loadChildren: () => import('./pages/authentication/user/user.module').then(m => m.UserModule) },
+      // { path: "admin/utilisateur/profils", component: },
+      // { path: "admin/utilisateur/profil/:id", component: },
+
+      // USER
+      // { path: "utilisateur", loadChildren: () => import('./pages/authentication/user/user.module').then(m => m.UserModule) },
+      { path: "utilisateur/profil", component: ProfilComponent },
+      { path: "utilisateur/profil/editer", component: EditerProfilComponent },
     ]
   },
-  {path: 'back-office/utilisateur', component: DashboardComponent, children: [
-    // USER
-    { path: "profil", component: ProfilComponent },
-    { path: "profil/editer/:id", component: EditerProfilComponent },
-  ]
-},
 
   // ROUTE D'AUTHENTIFICATION
   { path: "securite/authentification", component: AuthenticateComponent },
+
 
   // TOUTES LES AUTRES ROUTES = NOT FOUND
   { path: "**", component: NotFoundComponent } // Page d'erreur 404

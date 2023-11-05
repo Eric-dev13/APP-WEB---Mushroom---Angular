@@ -1,0 +1,120 @@
+<div class="bgfullSize bg-image--forest opacity-75"></div>
+<div class="bgfullSize bgColor--filterBlack"></div>
+
+<article class="container">
+    <!-- <div>
+        <a [routerLink]="['/back-office/admin/champignon/Liste-des-champignons']" class="btn btn-info"
+            title="Retour"><fa-icon class="text-light" [icon]="faRotateLeft"></fa-icon></a>
+    </div> -->
+    <div class="row bg-light bg-opacity-25 py-3 m-md-3 rounded descriptionMushroom ">
+        <!-- Carousel  -->
+        <div class="col-12 col-md-6 order-md-3 col-lg-6 order-lg-3 col-xl-5 order-xl-3 p-3 mb-3">
+            <div *ngIf="mushroom?.medias?.length == 0; else showAllImages" id="carouselExampleIndicators"
+                class="carousel slide carousel-fade descriptionMushroom__img" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="assets/images/icones/default.png" class="d-block w-100" alt="Image par defaut">
+                    </div>
+                </div>
+            </div>
+            <ng-template #showAllImages>
+                <div id="carouselExampleIndicators" class="carousel slide carousel-fade descriptionMushroom__img"
+                    data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button *ngFor="let media of mushroom?.medias; index as i" type="button"
+                            data-bs-target="#carouselExampleIndicators" [attr.data-bs-slide-to]="i"
+                            [class.active]="i == 0" aria-label="Slide" [attr.aria-label]="i">
+                        </button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div *ngFor="let media of mushroom?.medias; index as i" class="carousel-item"
+                            [class.active]="i === 0" id="conteneur_image">
+                            <img [src]="PUBLIC_URL_GET_FILE_MUSHROOM  + media?.filename" class="d-block w-100"
+                                [alt]="media?.filename" />
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </ng-template>
+        </div>
+        <!-- Titre et sous titre -->
+        <div
+            class="col-12 col-md-12 order-md-1 col-lg-6 order-lg-2 col-xl-7 order-xl-2 mt-1 p-3 text-center fiche__header">
+            <h1 class="text-light txtShadow--dark">{{ mushroom?.commonname }}</h1>
+            <h2 class="descriptionMushroom__header__letter text-uppercase txtShadow--dark">{{ mushroom?.latinname }}
+            </h2>
+        </div>
+        <!-- Comestibilité -->
+        <div
+            class="col-12 col-md-12 order-md-2 col-lg-6 order-lg-1 col-xl-5 order-xl-1 mt-2 d-flex justify-content-center align-items-end descriptionMushroom__eat">
+            <div class="text-center font-weight-bold text-light txtShadow--dark">
+                <img [src]="PUBLIC_URL_GET_FILE_EDIBILITY + mushroom?.edibility?.filename" alt="?">
+                <p>{{ mushroom?.edibility?.name }}</p>
+            </div>
+        </div>
+        <!-- Descriptif -->
+        <div
+            class="col-12 col-md-6 order-md-4 col-lg-6 order-lg-4 col-xl-7 order-xl-4 px-3 px-md-4 py-3 p-lg-5 rounded">
+            <!-- Nom local -->
+            <p *ngIf="mushroom?.localnames">
+                <span class="fw-bold">Nom local</span><br>
+                <ng-template *ngFor="let localname of mushroom?.localnames">
+                    {{ localname?.name }}
+                </ng-template>
+            </p>
+
+            <!-- Chapeau -->
+            <p *ngIf="mushroom?.hat">
+                <span class="fw-bold">Chapeau</span><br>
+                {{ mushroom?.hat }}
+            </p>
+
+            <!-- Lamelle et type de lamelle -->
+            <div class="d-block">
+                <!-- <img *ngIf="mushroom?.lamellatype" [src]="API_URL_GET_FILE_LAMELLATYPE + mushroom?.lamellatype?.filename" class="float-right" alt="?" width="50"> -->
+                <p *ngIf="mushroom?.lamella">
+                    <span class="fw-bold">Hyménium</span>
+                    (Lames - Tubes - Plis - Aiguillons - Pores)<br>
+                    {{ mushroom?.lamella }}
+                </p>
+            </div>
+
+            <!-- Pied -->
+            <p *ngIf="mushroom?.foot">
+                <span class="fw-bold">Pied</span><br>
+                {{ mushroom?.foot }}
+            </p>
+
+            <!-- Chair -->
+            <p *ngIf="mushroom?.flesh">
+                <span class="fw-bold">Chair</span><br>
+                {{ mushroom?.flesh }}
+            </p>
+
+            <!-- Habitat -->
+            <p *ngIf="mushroom?.habitat">
+                <span class="fw-bold">Habitat</span><br>
+                {{ mushroom?.habitat }}
+            </p>
+
+            <!-- Commentaire -->
+            <p *ngIf="mushroom?.comment">
+                <span class="fw-bold">Remarques</span><br>
+                {{ mushroom?.comment }}
+            </p>
+        </div>
+    </div>
+</article>

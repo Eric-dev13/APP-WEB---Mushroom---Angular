@@ -1,0 +1,197 @@
+<div class="bgfullSize bg-image--forest"></div> foret/foret-3.jpg
+<div class="bgfullSize bgColor--filterBlack"></div>
+
+<article class="forumSubjects">
+    <div class="container bg-dark mt-1">
+        <header class="row">
+            <div class="col-12 py-5 text-light text-center">
+                <div>
+                    <h1>Bienvenue sur ce salon</h1>
+                    <h2>Vous avez besoin d'aide ?</h2>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <div class="container mb-1 bg-dark border-top border-secondary">
+        <div class="row py-3 m-md-3 rounded">
+            <!-- CHARTE DU FORUM -->
+            <div class="col-12 p-3">
+                <p class="text-light forumCharte">ici, vous pouvez discuter, questionner, échanger avec les autres
+                    membres de la communauté. Afin que tout se passe bien, voici quelques règles à respecter...
+                    <a class="forumCharte" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        lire la suite
+                    </a>
+                </p>
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Règles du forum</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <app-charte></app-charte>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- {# AJOUTER UN SUJET #} -->
+            <div *ngIf="auth.isAuth()" class="text-center border-bottom border-secondary pb-4">
+            
+                <a class="h5 btn btn-warning" data-bs-toggle="collapse" href="#collapseExample1" role="button"
+                    aria-expanded="false" aria-controls="multiCollapseExample1">
+                    Poser votre question
+                </a>
+                <div class="collapse" id="collapseExample1">
+                    <div class="card card-body bg-dark text-light p-4">
+                        <form #form="ngForm" (submit)="addSubject(form)" enctype="multipart/form-data">
+                            <div class="form-group mb-3">
+                                <label for="title">Titre</label>
+                                <input ngModel type="text" class="form-control" id="title" aria-describedby="title"
+                                    placeholder="Saisir un titre">
+                                <small id="title_error" class="form-text text-muted"></small>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="description">Description</label>
+                                <ckeditor [editor]="Editor" data="" ngModel name="description" ></ckeditor>
+                                <!-- <input ngModel type="text" class="form-control" id="description"
+                                    aria-describedby="description" placeholder="Description"> -->
+                                <small id="description_error" class="form-text text-muted"></small>
+                            </div>
+                            <button class="btn btn-primary">Publier</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- LES SUJETS -->
+    <div class="col-12 mt-3">
+        <div class="row justify-content-center" *ngFor="let sujet of sujets">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img [src]="PUBLIC_URL_GET_FILE_USER + sujet.user.filename" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <p>
+                                <span class="me-2">{{sujet.user.pseudo}}</span> 
+                                <small class="text-body-secondary" >{{sujet.createdAt | date:"dd/MM/yyyy hh:mm:ss"}}</small>
+                            </p>
+                            <h5 class="card-title">{{sujet.title}}</h5>
+                            <!-- <div [innerHtml]="sujet.description"></div> -->
+                            <ckeditor [editor]="Editor" [data]="extractFirstWords(sujet.description,10)" [config]="{}" [disabled]="isDisabled"></ckeditor>
+                            <button (click)="toggleDisabled()">
+                                 {{isDisabled ? 'Enable editor' : 'Disable editor' }}
+                            </button>
+                            <button type="button" class="btn btn-primary position-relative" *ngIf="sujet.comments.length > 0 ">
+                                Réponses
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{sujet.comments.length}}++
+                                </span>
+                              </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</article> 
+        <!-- <div class="col-12 border-bottom border-secondary">
+                        {{ form_start(formCategory,{'attr':{'class':'row g-3'}}) }}
+                        {{ form_row(formCategory.name) }}
+                        {{ form_row(formCategory.save) }}
+                        {{form_end(formCategory)}}
+                    </div> -->
+
+        <!-- <div class="col-12 my-5">
+                        {% if nameCategory is not empty %}
+                        <h4 class="text-light text-center">{{nameCategory}}</h4>
+                        {% endif %}
+                    </div> -->
+
+        <!-- <div class="col-12">
+                        <div class="table-responsive-md">
+                            <table class="table text-light">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">
+                                            sujet(s) sur le forum
+                                        </th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Auteur</th>
+                                        <th scope="col">Catégorie</th>
+                                        <th scope="col">Reponse(s)</th>
+                                        <th scope="col">
+                                            Activité
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let sujet of sujets">
+                                        <td>
+                                            <a routerLink="">{{sujet.title}}</a>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" [data-bs-target] = "sujet.id">
+                                                Aperçu
+                                            </button>
+                                            <div class="modal fade" id="{{sujet.id}}" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg text-dark" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">{{
+                                                                subject.title|raw }}</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="container">
+                                                                <div class="row">
+                                                                    <div
+                                                                        class="col forumSubjects__commentary__image--size">
+                                                                        {{subject.description|raw}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Fermer</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {# {{subject.description|slice(0,100)|nl2br}}... #}
+                                        </td>
+                                        <td>
+                                            {{subject.userPseudo}}
+                                        </td>
+                                        <td>
+                                            {# {{subject.forumCategory|length}} #}
+                                            {% for categorie in subject.forumCategory %}
+                                            {{categorie.name}}
+                                            {% if subject.forumCategory|length %}<br>{% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{subject.forumCommentary|length}}</td>
+                                        <td>{{ dateDiff(subject.createdAt|date("m/d/Y H:i",false)) }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> -->

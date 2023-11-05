@@ -1,5 +1,16 @@
 export const environment = {
-    BASE_URL: "http://localhost:9000/api/v1/",
-    URL_GET_MUSHROOM: "http://localhost:9000/api/v1/file/upload/mushrooms/",
-    URL_GET_USER: "http://localhost:9000/api/v1/file/upload/users/"
-};
+
+    API_BASE_URL: 'http://localhost:9000/api/v1/',
+
+    API_URL_AUTH: 'http://localhost:9000/api/v1/auth/',
+
+    API_BASE_URL_ADMIN: 'http://localhost:9000/api/v1/admin/',
+
+
+    // ACCES PUBLIC FILE UPLOAD
+    API_BASE_URL_UPLOAD: 'http://localhost:9000/upload/'
+    // PUBLIC_URL_GET_FILE_MUSHROOM: PUBLIC_BASE_URL + 'mushrooms/',
+    // PUBLIC_URL_GET_FILE_EDIBILITY: PUBLIC_BASE_URL + 'edibility/',
+    // PUBLIC_URL_GET_FILE_LAMELLATYPE: PUBLIC_BASE_URL + 'lamellatype/',
+    // PUBLIC_URL_GET_FILE_USER: PUBLIC_BASE_URL + 'users/',
+}

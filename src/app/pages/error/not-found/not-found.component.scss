@@ -1,0 +1,22 @@
+@import "../../../../../node_modules/rfs/scss.scss";
+
+.erreur {
+    min-height: calc(100vh - 90px);
+
+    h1,h2{
+        font-family: 'Lobster', cursive;
+        @include font-size(3.5rem);
+    }
+
+    h2{
+        line-height: 3em;
+        @include font-size(1.6rem);
+    }
+
+}
+
+@media  screen and (max-width:574px){
+    .erreur h2{
+        line-height:1.5em;
+    }
+}
