@@ -3,3 +3,11 @@ h1 {
     font-size: 4.5rem;
     letter-spacing: 10px;
 }
+
+.containerImageCircle {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
+}

@@ -6,35 +6,42 @@
         -----------------------------------------------------------                     
         -->
         <nav id="sidebar" [ngClass]="{'active': isSidebarActive}">
-            <!-- header sideBar -->
-            <div class="sidebar-header">
-                <h3>Espace admin</h3>
-            </div>
-            <ul class="list-unstyled components">
-                <li class="active">
-                    <a data-bs-toggle="collapse" data-bs-target="#listeChampi" href="#" aria-expanded="false" class="dropdown-toggle">Champignons</a>
-                    <ul class="collapse list-unstyled" id="listeChampi">
-                        <li>
-                            <a [routerLink]="['/back-office/admin/champignon/Liste-des-champignons']">Liste des champignons</a>
-                        </li>
-                        <li>
-                            <a [routerLink]="['/back-office/admin/champignon/nouveau']">Ajouter une nouvelle espèce</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="active">
-                    <a  data-bs-toggle="collapse" href="#" data-bs-target="#saveurToxicite"  aria-expanded="false"
-                        class="dropdown-toggle">Saveur et toxicité</a>
-                    <ul class="collapse list-unstyled" id="saveurToxicite">
-                        <li>
-                            <a [routerLink]="['/back-office/admin/comestibilite/liste']">Afficher la liste des saveurs et toxicités</a>
-                        </li>
-                        <li>
-                            <a [routerLink]="['/back-office/admin/comestibilite/nouveau']">Ajouter une nouvelle saveur ou toxicité</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+            <ng-template [ngIf]="auth.isAdmin()">
+                <!-- header sideBar -->
+                <div class="sidebar-header">
+                    <h3>Espace admin</h3>
+                </div>
+                <ul class="list-unstyled components">
+                    <li class="active">
+                        <a data-bs-toggle="collapse" data-bs-target="#listeChampi" href="#" aria-expanded="false"
+                            class="dropdown-toggle">Champignons</a>
+                        <ul class="collapse list-unstyled" id="listeChampi">
+                            <li>
+                                <a [routerLink]="['/back-office/admin/champignon/Liste-des-champignons']">Liste des
+                                    champignons</a>
+                            </li>
+                            <li>
+                                <a [routerLink]="['/back-office/admin/champignon/nouveau']">Ajouter une nouvelle
+                                    espèce</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="active">
+                        <a data-bs-toggle="collapse" href="#" data-bs-target="#saveurToxicite" aria-expanded="false"
+                            class="dropdown-toggle">Saveur et toxicité</a>
+                        <ul class="collapse list-unstyled" id="saveurToxicite">
+                            <li>
+                                <a [routerLink]="['/back-office/admin/comestibilite/liste']">Afficher la liste des
+                                    saveurs et toxicités</a>
+                            </li>
+                            <li>
+                                <a [routerLink]="['/back-office/admin/comestibilite/nouveau']">Ajouter une nouvelle
+                                    saveur ou toxicité</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </ng-template>
 
             <!-- 
                 ------------------------------------------------------------------- 
@@ -95,5 +102,3 @@
         </div>
     </div>
 </div>
-
-

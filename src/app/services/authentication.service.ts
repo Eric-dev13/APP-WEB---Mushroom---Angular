@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../interfaces/user.interface';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { API_URL_AUTH } from 'src/environments/config';
 import { JwtTokenService } from './jwt-token.service';
@@ -28,10 +28,7 @@ export class AuthenticationService {
 
     if(token) {
       // Configurez le service de gestion des jetons avec le token récupéré
-      this.jwtTokenService.setToken(token)
-      
-      // Vérifiez si le token est expiré en utilisant le service de gestion des jetons
-      //console.log(this.jwtTokenService.isTokenExpired());
+      this.jwtTokenService.setToken(token);
 
       // Retournez true si le token n'est pas expiré, indiquant que l'utilisateur est authentifié
       return !this.jwtTokenService.isTokenExpired();

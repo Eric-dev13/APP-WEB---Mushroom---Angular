@@ -31,15 +31,13 @@
 
               <div class="input-box">
                 <fa-icon [icon]="faEnvelope" class="text-success"></fa-icon>
-                <input [(ngModel)]="userAuthentication.email" name="email" type="email" placeholder="Entrez votre email"
-                  required>
+                <input ngModel name="email" type="email" placeholder="Entrez votre email">
               </div>
               <small class="text-danger" *ngIf="errors['email']">{{ errors['email'] }}</small>
 
               <div class="input-box">
                 <fa-icon [icon]="faLock" class="text-success"></fa-icon>
-                <input [(ngModel)]="userAuthentication.password" name="password" type="password"
-                  placeholder="Entrez votre mot de passe" required>
+                <input ngModel name="password" type="password" placeholder="Entrez votre mot de passe">
               </div>
               <small class="text-danger" *ngIf="errors['password']">{{ errors['password'] }}</small>
 
@@ -47,7 +45,7 @@
               <div class="button input-box">
                 <input type="submit" value="Me connecter">
               </div>
-              <div class="text sign-up-text">Vous n'avez pas de compte? <label for="flip">S'inscrire maintenant</label>
+              <div class="text sign-up-text">Vous n'avez pas de compte? <label for="flip"(click)="emptyErrors()">S'inscrire maintenant</label>
               </div>
             </div>
           </form>
@@ -59,19 +57,18 @@
 
               <div class="input-box">
                 <fa-icon [icon]="faUser" class="text-success"></fa-icon>
-                <input [(ngModel)]="userRegistration.pseudo" name="pseudo" type="text" placeholder="Entrez votre pseudo"
-                  required>
+                <input ngModel name="pseudo" type="text" placeholder="Entrez votre pseudo">
               </div>
 
               <div class="input-box">
                 <fa-icon [icon]="faEnvelope" class="text-success"></fa-icon>
-                <input [(ngModel)]="userRegistration.email" name="email" type="email" placeholder="Entrez votre email">
+                <input ngModel name="email" type="email" placeholder="Entrez votre email">
               </div>
               <small class="text-danger" *ngIf="errors['email']">{{ errors['email'] }}</small>
 
               <div class="input-box">
                 <fa-icon [icon]="faLock" class="text-success"></fa-icon>
-                <input [(ngModel)]="userRegistration.password" name="password" type="password"
+                <input ngModel name="password" type="password"
                   placeholder="Entrez votre mot de passe">
               </div>
               <small class="text-danger" *ngIf="errors['password']">{{ errors['password'] }}</small>
@@ -79,7 +76,7 @@
               <div class="button input-box">
                 <input type="submit" value="M'inscrire">
               </div>
-              <small class="text-danger">Vous avez déjà un compte? <label for="flip">Connecte-toi
+              <small class="text-danger">Vous avez déjà un compte? <label for="flip" (click)="emptyErrors()">Connecte-toi
                   maintenant</label></small>
             </div>
           </form>

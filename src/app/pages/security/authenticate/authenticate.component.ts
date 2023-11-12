@@ -29,18 +29,6 @@ export class AuthenticateComponent implements OnInit {
     private route: ActivatedRoute,
     protected authenticationService: AuthenticationService) { }
 
-  userRegistration: UserAuth = {
-    "pseudo": "Luke",
-    "email": "skywalker@gmail.com",
-    "password": "1234",
-  }
-
-  userAuthentication: UserAuth = {
-    "pseudo": "ricou",
-    "email": "lanzae32@gmail.com",
-    "password": "1234"
-  }
-
   errors: { [key: string]: string } = {};
 
   ngOnInit(): void { }
@@ -52,12 +40,16 @@ export class AuthenticateComponent implements OnInit {
     if (formAuth.valid) {
       this.authenticationService.loggedIn(formAuth).subscribe({
         next: (data) => {
-          console.log('Utilisateur: ', data.user);
-          console.log('token: ', data.token);
-          //// Enregistre le token et redirige vers la page d'acceuil
+          // console.log('Utilisateur: ', data.user);
+          // console.log('token: ', data.token);
+          // console.log('token: ', data);
+          // Enregistre le token et redirige vers la page d'acceuil
           this.authenticationService.doLogged(data);
         },
-        error: (err) => console.log('Observer got an error: ' + err),
+        error: (err) => {
+          // console.log('Observer got an error: ' + err);
+          this.checkDataConstraints(err);
+        },
         complete: () => console.log('Observer got a complete notification')
       });
     }
@@ -71,40 +63,32 @@ export class AuthenticateComponent implements OnInit {
         next: (data) => {
           // console.log('Utilisateur: ', data.user);
           // console.log('token: ', data.token);
-          // Envoi l'email et password pour l'inscription puis stocke en retour le token et enfin redirige vers la page d'acceuil
-          this.authenticationService.doLogged(data.token);
+          // Enregistre le token et redirige vers la page d'acceuil
+          this.authenticationService.doLogged(data);
         },
         error: (err) => {
           // console.log('Observer got an error: ', err.error);
-          // console.log(this.errors);
-          this.errors = {};
-          
-          if (err.error) {
-            for (const fieldName in err.error) {
-              if (err.error.hasOwnProperty(fieldName)) {
-                // Mise à jour de la structure de données "errors" avec les messages d'erreur
-                this.errors[fieldName] = err.error[fieldName];
-              }
-            }
-          }
+          this.checkDataConstraints(err);
         },
         complete: () => console.log('Observer got a complete notification')
       });
     }
   }
 
-  // Error
-  // handleError(error: HttpErrorResponse) {
-  //   let msg = '';
-  //   if (error.error instanceof ErrorEvent) {
-  //     // client-side error
-  //     msg = error.error.message;
-  //   } else {
-  //     // server-side error
-  //     msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
-  //   }
-  //   return throwError(() => msg);
-  // }
+  checkDataConstraints = (err: any) => {
+    this.emptyErrors;
+    if (err.error) {
+      for (const fieldName in err.error) {
+        if (err.error.hasOwnProperty(fieldName)) {
+          // Mise à jour de la structure de données "errors" avec les messages d'erreur
+          this.errors[fieldName] = err.error[fieldName];
+        }
+      }
+    }
+  }
 
+  emptyErrors = () :void => {
+    this.errors = {};
+  }
 
-}
+} 

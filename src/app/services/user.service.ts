@@ -30,11 +30,11 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getProfilCurrentUser = (): Observable<any> => {
-    return this.http.get<User>(API_BASE_URL +"user");
+    return this.http.get<User>(API_BASE_URL +"current-user");
   }
 
-    updateProfilCurrentUser = (formData: FormData): Observable<boolean> => {
-    return this.http.put<boolean>(API_BASE_URL + "user",formData);
+  updateProfilCurrentUser = (formData: FormData): Observable<boolean> => {
+    return this.http.put<boolean>(API_BASE_URL + "current-user",formData);
   }
 
   // updateProfilCurrentUser = (form: NgForm): Observable<boolean> => {

@@ -1,8 +1,7 @@
-
 <div class="container-fluid container-lg bgColor--whiteLight px-3 currentUser">
     <header class="row border-bottom">
         <h1 class="text-center">Profil</h1>
-        <p class="text-nowrap mt-5" *ngIf="user?.createdAt"> 
+        <p class="text-nowrap mt-5" *ngIf="user?.createdAt">
             <span class="fw-bold">Date d'inscription :</span>
             {{ user.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}
         </p>
@@ -11,14 +10,16 @@
         <div class="col flex-grow-0">
             <h3 class="mt-2 mt-sm-0 fw-bold" *ngIf="user?.pseudo">{{user.pseudo}}</h3>
             <div *ngIf="user?.filename ; else iconUserByDefault">
-                <img [src]="PUBLIC_URL_GET_FILE_USER + user.filename" class="rounded" alt="Avatar" width="200"/>
+                <div class="containerImageCircle">
+                    <img [src]="PUBLIC_URL_GET_FILE_USER + user.filename" class="img-fluid" alt="Avatar"  />
+                </div>
             </div>
             <ng-template #iconUserByDefault>
-                 <img src="assets/images/icones/connexion.png" alt="Avatar"  class="">
+                <img src="assets/images/icones/connexion.png" alt="Avatar" class="">
             </ng-template>
             <div class="text-nowrap" *ngIf="user?.updatedAt">
                 <div class="col">
-                    <label class="mt-4 fw-bold text-nowrap">Dernière modification</label> 
+                    <label class="mt-4 fw-bold text-nowrap">Dernière modification</label>
                     <p>{{user.updatedAt}}</p>
                 </div>
             </div>
