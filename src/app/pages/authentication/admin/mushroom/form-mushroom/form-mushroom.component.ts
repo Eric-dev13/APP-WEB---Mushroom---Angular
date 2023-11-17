@@ -8,7 +8,6 @@ import { Edibility } from 'src/app/interfaces/edibility.interface';
 import { LamellaType } from 'src/app/interfaces/lamella-type.interface';
 import { MushroomInterface } from '../mushroom-interface';
 import { MediaInterface } from '../../media/media-interface';
-import { Media, MediaFileToUpload } from 'src/app/interfaces/media.interface';
 import { LocalName } from 'src/app/interfaces/local-name.interface';
 import { EdibilityService } from 'src/app/services/edibility.service';
 import { LamellaTypeService } from 'src/app/services/lamella-type.service';
@@ -79,9 +78,8 @@ export class FormMushroomComponent implements OnInit {
 
 
   load() {
-    // GET edibilityEntity[]
-    // Créez un en-tête d'autorisation avec le jeton Bearer
 
+    // FindAll edibility
     this.edibilityService.findAll().subscribe({
       next: (data) => {
         this.edibilities = data;
@@ -91,7 +89,7 @@ export class FormMushroomComponent implements OnInit {
       complete: () => console.log('Actualiser')
     });
 
-    // GET LamellatypeEntity[] 
+    // FindAll Lamellatype
     this.lamellaTypeService.findAll().subscribe({
       next: (data) => {
         this.lamellaTypes = data;
@@ -103,6 +101,7 @@ export class FormMushroomComponent implements OnInit {
 
     // POST ou PUT : Si un paramètre 'id' est présent dans l'URL nous sommes en mode mise à jour (PUT) sinon ajouter (POST)
     this.id_mushroom = this.route.snapshot.paramMap.get('id');
+
     if (this.id_mushroom) {
       // GET : Find By ID - le nom des propriétés de l'interface mushroom doivent correspondre avec les cles du JSON renvoyé par l'API
       this.mushroomAdminService.findById(this.id_mushroom).subscribe({
@@ -152,7 +151,7 @@ export class FormMushroomComponent implements OnInit {
 
 
   send(form: NgForm) {
-    // Validation du formulaire
+    // Validation coté front du formulaire
     // if (form?.invalid) {
     //   console.log('Le formulaire est invalide.');
     //   return;
@@ -219,41 +218,41 @@ export class FormMushroomComponent implements OnInit {
       /* --------------------------------------------------------------- */
       /*    POST -  (En 2 étapes BD & FILE )  */
       /* --------------------------------------------------------------- */
-      this.http.post<MushroomInterface>(this.API_ADMIN_BASE_URL + 'mushroom', form.value).subscribe({
-        next: (data) => {
-          // Envoie une deuxième requête POST pour ajouter les médias associés 
-          if (this.medias.length > 0) {
-            this.http.post(this.API_ADMIN_BASE_URL + 'media/' + data.id, formData).subscribe({
-              next: (data) => console.log('Medias: ', data),
-              error: (err) => console.log('Observer got an error: ' + err),
-              complete: () => console.log('Medias ajoutés!')
-            });
-          }
-
-          // Redirige l'utilisateur vers la liste des champignons après l'ajout
-          this.router.navigate(["admin/champignon/Liste-des-champignons"])
-        },
-        error: (err) => console.log('Observer got an error: ' + err),
-        complete: () => console.log('Champignon ajouté!')
-      });
-
-      // this.mushroomAdminService.add(form).subscribe({
-      //   next: (data: MushroomInterface) => {
-      //     // Envoie une deuxième requête POST avec l'ID de l'enregistrement champignon correspondant pour ajouter les médias associés 
+      // this.http.post<MushroomInterface>(this.API_ADMIN_BASE_URL + 'mushroom', form.value).subscribe({
+      //   next: (data) => {
+      //     // Envoie une deuxième requête POST pour ajouter les médias associés 
       //     if (this.medias.length > 0) {
-      //       this.mediaService.add(data.id, formData).subscribe({
+      //       this.http.post(this.API_ADMIN_BASE_URL + 'media/' + data.id, formData).subscribe({
       //         next: (data) => console.log('Medias: ', data),
       //         error: (err) => console.log('Observer got an error: ' + err),
-      //         complete: () => console.log('Média(s) ajouté(s)')
+      //         complete: () => console.log('Medias ajoutés!')
       //       });
       //     }
 
       //     // Redirige l'utilisateur vers la liste des champignons après l'ajout
-      //     this.router.navigate(["/back-office/admin/champignon/Liste-des-champignons"])
+      //     this.router.navigate(["admin/champignon/Liste-des-champignons"])
       //   },
       //   error: (err) => console.log('Observer got an error: ' + err),
-      //   complete: () => console.log('Champignon ajouté !')
+      //   complete: () => console.log('Champignon ajouté!')
       // });
+
+      this.mushroomAdminService.add(form).subscribe({
+        next: (data: MushroomInterface) => {
+          // Envoie une deuxième requête POST avec l'ID de l'enregistrement champignon correspondant pour ajouter les médias associés 
+          if (this.medias.length > 0 && data.id) {
+            this.mediaService.add(data.id, formData).subscribe({
+              next: (data) => console.log('Medias: ', data),
+              error: (err) => console.log('Observer got an error: ' + err),
+              complete: () => console.log('Média(s) ajouté(s)')
+            });
+          }
+
+          // Redirige l'utilisateur vers la liste des champignons après l'ajout
+          this.router.navigate(["/back-office/admin/champignon/Liste-des-champignons"])
+        },
+        error: (err) => console.log('Observer got an error: ' + err),
+        complete: () => console.log('Champignon ajouté !')
+      });
     }
   }
 

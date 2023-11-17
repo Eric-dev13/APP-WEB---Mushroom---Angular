@@ -1,9 +1,8 @@
 <div class="container">
-    <div *ngIf="user.filename ; else iconUserByDefault" class="">
-        <img [src]="PUBLIC_URL_GET_FILE_USER + user.filename" alt="Avatar" class="rounded-circle p-1 bg-dark"
-            width="200" />
+    <div *ngIf="user.filename ; else iconUserByDefault" class="containerImageCircle">
+        <img [src]="PUBLIC_URL_GET_FILE_USER + user.filename" alt="Avatar" class="img-fluid"/>
     </div>
-    <ng-template #iconUserByDefault>
+    <ng-template #iconUserByDefault >
         <img src="assets/images/icones/connexion.png" alt="Avatar">
     </ng-template>
     <p class="text-nowrap" *ngIf="user?.createdAt">

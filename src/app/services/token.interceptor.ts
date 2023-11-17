@@ -24,15 +24,15 @@ export class TokenInterceptor implements HttpInterceptor {
     // Récupérez l'URL actuelle
     const currentUrl: string = this.router.url;
 
-    // Vérifiez si l'URL contient le segment "back-office"
+    // Vérifiez si l'URL dans angular contient le segment "back-office"
     if (currentUrl.includes('back-office')) {
       // Récupération du token d'authentification
       const token: string | null = this.auth.getToken();
       // Ajout du token dans les entêtes de la requête
       request = request.clone({
         headers: new HttpHeaders({
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Authorization': `Bearer ${token}`
+          //'Content-Type': 'application/json'
         })
       });
     }
@@ -45,17 +45,16 @@ export class TokenInterceptor implements HttpInterceptor {
         console.log(`Code d'erreur HTTP : ${errorCode}`);
 
         if (errorCode === 403) {
-          this.auth.doLogout(); 
+          // this.auth.doLogout(); 
           // redirect vers login
           this.router.navigate(["securite/authentification"]);
         }
 
         if (errorCode === 400) {
           console.log(error.error);
-          
         }
 
-        // Vous pouvez également propager l'erreur pour qu'elle soit gérée ailleurs dans l'application
+        // Propager l'erreur pour qu'elle soit gérée ailleurs dans l'application
         return throwError(() => error);
       })
     );

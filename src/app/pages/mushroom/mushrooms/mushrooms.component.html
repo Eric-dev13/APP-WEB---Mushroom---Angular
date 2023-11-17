@@ -5,8 +5,8 @@
     <div class="row">
         <header class="col text-light text-center">
             <h1 class="pt-3">Guide des champignons</h1>
-            <p class="fs-5">Guide des champignons : Explorez la biodiversité fongique. Identifiez, apprenez et appréciez les
-                champignons avec notre guide complet. Parcourez les formes, couleurs et habitats fascinants.</p>
+            <p class="fs-5">Guide des champignons : Explorez la biodiversité fongique. Identifiez, apprenez et appréciez
+                les champignons avec notre guide complet. Parcourez les formes, couleurs et habitats fascinants.</p>
         </header>
     </div>
 
@@ -24,7 +24,7 @@
                     </div>
                     <div class="listMushrooms__card__bloc-img">
                         <div class="listMushrooms__card__bloc-img__opacity"></div>
-                        <img class="listMushrooms__card__bloc-img__image" *ngIf="mushroom.medias[0]; else default" 
+                        <img class="listMushrooms__card__bloc-img__image" *ngIf="mushroom.medias[0]; else default"
                             [src]="PUBLIC_URL_GET_FILE_MUSHROOM + mushroom.medias[0].filename"
                             alt="{{mushroom.commonname}}">
                         <ng-template #default>
@@ -40,6 +40,29 @@
         </section>
     </div>
     <div class="my-4">
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item" [class]="btnPreviousPageEnabled()">
+                    <a class="page-link" (click)="previousPage()">
+                        <fa-icon [icon]="faChevronLeft"></fa-icon>
+                    </a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link">{{currentPage}}</a>
+                </li>
+                <!-- <li class="page-item" *ngIf="pageExist(currentPage + 1)">
+                    <a class="page-link" (click)="show(currentPage + 1)">{{currentPage + 1}}</a>
+                </li>
+                <li class="page-item" *ngIf="pageExist(currentPage + 2)">
+                    <a class="page-link" (click)="show(currentPage + 1)">{{currentPage + 2}}</a>
+                </li> -->
+                <li class="page-item " [class]="btnNextPageEnabled()">
+                    <a class="page-link" (click)="nextPage()">
+                        <fa-icon [icon]="faChevronRight"></fa-icon>
+                    </a>
+                </li>
+            </ul>
+        </nav>
         <!-- Pagination -->
     </div>
 </article>

@@ -24,9 +24,30 @@
     height: 100%;
 }
 
-
-
 // Filtre d'arrière plan
 .bgColor--filterBlack {
     background-color: rgba(0, 0, 0, 0.4);
 }
+
+/* pages/authentication/user */
+
+.containerImageCircle {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+// CONTENEUR ROND POUR IMAGE avec argument $size en pixel (200 px par defaut)
+// @mixin createContainerCircle($size: 200px) {
+//     position: relative;
+//     width: $size;
+//     height: $size;
+//     overflow: hidden;
+//     border-radius: 50%;
+//   }
+
+// .containerImageCircle {
+//     @include createContainerCircle(100px);
+// }

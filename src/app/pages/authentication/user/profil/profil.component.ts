@@ -18,9 +18,13 @@ export class ProfilComponent implements OnInit{
   user!: User;
 
   ngOnInit(): void {
+    this.getProfilCurrentUser();
+  }
+
+  getProfilCurrentUser = () => {
     this.userService.getProfilCurrentUser().subscribe({
       next: (data) => {
-        console.log(data),
+        console.table(data),
         this.user = data
       },
       error: (err) => console.log('Observer got an error: ' + err),

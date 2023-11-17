@@ -1,0 +1,23 @@
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item" [class]="btnPreviousPageEnabled()">
+            <a class="page-link" (click)="previousPage()">
+                <fa-icon [icon]="faChevronLeft"></fa-icon>
+            </a>
+        </li>
+        <li class="page-item active">
+            <a class="page-link">{{currentPage}}</a>
+        </li>
+        <!-- <li class="page-item" *ngIf="pageExist(currentPage + 1)">
+            <a class="page-link" (click)="show(currentPage + 1)">{{currentPage + 1}}</a>
+        </li>
+        <li class="page-item" *ngIf="pageExist(currentPage + 2)">
+            <a class="page-link" (click)="show(currentPage + 1)">{{currentPage + 2}}</a>
+        </li> -->
+        <li class="page-item " [class]="btnNextPageEnabled()">
+            <a class="page-link" (click)="nextPage()">
+                <fa-icon [icon]="faChevronRight"></fa-icon>
+            </a>
+        </li>
+    </ul>
+</nav>

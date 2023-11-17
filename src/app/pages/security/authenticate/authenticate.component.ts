@@ -46,9 +46,9 @@ export class AuthenticateComponent implements OnInit {
           // Enregistre le token et redirige vers la page d'acceuil
           this.authenticationService.doLogged(data);
         },
-        error: (err) => {
+        error: (errors :Error) => {
           // console.log('Observer got an error: ' + err);
-          this.checkDataConstraints(err);
+          this.checkDataConstraints(errors);
         },
         complete: () => console.log('Observer got a complete notification')
       });
@@ -66,17 +66,26 @@ export class AuthenticateComponent implements OnInit {
           // Enregistre le token et redirige vers la page d'acceuil
           this.authenticationService.doLogged(data);
         },
-        error: (err) => {
-          // console.log('Observer got an error: ', err.error);
-          this.checkDataConstraints(err);
+        error: (errors: Error) => {
+          //console.log('Observer got an error: ', errors);
+          this.checkDataConstraints(errors);
         },
         complete: () => console.log('Observer got a complete notification')
       });
     }
   }
 
+  // checkErrors = (errors: any) => {
+  //   this.emptyErrors();
+  //   if (errors.error) {
+  //     for (const erreur of errors.error.errors) {
+  //       this.errors[erreur.field] = erreur.defaultMessage;
+  //     }
+  //   }
+  // }
+
   checkDataConstraints = (err: any) => {
-    this.emptyErrors;
+    this.emptyErrors();
     if (err.error) {
       for (const fieldName in err.error) {
         if (err.error.hasOwnProperty(fieldName)) {
@@ -87,7 +96,7 @@ export class AuthenticateComponent implements OnInit {
     }
   }
 
-  emptyErrors = () :void => {
+  emptyErrors = (): void => {
     this.errors = {};
   }
 
