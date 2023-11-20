@@ -1,6 +1,6 @@
 import { Mushroom } from "./mushroom.interface";
 
-export interface Mushrooms {
+export interface MushroomsPaginator {
     mushrooms : Mushroom[],
     totalMushroom : number
 }

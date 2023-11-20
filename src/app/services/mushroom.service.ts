@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_BASE_URL, API_ADMIN_BASE_URL } from 'src/environments/config';
 import { Mushroom } from 'src/app/interfaces/mushroom.interface';
-import { Mushrooms } from '../interfaces/mushrooms.interface';
+import { MushroomsPaginator } from '../interfaces/mushroomsPaginator.interface';
 
 
 
@@ -27,13 +27,11 @@ export class MushroomService {
     return this.http.get<Mushroom[]>(this.API_BASE_URL + "mushroom");
   }
 
-  findAllFilter = (limit?: number, offset?: number): Observable<Mushrooms> => {
-   
+  findAllByVisibilityPaginate = (limit?: number, offset?: number): Observable<MushroomsPaginator> => {
     if (limit == null || limit < 0  || offset  == null || offset < 0  ) {
-      return this.http.get<Mushrooms>(this.API_BASE_URL + "mushroom");
+      return this.http.get<MushroomsPaginator>(this.API_BASE_URL + "mushroom");
     }
-    return this.http.get<Mushrooms>(this.API_BASE_URL + `mushroom?limit=${limit}&offset=${offset}`);
-    
+    return this.http.get<MushroomsPaginator>(this.API_BASE_URL + `mushroom?limit=${limit}&offset=${offset}`);
   }
 
   findById = (id: number): Observable<Mushroom> => {
@@ -54,8 +52,12 @@ export class MushroomAdminService {
 
   constructor(private http: HttpClient) { }
 
-  public findAll = (): Observable<Mushroom[]> => {
-    return this.http.get<Mushroom[]>(this.API_ADMIN_BASE_URL + "mushroom");
+  public findAllPaginate = (limit?: number, offset?: number): Observable<MushroomsPaginator> => {
+    // return this.http.get<MushroomsPaginator>(this.API_ADMIN_BASE_URL + "mushroom");
+    if (limit == null || limit < 0  || offset  == null || offset < 0  ) {
+      return this.http.get<MushroomsPaginator>(this.API_ADMIN_BASE_URL + "mushroom");
+    }
+    return this.http.get<MushroomsPaginator>(this.API_ADMIN_BASE_URL + `mushroom?limit=${limit}&offset=${offset}`);
   }
 
   public findById = (id: number): Observable<Mushroom> => {

@@ -11,7 +11,7 @@
     </div>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-8">
-        <section class="col d-flex justify-content-center" *ngFor="let mushroom of mushrooms">
+        <section class="col d-flex justify-content-center" *ngFor="let mushroom of mushroomsPaginator.mushrooms">
             <div class="listMushrooms__card box-shadow-down">
                 <a [routerLink]="['/champignon', mushroom.id]">
                     <div class="listMushrooms__card__eat d-flex justify-content-center align-items-center"
@@ -42,13 +42,13 @@
     <div class="my-4">
         <nav>
             <ul class="pagination justify-content-center">
-                <li class="page-item" [class]="btnPreviousPageEnabled()">
+                <li class="page-item" [class]="isPreviousPageDisabled()">
                     <a class="page-link" (click)="previousPage()">
                         <fa-icon [icon]="faChevronLeft"></fa-icon>
                     </a>
                 </li>
                 <li class="page-item active">
-                    <a class="page-link">{{currentPage}}</a>
+                    <a class="page-link">{{paginator.currentPage}}</a>
                 </li>
                 <!-- <li class="page-item" *ngIf="pageExist(currentPage + 1)">
                     <a class="page-link" (click)="show(currentPage + 1)">{{currentPage + 1}}</a>
@@ -56,7 +56,7 @@
                 <li class="page-item" *ngIf="pageExist(currentPage + 2)">
                     <a class="page-link" (click)="show(currentPage + 1)">{{currentPage + 2}}</a>
                 </li> -->
-                <li class="page-item " [class]="btnNextPageEnabled()">
+                <li class="page-item " [class]="isNextPageDisabled()">
                     <a class="page-link" (click)="nextPage()">
                         <fa-icon [icon]="faChevronRight"></fa-icon>
                     </a>

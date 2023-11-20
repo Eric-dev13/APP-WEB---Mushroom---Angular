@@ -40,11 +40,6 @@ export class JwtTokenService {
     return this.decodedToken ? this.decodedToken.sub : null;
   }
 
-  // getEmailId() {
-  //   this.decodeToken();
-  //   return this.decodedToken ? this.decodedToken.email : null;
-  // }
-
   getExpiryTime() {
     this.decodeToken();
     return this.decodedToken ? this.decodedToken.exp : null;
@@ -54,8 +49,8 @@ export class JwtTokenService {
     const expiryTime: number|null = this.getExpiryTime();
     if (expiryTime) {
       return ((1000 * expiryTime) - (new Date()).getTime()) < 5000;
-    } else {
-      return false;
     }
+    return false;
   }
+
 }

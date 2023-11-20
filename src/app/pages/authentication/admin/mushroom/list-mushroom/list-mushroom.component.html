@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="table-secondary" *ngFor="let mushroom of mushrooms">
+            <tr class="table-secondary" *ngFor="let mushroom of mushroomsPaginate?.mushrooms">
                 <td scope="row">{{mushroom?.id}}</td>
                 <td>
                     <a [routerLink]="['/back-office/admin/champignon/description', mushroom?.id]" class=""
@@ -72,4 +72,13 @@
             </tr>
         </tbody>
     </table>
+
+    <app-paginator 
+        [itemsPerPage] = "itemsPerPage"
+        [totalItems] = "mushroomsPaginate.totalMushroom"
+        (paginationSettings) = "handlePaginationEvent($event)"
+    ></app-paginator>
+
+    
+    
 </div>

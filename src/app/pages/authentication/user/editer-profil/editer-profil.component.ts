@@ -4,7 +4,6 @@ import { User } from 'src/app/pages/authentication/user/user.interface';
 import { NgForm } from '@angular/forms';
 import { PUBLIC_URL_GET_FILE_USER } from 'src/environments/config';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-editer-profil',
@@ -13,7 +12,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class EditerProfilComponent implements OnInit {
 
-  constructor(private userService: UserService, private router: Router, private http: HttpClient) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   readonly PUBLIC_URL_GET_FILE_USER: string = PUBLIC_URL_GET_FILE_USER;
 
@@ -36,8 +35,8 @@ export class EditerProfilComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getProfilCurrentUser().subscribe({
       next: (data) => {
-        console.log(data),
-          this.user = data
+        //console.log(data),
+        this.user = data
       },
       error: (err) => console.log('Observer got an error: ' + err),
       complete: () => console.log('current user ok')
@@ -62,13 +61,12 @@ export class EditerProfilComponent implements OnInit {
     formData.append("firstname", form.value.firstname);
     formData.append("filename", this.selectedFile);
 
-    console.log("test", formData);
 
     // ATTENTION PAS DE CONTENT-TYPE:application/json DANS L'INTERCEPTOR SINON ERREUR 400 !!!!!!
     this.userService.updateProfilCurrentUser(formData).subscribe({
       next: (response:boolean) => {
         if (response) {
-          console.table(response);
+          // console.table(response);
           // redirige vers la liste
           this.router.navigate(["/back-office/utilisateur/profil"]);
         }
