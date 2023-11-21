@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_BASE_URL, API_ADMIN_BASE_URL } from 'src/environments/config';
 import { ForumSubject } from '../interfaces/forumSubject.interface';
+import { ForumSubjectsPaginator } from '../interfaces/forum-subjects-paginator.interface';
 
 
 @Injectable({
@@ -17,8 +18,15 @@ export class ForumService {
  
    constructor(private http: HttpClient) { }
 
-   public findAll = (): Observable<ForumSubject[]> => {
-    return this.http.get<ForumSubject[]>(this.API_BASE_URL + "forum");
+  //  public findAll = (): Observable<ForumSubject[]> => {
+  //   return this.http.get<ForumSubject[]>(this.API_BASE_URL + "forum");
+  // }
+
+  public findAllPaginate = (limit?: number, offset?: number): Observable<ForumSubjectsPaginator> => {
+    if (limit == null || limit < 0  || offset  == null || offset < 0  ) {
+    return this.http.get<ForumSubjectsPaginator>(this.API_BASE_URL + "forum");
+    }
+    return this.http.get<ForumSubjectsPaginator>(this.API_BASE_URL + `forum?limit=${limit}&offset=${offset}`);
   }
 
   public findById = (id: number): Observable<ForumSubject> => {

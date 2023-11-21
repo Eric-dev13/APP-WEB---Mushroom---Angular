@@ -46,7 +46,7 @@ export class ListMushroomComponent implements OnInit {
 
   // Ecoute les changements du paginator (si click sur le btn next ou previous)
   handlePaginationEvent = (paginator: Paginator) => {
-    console.log("click sur le btn precedent ou suivant = Event", paginator);
+    //console.log("click sur le btn precedent ou suivant = Event", paginator);
     this.findAll(paginator.itemsPerPage, paginator.offset);
   }
 

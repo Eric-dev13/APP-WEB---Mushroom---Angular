@@ -53,7 +53,6 @@ export class MushroomAdminService {
   constructor(private http: HttpClient) { }
 
   public findAllPaginate = (limit?: number, offset?: number): Observable<MushroomsPaginator> => {
-    // return this.http.get<MushroomsPaginator>(this.API_ADMIN_BASE_URL + "mushroom");
     if (limit == null || limit < 0  || offset  == null || offset < 0  ) {
       return this.http.get<MushroomsPaginator>(this.API_ADMIN_BASE_URL + "mushroom");
     }
