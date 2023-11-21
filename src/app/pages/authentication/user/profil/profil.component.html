@@ -1,14 +1,14 @@
-<div class="container-fluid container-lg bgColor--whiteLight px-3 currentUser">
+<div class="container-fluid container-lg bgColor--whiteLight px-3">
     <header class="row border-bottom">
         <h1 class="text-center">Voir mon profil</h1>
-        <p class="text-nowrap mt-5" *ngIf="user?.createdAt">
-            <span class="fw-bold">Date d'inscription :</span>
-            {{ user.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}
-        </p>
     </header>
     <div class="row pt-3">
         <div class="col flex-grow-0">
-            <h3 class="mt-2 mt-sm-0 fw-bold" *ngIf="user?.pseudo">{{user.pseudo}}</h3>
+            <h3 class="my-3 mt-sm-0 fw-bold" *ngIf="user?.pseudo">{{user.pseudo}}</h3>
+            <p class="text-nowrap mt-1" *ngIf="user?.createdAt">
+                <span class="fw-bold">Inscrit depuis le </span>
+                {{ user.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}
+            </p>
             <div *ngIf="user?.filename ; else iconUserByDefault">
                 <div class="containerImageCircle">
                     <img [src]="PUBLIC_URL_GET_FILE_USER + user.filename" class="img-fluid" alt="Avatar"  />
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <div class="col flex-grow-1 mt-sm-5">
+        <div class="col flex-grow-1 d-flex flex-column justify-content-center">
             <ng-template [ngIf]="user?.lastname">
                 <span class="mt-5 mt-sm-0 fw-bold">Nom</span>
                 <p>{{user.lastname}}</p>

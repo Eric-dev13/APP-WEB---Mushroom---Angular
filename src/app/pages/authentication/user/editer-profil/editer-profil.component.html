@@ -18,21 +18,21 @@
     <form #form="ngForm" (submit)="send(form)" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="pseudo" class="form-label">Pseudo</label>
-            <input [(ngModel)]="user.pseudo" type="text" class="form-control" id="nom" name="pseudo"
+            <input [(ngModel)]="user.pseudo" type="text" class="form-control" id="pseudo" name="pseudo"
                 aria-describedby="pseudo">
-            <div id="pseudoHelp" class="form-text"></div>
+            <!-- <small class="text-danger" *ngIf="errors['pseudo']">{{ errors['pseudo'] }}</small> -->
         </div>
         <div class="mb-3">
             <label for="lastname" class="form-label">Nom</label>
             <input [(ngModel)]="user.lastname" type="text" class="form-control" id="lastname" name="lastname"
                 aria-describedby="lastname">
-            <div id="lastnameHelp" class="form-text"></div>
+            <!-- <small class="text-danger" *ngIf="errors['lastname']">{{ errors['lastname'] }}</small> -->
         </div>
         <div class="mb-3">
             <label for="firstname" class="form-label">Prénom</label>
             <input [(ngModel)]="user.firstname" type="text" class="form-control" id="firstname" name="firstname"
                 aria-describedby="firstname">
-            <div id="firstnameHelp" class="form-text"></div>
+            <!-- <small class="text-danger" *ngIf="errors['firstname']">{{ errors['firstname'] }}</small> -->
         </div>
         <div class="mb-3">
             <label for="formFile" class="form-label">Avatar</label>
