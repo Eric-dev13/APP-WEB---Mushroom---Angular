@@ -1,10 +1,10 @@
-<div class="bgfullSize bg-image--forest"></div> foret/foret-3.jpg
+<div class="bgfullSize bg-image--forest"></div>
 <div class="bgfullSize bgColor--filterBlack"></div>
 
 <article class="forumSubjects">
-    <div class="container bg-dark mt-1">
+    <div class="container mt-1">
         <header class="row">
-            <div class="col-12 py-5 text-light text-center">
+            <div class="col-12 py-2 text-light text-center">
                 <div>
                     <h1>Bienvenue sur ce salon</h1>
                     <h2>Vous avez besoin d'aide ?</h2>
@@ -13,8 +13,8 @@
         </header>
     </div>
 
-    <div class="container mb-1 bg-dark border-top border-secondary">
-        <div class="row py-3 m-md-3 rounded">
+    <div class="container mb-1">
+        <div class="row rounded">
             <!-- CHARTE DU FORUM -->
             <div class="col-12 p-3">
                 <p class="text-light forumCharte">ici, vous pouvez discuter, questionner, échanger avec les autres
@@ -77,11 +77,12 @@
 
     <!-- LES SUJETS -->
     <div class="col-12 mt-3">
-        <div class="row justify-content-center" *ngFor="let sujet of sujets">
-            <div class="card mb-3" style="max-width: 540px;">
+        <div class="row justify-content-center" *ngFor="let sujet of forumSubjectPaginate.forumSubjects">
+            <!-- <div class="card mb-3" style="max-width: 540px;"> -->
+            <div class="card mb-3 w-75 w-lg-50">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img [src]="PUBLIC_URL_GET_FILE_USER + sujet.user.filename" class="img-fluid rounded-start" alt="...">
+                        <img [src]="PUBLIC_URL_GET_FILE_USER + sujet.user.filename" class="img-fluid rounded-start" alt="..." >
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -107,7 +108,15 @@
             </div>
         </div>
     </div> 
-</article> 
+
+    <app-paginator 
+        [itemsPerPage] = "itemsPerPage"
+        [totalItems] = "forumSubjectPaginate.forumSubjectLength"
+        (paginationSettings) = "handlePaginationEvent($event)"
+    ></app-paginator>
+</article>
+
+
         <!-- <div class="col-12 border-bottom border-secondary">
                         {{ form_start(formCategory,{'attr':{'class':'row g-3'}}) }}
                         {{ form_row(formCategory.name) }}

@@ -908,3 +908,27 @@ npm install --save @ckeditor/ckeditor5-build-classic
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 ````
 
+
+
+
+
+## Communication des composants (enfant parent)
+
+**EMITTER**
+
+````
+// Composant enfant
+@Output() myEvent: EventEmitter<string> = new EventEmitter<string>();
+
+// Émission de l'événement
+this.myEvent.emit("Données à transmettre");
+
+// Composant parent
+<app-enfant (myEvent)="handleMyEvent($event)"></app-enfant>
+
+// Le composant parent écoute ou "reçoit" l'événement émis par le composant enfant
+handleMyEvent(data: string) {
+  console.log("Événement reçu avec les données :", data);
+}
+````
+

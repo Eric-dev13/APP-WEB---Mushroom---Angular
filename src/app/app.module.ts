@@ -49,7 +49,8 @@ import { SubjectsComponent } from './pages/forum/subjects/subjects.component';
 import { SubjectComponent } from './pages/forum/subject/subject.component';
 import { CharteComponent } from './pages/forum/charte/charte.component';
 
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular'; 
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { PaginatorComponent } from './layouts/paginator/paginator.component'; 
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     SubjectsComponent,
     SubjectComponent,
     CharteComponent,
+    PaginatorComponent,
   ],
   imports: [
     BrowserModule,
