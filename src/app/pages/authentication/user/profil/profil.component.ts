@@ -24,11 +24,11 @@ export class ProfilComponent implements OnInit{
   getProfilCurrentUser = () => {
     this.userService.getProfilCurrentUser().subscribe({
       next: (data) => {
-        console.table(data),
+        // console.table(data),
         this.user = data
       },
       error: (err) => console.log('Observer got an error: ' + err),
-      complete: () => console.log('current user ok')
+      complete: () => console.log('Affichage de votre profil')
     })
   }
 

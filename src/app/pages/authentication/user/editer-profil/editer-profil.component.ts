@@ -4,6 +4,8 @@ import { User } from 'src/app/pages/authentication/user/user.interface';
 import { NgForm } from '@angular/forms';
 import { PUBLIC_URL_GET_FILE_USER } from 'src/environments/config';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserSessionStorage } from 'src/app/interfaces/user-session-storage.interface';
 
 @Component({
   selector: 'app-editer-profil',
@@ -12,7 +14,11 @@ import { Router } from '@angular/router';
 })
 export class EditerProfilComponent implements OnInit {
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(
+    private userService: UserService, 
+    private router: Router,
+    private auth: AuthenticationService
+  ) { }
 
   readonly PUBLIC_URL_GET_FILE_USER: string = PUBLIC_URL_GET_FILE_USER;
 
@@ -35,7 +41,6 @@ export class EditerProfilComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getProfilCurrentUser().subscribe({
       next: (data) => {
-        //console.log(data),
         this.user = data
       },
       error: (err) => console.log('Observer got an error: ' + err),
@@ -64,15 +69,18 @@ export class EditerProfilComponent implements OnInit {
 
     // ATTENTION PAS DE CONTENT-TYPE:application/json DANS L'INTERCEPTOR SINON ERREUR 400 !!!!!!
     this.userService.updateProfilCurrentUser(formData).subscribe({
-      next: (response:boolean) => {
-        if (response) {
-          // console.table(response);
+      next: (userSession: UserSessionStorage) => {
+        if (userSession) {
+          console.table(userSession);
+          // j'actualise les infos de user dans session storage
+          this.auth.setUser(userSession);
+
           // redirige vers la liste
           this.router.navigate(["/back-office/utilisateur/profil"]);
         }
       },
       error: (err) => console.log('Observer got an error: ' + err),
-      complete: () => console.log('current user ok')
+      complete: () => console.log('Modification réussie!')
     })
   }
 }
