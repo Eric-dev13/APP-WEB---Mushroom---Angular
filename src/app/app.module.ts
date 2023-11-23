@@ -15,6 +15,8 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './layouts/nav/nav.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 
+//  AFFICHER DES MESSAGES DE NOTIFICATION
+
 
 // PAGES ERROR
 import { NotFoundComponent } from './pages/error/not-found/not-found.component';
@@ -23,7 +25,6 @@ import { NotFoundComponent } from './pages/error/not-found/not-found.component';
 import { HomeComponent } from './pages/home/home.component';
 
 // LOGIN
-import { AuthenticationModule } from './pages/authentication/authentication.module';
 import { AuthenticateComponent } from './pages/security/authenticate/authenticate.component';
 
 // PAGES SECURISEE
@@ -50,7 +51,8 @@ import { SubjectComponent } from './pages/forum/subject/subject.component';
 import { CharteComponent } from './pages/forum/charte/charte.component';
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { PaginatorComponent } from './layouts/paginator/paginator.component'; 
+import { PaginatorComponent } from './layouts/paginator/paginator.component';
+import { ActualiteComponent } from './pages/actualite/actualite/actualite.component'; 
 
 
 @NgModule({
@@ -78,6 +80,7 @@ import { PaginatorComponent } from './layouts/paginator/paginator.component';
     SubjectComponent,
     CharteComponent,
     PaginatorComponent,
+    ActualiteComponent,
   ],
   imports: [
     BrowserModule,

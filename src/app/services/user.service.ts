@@ -37,9 +37,11 @@ export class UserService {
     return this.http.put<any>(API_BASE_URL + "current-user",formData);
   }
 
-  // updateProfilCurrentUser = (form: NgForm): Observable<boolean> => {
-  //   return this.http.put<boolean>(API_BASE_URL + "user",form.value);
-  // }
+  updatePassword = (form:NgForm): Observable<boolean> => {
+    return this.http.put<boolean>(API_BASE_URL + "current-user/password/change",form.value);
+  }
+
+
 
 
 }

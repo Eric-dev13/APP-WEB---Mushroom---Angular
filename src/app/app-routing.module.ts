@@ -19,6 +19,7 @@ import { ListMushroomComponent } from './pages/authentication/admin/mushroom/lis
 import { DetailMushroomComponent } from './pages/authentication/admin/mushroom/detail-mushroom/detail-mushroom.component';
 import { FormMushroomComponent } from './pages/authentication/admin/mushroom/form-mushroom/form-mushroom.component';
 import { EditerPasswordComponent } from './pages/authentication/user/editer-password/editer-password.component';
+import { ActualiteComponent } from './pages/actualite/actualite/actualite.component';
 
 
 const routes: Routes = [
@@ -26,9 +27,9 @@ const routes: Routes = [
   { path: "", component: HomeComponent }, // Route par défaut (page d'accueil)
   { path: "", loadChildren: () => import('./pages/mushroom/mushroom.module').then(m => m.MushroomModule) },
   { path: "forum", component: SubjectsComponent },
+  { path: "actualite", component: ActualiteComponent },
 
   // ROUTES PROTEGES
-  // { path: "admin/champignon/Liste-des-champignons", component: ListMushroomComponent },
   {
     path: 'back-office', component: DashboardComponent, children: [
       // ADMIN - mushroom
