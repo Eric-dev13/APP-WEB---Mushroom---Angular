@@ -18,44 +18,39 @@ import { FormEdibilityComponent } from './pages/authentication/admin/edibility/f
 import { ListMushroomComponent } from './pages/authentication/admin/mushroom/list-mushroom/list-mushroom.component';
 import { DetailMushroomComponent } from './pages/authentication/admin/mushroom/detail-mushroom/detail-mushroom.component';
 import { FormMushroomComponent } from './pages/authentication/admin/mushroom/form-mushroom/form-mushroom.component';
+import { EditerPasswordComponent } from './pages/authentication/user/editer-password/editer-password.component';
+import { ActualiteComponent } from './pages/actualite/actualite/actualite.component';
 
 
 const routes: Routes = [
   // ROUTES PUBLIQUES
   { path: "", component: HomeComponent }, // Route par défaut (page d'accueil)
   { path: "", loadChildren: () => import('./pages/mushroom/mushroom.module').then(m => m.MushroomModule) },
-
   { path: "forum", component: SubjectsComponent },
-
-
+  { path: "actualite", component: ActualiteComponent },
 
   // ROUTES PROTEGES
-
-  // { path: "admin/champignon/Liste-des-champignons", component: ListMushroomComponent },
   {
     path: 'back-office', component: DashboardComponent, children: [
       // ADMIN - mushroom
-      //{ path: "admin/champignon", loadChildren: () => import('./pages/authentication/admin/mushroom/admin-mushroom.module').then(m => m.AdminMushroomModule) },
       { path: "admin/champignon/Liste-des-champignons", component: ListMushroomComponent },
       { path: "admin/champignon/description/:id", component: DetailMushroomComponent },
       { path: "admin/champignon/nouveau", component: FormMushroomComponent },
       { path: "admin/champignon/editer/:id", component: FormMushroomComponent },
 
       // ADMIN - edibility
-      //{ path: "comestibilite", loadChildren: () => import('./pages/authentication/admin/edibility/edibility.module').then(m => m.EdibilityModule) },
       { path: "admin/comestibilite/liste", component: EdibilitiesComponent },
       { path: "admin/comestibilite/nouveau", component: FormEdibilityComponent },
       { path: "admin/comestibilite/editer/:id", component: FormEdibilityComponent },
 
       //  ADMIN - USER ACCESS
-      // { path: "admin/utilisateur", loadChildren: () => import('./pages/authentication/user/user.module').then(m => m.UserModule) },
       // { path: "admin/utilisateur/profils", component: },
       // { path: "admin/utilisateur/profil/:id", component: },
 
       // USER
-      // { path: "utilisateur", loadChildren: () => import('./pages/authentication/user/user.module').then(m => m.UserModule) },
       { path: "utilisateur/profil", component: ProfilComponent },
       { path: "utilisateur/profil/editer", component: EditerProfilComponent },
+      { path: "utilisateur/profil/mdp/editer", component: EditerPasswordComponent },
     ]
   },
 

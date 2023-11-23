@@ -1,10 +1,15 @@
 <div class="container">
+    <header class="row border-bottom">
+        <h1 class="text-center">Modifier mes données personnelles</h1>
+    </header>
+
     <div *ngIf="user.filename ; else iconUserByDefault" class="containerImageCircle">
         <img [src]="PUBLIC_URL_GET_FILE_USER + user.filename" alt="Avatar" class="img-fluid"/>
     </div>
     <ng-template #iconUserByDefault >
         <img src="assets/images/icones/connexion.png" alt="Avatar">
     </ng-template>
+    <p class="fw-bold fs-4 text-danger border-bottom pb-2">{{user.email}}</p>
     <p class="text-nowrap" *ngIf="user?.createdAt">
         <span class="fw-bold">Inscrit depuis le </span>
         {{ user.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}
@@ -13,27 +18,21 @@
     <form #form="ngForm" (submit)="send(form)" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="pseudo" class="form-label">Pseudo</label>
-            <input [(ngModel)]="user.pseudo" type="text" class="form-control" id="nom" name="pseudo"
+            <input [(ngModel)]="user.pseudo" type="text" class="form-control" id="pseudo" name="pseudo"
                 aria-describedby="pseudo">
-            <div id="pseudoHelp" class="form-text"></div>
+            <!-- <small class="text-danger" *ngIf="errors['pseudo']">{{ errors['pseudo'] }}</small> -->
         </div>
         <div class="mb-3">
             <label for="lastname" class="form-label">Nom</label>
             <input [(ngModel)]="user.lastname" type="text" class="form-control" id="lastname" name="lastname"
                 aria-describedby="lastname">
-            <div id="lastnameHelp" class="form-text"></div>
+            <!-- <small class="text-danger" *ngIf="errors['lastname']">{{ errors['lastname'] }}</small> -->
         </div>
         <div class="mb-3">
             <label for="firstname" class="form-label">Prénom</label>
             <input [(ngModel)]="user.firstname" type="text" class="form-control" id="firstname" name="firstname"
                 aria-describedby="firstname">
-            <div id="firstnameHelp" class="form-text"></div>
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input [(ngModel)]="user.email" type="email" class="form-control" id="email" name="email"
-                aria-describedby="email">
-            <div id="emailHelp" class="form-text"></div>
+            <!-- <small class="text-danger" *ngIf="errors['firstname']">{{ errors['firstname'] }}</small> -->
         </div>
         <div class="mb-3">
             <label for="formFile" class="form-label">Avatar</label>

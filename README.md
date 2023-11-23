@@ -910,25 +910,147 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 
+## toast
 
+ Toast est un module Angular qui permet d'afficher des messages flash sur un site Web. 
 
-## Communication des composants (enfant parent)
-
-**EMITTER**
+Mettre à niveau `@angular/core` vers la version 16.2.0 ou supérieure.
 
 ````
-// Composant enfant
-@Output() myEvent: EventEmitter<string> = new EventEmitter<string>();
+npm install @angular/core@16.2.12
+````
 
-// Émission de l'événement
-this.myEvent.emit("Données à transmettre");
 
-// Composant parent
-<app-enfant (myEvent)="handleMyEvent($event)"></app-enfant>
 
-// Le composant parent écoute ou "reçoit" l'événement émis par le composant enfant
-handleMyEvent(data: string) {
-  console.log("Événement reçu avec les données :", data);
-}
+```
+npm install toast
+```
+
+```
+ // app.module.ts
+ 
+ import { ToastModule } from 'toast';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    ToastModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+Une fois que vous avez importé toast, vous pouvez l'utiliser dans votre template Angular
+
+````
+// component *.html
+
+<div class="container">
+  <h1>Mon application Angular</h1>
+
+  <button (click)="showMessage()">Afficher un message</button>
+</div>
+````
+
+````
+
+// *.ts
+
+ngOnInit() { }
+
+  showMessage() {
+    // Affiche un message de notification
+    Toast.info('Voici un message de notification');
+    
+    // Affiche un message d'information qui s'affichera pendant 5 secondes
+    Toast.info('Voici un message d'information', '', {
+      duration: 5000
+    });
+    
+    // Affiche un message d'erreur
+    Toast.error('Voici un message d'erreur');
+  }
+````
+
+
+
+````
+     _                      _                 ____ _     ___
+    / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
+   / △ \ | '_ \ / _` | | | | |/ _` | '__|   | |   | |    | |
+  / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | |
+ /_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|
+                |___/
+    
+
+Angular CLI: 16.1.5
+Node: 18.16.0
+Package Manager: npm 9.5.1
+OS: win32 x64
+
+Angular: 16.1.6
+... animations, common, compiler, compiler-cli, core, forms
+... platform-browser, platform-browser-dynamic, router
+
+Package                         Version
+---------------------------------------------------------
+@angular-devkit/architect       0.1601.5
+@angular-devkit/build-angular   16.1.5
+@angular-devkit/core            16.1.5
+@angular-devkit/schematics      16.1.5
+@angular/cli                    16.1.5
+@schematics/angular             16.1.5
+rxjs                            7.8.1
+typescript                      5.1.6
+zone.js                         0.13.1
+
+
+Utilisateur@SIM-PC-5CG6324DZC MINGW64 /c/workspace/PROJET_EXAMEN/mushroom-angular (feat/authentication)
+$ npm install @angular/core@16.2.12
+````
+
+
+
+````
+   _                      _                 ____ _     ___
+    / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
+   / △ \ | '_ \ / _` | | | | |/ _` | '__|   | |   | |    | |
+  / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | |
+ /_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|
+                |___/
+    
+
+Angular CLI: 16.1.5
+Node: 18.16.0
+Package Manager: npm 9.5.1
+OS: win32 x64
+
+Angular: 16.2.12
+... core
+
+Package                             Version
+-------------------------------------------------------------
+@angular-devkit/architect           0.1601.5
+@angular-devkit/build-angular       16.1.5
+@angular-devkit/core                16.1.5
+@angular-devkit/schematics          16.1.5
+@angular/animations                 16.1.6
+@angular/cli                        16.1.5
+@angular/common                     16.1.6
+@angular/compiler                   16.1.6
+@angular/compiler-cli               16.1.6
+@angular/forms                      16.1.6
+@angular/platform-browser           16.1.6
+@angular/platform-browser-dynamic   16.1.6
+@angular/router                     16.1.6
+@schematics/angular                 16.1.5
+rxjs                                7.8.1
+typescript                          5.1.6
+zone.js                             0.13.1
 ````
 

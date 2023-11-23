@@ -48,6 +48,7 @@ export class AuthenticateComponent implements OnInit {
         },
         error: (errors :Error) => {
           // console.log('Observer got an error: ' + err);
+          // Gestion des erreurs de validation provenat de l'API
           this.checkDataConstraints(errors);
         },
         complete: () => console.log('Observer got a complete notification')
@@ -74,15 +75,6 @@ export class AuthenticateComponent implements OnInit {
       });
     }
   }
-
-  // checkErrors = (errors: any) => {
-  //   this.emptyErrors();
-  //   if (errors.error) {
-  //     for (const erreur of errors.error.errors) {
-  //       this.errors[erreur.field] = erreur.defaultMessage;
-  //     }
-  //   }
-  // }
 
   checkDataConstraints = (err: any) => {
     this.emptyErrors();

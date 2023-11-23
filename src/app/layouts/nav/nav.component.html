@@ -66,6 +66,9 @@
                                 <a class="dropdown-item ftsz-9" [routerLink]="['/back-office/utilisateur/profil/editer']">Mettre à
                                     jour mon profil</a>
                             </li>
+                            <li>
+                                <a class="dropdown-item ftsz-9" [routerLink]="['/back-office/utilisateur/profil/mdp/editer']">Changer de mot de passe</a>
+                            </li>
 
                             <!-- BACK OFFICE ADMINISTRATEUR -->
                             <ng-template [ngIf]="authenticated.isAdmin()">
