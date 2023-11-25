@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_BASE_URL, API_ADMIN_BASE_URL } from 'src/environments/config';
 import { ForumSubject } from '../interfaces/forumSubject.interface';
@@ -31,6 +31,10 @@ export class ForumService {
 
   public findById = (id: number): Observable<ForumSubject> => {
     return this.http.get<ForumSubject>(this.API_BASE_URL + "forum/" + id);
+  }
+
+  public add = (form: NgForm): Observable<any> => {
+    return this.http.post<any>(this.API_BASE_URL + "forum", form.value);
   }
 
 

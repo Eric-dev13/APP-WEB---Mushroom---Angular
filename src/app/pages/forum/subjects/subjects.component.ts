@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NgForm } from '@angular/forms';
 import { ForumService } from 'src/app/services/forum.service';
-import { ForumSubject } from 'src/app/interfaces/forumSubject.interface';
 import { PUBLIC_URL_GET_FILE_USER } from 'src/environments/config';
-
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ForumSubjectsPaginator } from 'src/app/interfaces/forum-subjects-paginator.interface';
 import { Paginator } from 'src/app/interfaces/paginator.interface';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { PaginatorComponent } from 'src/app/layouts/paginator/paginator.component';
+
 
 @Component({
   selector: 'app-subjects',
@@ -16,28 +16,26 @@ import { Paginator } from 'src/app/interfaces/paginator.interface';
 })
 export class SubjectsComponent implements OnInit {
 
-  constructor(protected auth: AuthenticationService, private forumService: ForumService) { }
+  constructor(
+    protected auth: AuthenticationService,
+    private forumService: ForumService
+  ) { }
 
-  // Configuration de la pagination : nombre d'élément par page
+  readonly PUBLIC_URL_GET_FILE_USER: string = PUBLIC_URL_GET_FILE_USER;
+
+  // Nombre d'élément par page
   itemsPerPage: number = 5;
+
+  // Accéder aux propriétés du composant enfant 
+  @ViewChild(PaginatorComponent) childPaginator!: PaginatorComponent;
 
   // Objet pour stocker les données paginées
   forumSubjectPaginate: ForumSubjectsPaginator = { forumSubjects: [], forumSubjectLength: 0 }
 
-
   public Editor = ClassicEditor;
 
-  editorConfig = {
-    toolbar: ['heading', '|', 'bold', 'italic', 'Underline', 'Strike', '|', 'Subscript', 'Superscript', '-'],
-  };
+  edition:string='';
 
-  readonly PUBLIC_URL_GET_FILE_USER: string = PUBLIC_URL_GET_FILE_USER;
-
-  readonly: boolean = false;
-  public isDisabled = false;
-  toggleDisabled() {
-    this.isDisabled = !this.isDisabled
-  }
 
   ngOnInit(): void {
     // Charger les données initiales
@@ -57,19 +55,36 @@ export class SubjectsComponent implements OnInit {
   }
 
   addSubject = (form: NgForm) => {
+    let isAddSubject: boolean = false;
+
+    this.forumService.add(form).subscribe({
+      next: (data) => {
+        if (data) {
+          isAddSubject = true;
+        }
+      },
+      error: (err: Error) => console.log(),
+      complete: () => {
+        if (isAddSubject) {
+
+          this.findAll(this.childPaginator.paginator.itemsPerPage, this.childPaginator.paginator.offset);
+        }
+      }
+    });
+    // Add model.editorData
   }
 
   // Méthode pour récupérer les données paginées
   findAll(limit?: number, offset?: number) {
-    this.forumService.findAllPaginate(limit, offset).subscribe(
-      {
-        next: (data) => {
-          //console.table(data),
+    this.forumService.findAllPaginate(limit, offset).subscribe({
+      next: (data) => {
+        console.log("data", data),
           // Retourne la liste et le nombre total d'enregistrements.
           this.forumSubjectPaginate = data
-        },
-        error: err => console.log(),
-        complete: () => console.log()
-      })
+      },
+      error: (err: Error) => console.log()
+    })
   }
+
+
 }

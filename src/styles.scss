@@ -7,6 +7,26 @@
 @import "./scss/bg-image.scss";
 
 
+// FORUM IMPOSSIBLE D'APPLIQUER LE STYLE A PARTIR DU SCSS DU COMPONENT
+.forumSubjects {
+    #forum-editor {
+        .ck-editor__editable_inline {
+            min-height: 200px;
+            overflow-y: auto;
+        }
+    }
+
+    .showEditor {
+        .ck-editor__editable_inline {
+            border :none;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+}
+
 .containerFullSize {
     position: absolute;
     top: 0;
@@ -26,7 +46,7 @@
 
 // Filtre d'arrière plan
 .bgColor--filterBlack {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 /* pages/authentication/user */

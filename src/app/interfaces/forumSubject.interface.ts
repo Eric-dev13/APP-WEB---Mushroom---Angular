@@ -6,5 +6,6 @@ export interface ForumSubject {
     title: string,
     description: string,
     user: User,
-    comments: Commentary[]
+    comments: Commentary[],
+    forumCategories: any
 }

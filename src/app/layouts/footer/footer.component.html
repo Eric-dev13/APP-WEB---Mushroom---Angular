@@ -113,12 +113,15 @@
                     <hr class="bg-secondary">
                     <h5 class="text-secondary fw-bold ftsz-10">Accès membre</h5>
                     <li>
-                        <a class="dropdown-item ftsz-9" [routerLink]="['/utilisateur/profil']">Afficher mon
+                        <a class="dropdown-item ftsz-9" [routerLink]="['/back-office/utilisateur/profil']">Afficher mon
                             profil</a>
                     </li>
                     <li>
-                        <a class="dropdown-item ftsz-9" [routerLink]="['/utilisateur/edit-profil']">Mettre à
+                        <a class="dropdown-item ftsz-9" [routerLink]="['/back-office/utilisateur/profil/editer']">Mettre à
                             jour mon profil</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item ftsz-9" [routerLink]="['/back-office/utilisateur/profil/mdp/editer']">Changer de mot de passe</a>
                     </li>
                     <li><a (click)="logout()" href="#">Me déconnecter</a></li>
                     <hr class="bg-secondary">
@@ -128,7 +131,7 @@
                     <li><a class="">Se connecter / S'incrire</a></li>
                 </ng-template>
                 <li><a>Mentions légales</a></li>
-                <li><a class="" id="showBoxCookiesManager">Cookies</a></li>
+                <!-- <li><a class="" id="showBoxCookiesManager">Cookies</a></li> -->
             </ul>
         </section>
         <section class="col-12 col-md-3 col-lg-3 col-xl-4 p-4 order-3 order-md-3">
