@@ -12,7 +12,7 @@
     </header>
 
     <div class="container">
-        <div class="row rounded text-bg-light bg-opacity-10 pt-3">
+        <div class="row rounded text-bg-light bg-opacity-10 pt-3 mb-3">
             <!-- CHARTE DU FORUM -->
             <div class="col-12">
                 <p class="text-light forumCharte">Ici, vous pouvez discuter, questionner, échanger avec les autres
@@ -52,14 +52,14 @@
                         <form #form="ngForm" (submit)="addSubject(form)" enctype="multipart/form-data">
                             <div class="form-group mb-3">
                                 <label for="title">Titre</label>
-                                <input ngModel type="text" class="form-control" id="title" name="title"
+                                <input [(ngModel)]="titleSubject" type="text" class="form-control" id="title" name="title"
                                     aria-describedby="title" placeholder="Saisir un titre">
                                 <small id="title_error" class="form-text text-muted"></small>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="description">Description</label>
                                 <div id="forum-editor">
-                                    <ckeditor [(ngModel)]="edition" [editor]="Editor" name="description" [config]="{ 
+                                    <ckeditor [(ngModel)]="contentEditor" [editor]="Editor" name="description" [config]="{ 
                                         toolbar: {
                                             items: [
                                                 'undo', 'redo',
@@ -80,48 +80,51 @@
                 </div>
             </div>
         </div>
-    </div>
 
+        <div class="row mb-3">
+            <select class="form-select" aria-label="Multiple select example" [(ngModel)]="categoryId" (ngModelChange)="onCategoryChange($event)">
+                <option selected [value]="-1">Toutes catégories</option>
+                <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+            </select>
+        </div>
 
-    <!-- LES SUJETS -->
-    <div class="col-12 mt-3">
-        <div class="row justify-content-center" *ngFor="let sujet of forumSubjectPaginate.forumSubjects">
-            <!-- <div class="card mb-3" style="max-width: 540px;"> -->
-            <div class="card mb-3 w-75 w-lg-50">
-                <div class="row g-0">
-                    <!-- <div class="col-md-4">
-                        <img [src]="PUBLIC_URL_GET_FILE_USER + sujet.user.filename" class="img-fluid rounded-start"
-                            alt="...">
-                    </div> -->
-                    <div class="col">
-                        <div class="card-body">
-                            <p>
-                                <span class="me-2">{{sujet.user.pseudo}}</span>
-                                <small class="text-body-secondary">{{sujet.createdAt | date:"dd/MM/yyyy hh:mm:ss"}}</small>
-                            </p>
-
-                            <div class="d-flex flex-column flex-lg-row justify-content-between">
-                                <h5 class="card-title">{{sujet.title}}</h5>
-                                <p *ngIf="sujet.forumCategories.length > 0">
-                                    <span *ngFor="let category of sujet.forumCategories; let last = last">{{category.name}}{{ !last ? ', ' : '' }}</span>
-                                </p>
-                            </div>
-
-                            <div class="showEditor">
-                                <ckeditor [editor]="Editor" [data]="sujet.description"
-                                    [config]="{ toolbar: {items: []} }" [disabled]="true"></ckeditor>
-                            </div>
-
-                            <button type="button" class="btn btn-primary position-relative"
-                                *ngIf="sujet.comments.length > 0 ">
-                                Réponses
-                                <span
-                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{sujet.comments.length}}
-                                </span>
-                            </button>
+        <!-- LES SUJETS -->
+        <div class="row">
+            <div class="card mb-3" *ngFor="let sujet of forumSubjectPaginate.forumSubjects">
+                <div class="card-body">
+                    <div *ngIf="sujet.user.filename ; else iconUserByDefault">
+                        <div class="avatarForforumSubject">
+                            <img [src]="PUBLIC_URL_GET_FILE_USER + sujet.user.filename" class="img-fluid"
+                                alt="Avatar" />
                         </div>
                     </div>
+                    <ng-template #iconUserByDefault>
+                        <img src="assets/images/icones/connexion.png" alt="Avatar" class="">
+                    </ng-template>
+                    <p>
+                        <span class="me-2">{{sujet.user.pseudo}}</span>
+                        <small class="text-body-secondary">{{sujet.createdAt | date:"dd/MM/yyyy hh:mm:ss"}}</small>
+                    </p>
+
+                    <div class="d-flex flex-column flex-lg-row justify-content-between">
+                        <h5 class="card-title">{{sujet.title}}</h5>
+                        <p *ngIf="sujet.forumCategories.length > 0">
+                            <span *ngFor="let category of sujet.forumCategories; let last = last">{{category.name}}{{
+                                !last ? ', ' : '' }}</span>
+                        </p>
+                    </div>
+
+                    <div class="showEditor">
+                        <ckeditor [editor]="Editor" [data]="sujet.description" [config]="{ toolbar: {items: []} }"
+                            [disabled]="true"></ckeditor>
+                    </div>
+
+                    <button type="button" class="btn btn-primary position-relative" *ngIf="sujet.comments.length > 0 ">
+                        Réponses
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{sujet.comments.length}}
+                        </span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -130,92 +133,3 @@
     <app-paginator [itemsPerPage]="itemsPerPage" [totalItems]="forumSubjectPaginate.forumSubjectLength"
         (paginationSettings)="handlePaginationEvent($event)"></app-paginator>
 </article>
-
-
-<!-- <div class="col-12 border-bottom border-secondary">
-                        {{ form_start(formCategory,{'attr':{'class':'row g-3'}}) }}
-                        {{ form_row(formCategory.name) }}
-                        {{ form_row(formCategory.save) }}
-                        {{form_end(formCategory)}}
-                    </div> -->
-
-<!-- <div class="col-12 my-5">
-                        {% if nameCategory is not empty %}
-                        <h4 class="text-light text-center">{{nameCategory}}</h4>
-                        {% endif %}
-                    </div> -->
-
-<!-- <div class="col-12">
-                        <div class="table-responsive-md">
-                            <table class="table text-light">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">
-                                            sujet(s) sur le forum
-                                        </th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Auteur</th>
-                                        <th scope="col">Catégorie</th>
-                                        <th scope="col">Reponse(s)</th>
-                                        <th scope="col">
-                                            Activité
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let sujet of sujets">
-                                        <td>
-                                            <a routerLink="">{{sujet.title}}</a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" [data-bs-target] = "sujet.id">
-                                                Aperçu
-                                            </button>
-                                            <div class="modal fade" id="{{sujet.id}}" tabindex="-1"
-                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-lg text-dark" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLongTitle">{{
-                                                                subject.title|raw }}</h5>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="container">
-                                                                <div class="row">
-                                                                    <div
-                                                                        class="col forumSubjects__commentary__image--size">
-                                                                        {{subject.description|raw}}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Fermer</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {# {{subject.description|slice(0,100)|nl2br}}... #}
-                                        </td>
-                                        <td>
-                                            {{subject.userPseudo}}
-                                        </td>
-                                        <td>
-                                            {# {{subject.forumCategory|length}} #}
-                                            {% for categorie in subject.forumCategory %}
-                                            {{categorie.name}}
-                                            {% if subject.forumCategory|length %}<br>{% endif %}
-                                            {% endfor %}
-                                        </td>
-                                        <td>{{subject.forumCommentary|length}}</td>
-                                        <td>{{ dateDiff(subject.createdAt|date("m/d/Y H:i",false)) }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                    {% endif %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div> -->

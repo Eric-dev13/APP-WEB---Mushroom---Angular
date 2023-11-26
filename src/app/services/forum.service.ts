@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { API_BASE_URL, API_ADMIN_BASE_URL } from 'src/environments/config';
 import { ForumSubject } from '../interfaces/forumSubject.interface';
 import { ForumSubjectsPaginator } from '../interfaces/forum-subjects-paginator.interface';
+import { ForumCategory } from '../interfaces/forum-category.interface';
 
 
 @Injectable({
@@ -12,21 +13,22 @@ import { ForumSubjectsPaginator } from '../interfaces/forum-subjects-paginator.i
 })
 export class ForumService {
 
-   // Déclaration de constantes
-   readonly API_BASE_URL:string = API_BASE_URL;
-   readonly API_ADMIN_BASE_URL:string = API_ADMIN_BASE_URL;
- 
-   constructor(private http: HttpClient) { }
+  // Déclaration de constantes
+  readonly API_BASE_URL: string = API_BASE_URL;
+  readonly API_ADMIN_BASE_URL: string = API_ADMIN_BASE_URL;
 
-  //  public findAll = (): Observable<ForumSubject[]> => {
-  //   return this.http.get<ForumSubject[]>(this.API_BASE_URL + "forum");
-  // }
+  constructor(private http: HttpClient) { }
 
-  public findAllPaginate = (limit?: number, offset?: number): Observable<ForumSubjectsPaginator> => {
-    if (limit == null || limit < 0  || offset  == null || offset < 0  ) {
-    return this.http.get<ForumSubjectsPaginator>(this.API_BASE_URL + "forum");
+  public findAllPaginate = (limit?: number, offset?: number, category?: number): Observable<ForumSubjectsPaginator> => {
+    if (category != null && limit != null && offset != null) {
+      // Si oui, récupère les entités paginées avec filtre par catégorie
+      return this.http.get<ForumSubjectsPaginator>(this.API_BASE_URL + `forum?limit=${limit}&offset=${offset}&category=${category}`);
+    } else if (limit != null && offset != null) {
+      // Si seulement limit et offset sont fournis, récupère les entités paginées sans filtre de catégorie
+      return this.http.get<ForumSubjectsPaginator>(this.API_BASE_URL + `forum?limit=${limit}&offset=${offset}`);
+    } else {
+      return this.http.get<ForumSubjectsPaginator>(this.API_BASE_URL + "forum");
     }
-    return this.http.get<ForumSubjectsPaginator>(this.API_BASE_URL + `forum?limit=${limit}&offset=${offset}`);
   }
 
   public findById = (id: number): Observable<ForumSubject> => {
@@ -35,6 +37,10 @@ export class ForumService {
 
   public add = (form: NgForm): Observable<any> => {
     return this.http.post<any>(this.API_BASE_URL + "forum", form.value);
+  }
+
+  public findAllCategories = (): Observable<ForumCategory[]> => {
+    return this.http.get<ForumCategory[]>(this.API_BASE_URL + "forum/category");
   }
 
 

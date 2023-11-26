@@ -54,6 +54,7 @@ import { PaginatorComponent } from './layouts/paginator/paginator.component';
 import { ActualiteComponent } from './pages/actualite/actualite/actualite.component'; 
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CategoryComponent } from './pages/forum/category/category/category.component';
 
 
 @NgModule({
@@ -82,6 +83,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     CharteComponent,
     PaginatorComponent,
     ActualiteComponent,
+    CategoryComponent,
   ],
   imports: [
     BrowserModule,

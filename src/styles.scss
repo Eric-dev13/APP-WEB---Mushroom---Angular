@@ -51,13 +51,23 @@
 
 /* pages/authentication/user */
 
-.containerImageCircle {
+@mixin containerImageCircle($size) {
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: $size;
+    height: $size;
     overflow: hidden;
     border-radius: 50%;
 }
+
+.avatarForforumSubject {
+    @include containerImageCircle(100px);
+}
+
+.avatarForProfil {
+    @include containerImageCircle(200px);
+}
+
+
 
 // CONTENEUR ROND POUR IMAGE avec argument $size en pixel (200 px par defaut)
 // @mixin createContainerCircle($size: 200px) {
