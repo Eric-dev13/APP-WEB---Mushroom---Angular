@@ -7,7 +7,7 @@
         <img [src]="PUBLIC_URL_GET_FILE_USER + user.filename" alt="Avatar" class="img-fluid"/>
     </div>
     <ng-template #iconUserByDefault >
-        <img src="assets/images/icones/connexion.png" alt="Avatar" width="200px">
+        <img src="assets/images/icones/connexion.png" alt="Avatar" class="avatar-file-size">
     </ng-template>
     <p class="fw-bold fs-4 text-danger border-bottom pb-2">{{user.email}}</p>
     <p class="text-nowrap" *ngIf="user?.createdAt">

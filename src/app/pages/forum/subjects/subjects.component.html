@@ -53,8 +53,9 @@
                             <div class="form-group mb-3">
                                 <label for="title">Titre</label>
                                 <input [(ngModel)]="titleSubject" type="text" class="form-control" id="title" name="title"
-                                    aria-describedby="title" placeholder="Saisir un titre">
-                                <small id="title_error" class="form-text text-muted"></small>
+                                    aria-describedby="title" placeholder="Saisir un titre" required>
+                                <small class="text-danger" *ngIf="errors['title']">{{ errors['title'] }}</small>
+                                <!-- <small *ngIf="form.controls['title'].hasError('required')" id="title_error" class="form-text text-danger"></small> -->
                             </div>
                             <div class="form-group mb-3">
                                 <label for="description">Description</label>
@@ -70,7 +71,8 @@
                                                 '|', 'bulletedList', 'numberedList'
                                             ]
                                         },
-                                    }" [ngStyle]="{backgroundColor: 'blue'}"></ckeditor>
+                                    }" required></ckeditor>
+                                    <small class="text-danger" *ngIf="errors['description']">{{ errors['description'] }}</small>
                                 </div>
                                 <small id="description_error" class="form-text text-muted"></small>
                             </div>
@@ -82,8 +84,8 @@
         </div>
 
         <div class="row mb-3">
-            <select class="form-select" aria-label="Multiple select example" [(ngModel)]="categoryId" (ngModelChange)="onCategoryChange($event)">
-                <option selected [value]="-1">Toutes catégories</option>
+            <select class="form-select" aria-label="Multiple select example" [(ngModel)]="filterCategoryId" (ngModelChange)="onCategoryChange($event)">
+                <option selected [ngValue]="undefined">Toutes catégories</option>
                 <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
             </select>
         </div>

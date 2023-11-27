@@ -67,7 +67,9 @@
     @include containerImageCircle(200px);
 }
 
-
+.avatar-file-size {
+    width: 200px;
+}
 
 // CONTENEUR ROND POUR IMAGE avec argument $size en pixel (200 px par defaut)
 // @mixin createContainerCircle($size: 200px) {
