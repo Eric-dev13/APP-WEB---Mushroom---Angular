@@ -71,9 +71,7 @@
             <!-- Nom local -->
             <p *ngIf="mushroom?.localnames">
                 <span class="fw-bold">Nom local</span><br>
-                <ng-template *ngFor="let localname of mushroom?.localnames">
-                    {{ localname?.name }}
-                </ng-template>
+                <span *ngFor="let localname of mushroom?.localnames; let last = last">{{ localname.name }}{{ !last ? ', ' : '' }}</span>
             </p>
 
             <!-- Chapeau -->

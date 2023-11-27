@@ -21,11 +21,18 @@ export class TokenInterceptor implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Récupérez l'URL actuelle
-    const currentUrl: string = this.router.url;
+    /* 
+      Vérifiez si l'URL du Back-end (route dans l'API) contient le segment "api/v1/forum"
+      request.url.includes('api/v1/forum')
 
-    // Vérifiez si l'URL dans angular contient le segment "back-office"
-    if (currentUrl.includes('back-office')) {
+      Vérifiez si l'URL dans angular (routes interne) contient le segment "back-office"
+      this.router.url.includes('back-office')
+    */
+
+      const urlInterne = this.router.url;
+      const urlDistante = request.url;
+
+    if (urlInterne.includes('back-office') || (urlDistante.includes('api/v1/forum') && request.method === 'POST')) {
       // Récupération du token d'authentification
       const token: string | null = this.auth.getToken();
       // Ajout du token dans les entêtes de la requête

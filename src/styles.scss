@@ -7,6 +7,26 @@
 @import "./scss/bg-image.scss";
 
 
+// FORUM IMPOSSIBLE D'APPLIQUER LE STYLE A PARTIR DU SCSS DU COMPONENT
+.forumSubjects {
+    #forum-editor {
+        .ck-editor__editable_inline {
+            min-height: 200px;
+            overflow-y: auto;
+        }
+    }
+
+    .showEditor {
+        .ck-editor__editable_inline {
+            border :none;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+}
+
 .containerFullSize {
     position: absolute;
     top: 0;
@@ -26,17 +46,29 @@
 
 // Filtre d'arrière plan
 .bgColor--filterBlack {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 /* pages/authentication/user */
 
-.containerImageCircle {
+@mixin containerImageCircle($size) {
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: $size;
+    height: $size;
     overflow: hidden;
     border-radius: 50%;
+}
+
+.avatarForforumSubject {
+    @include containerImageCircle(100px);
+}
+
+.avatarForProfil {
+    @include containerImageCircle(200px);
+}
+
+.avatar-file-size {
+    width: 200px;
 }
 
 // CONTENEUR ROND POUR IMAGE avec argument $size en pixel (200 px par defaut)

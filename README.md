@@ -898,6 +898,9 @@ npm install --save @ckeditor/ckeditor5-angular
 puis une des version prédéfini par exemple :
 
 npm install --save @ckeditor/ckeditor5-build-classic
+
+npm install --save @ckeditor/ckeditor5-core @ckeditor/ckeditor5-engine @ckeditor/ckeditor5-utils @ckeditor/ckeditor5-watchdog
+
 ````
 
 
@@ -905,7 +908,67 @@ npm install --save @ckeditor/ckeditor5-build-classic
 ````
 // app.module.ts
 
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
+import { AppComponent } from './app.component';
+
+@NgModule( {
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    CKEditorModule
+  ],
+  providers: [],
+  bootstrap: [ AppComponent ]
+} )
+export class AppModule { }
+
+````
+
+````
+// app.component.ts
+
+import { Component } from '@angular/core';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+@Component( {
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: [ './app.component.css' ]
+} )
+export class AppComponent {
+  title = 'angular';
+  public Editor = ClassicEditor;
+}
+````
+
+````
+<!-- app.component.html -->
+
+<ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
+
+````
+
+### Config Toolbar
+
+````
+toolbar: {
+    items: [
+        'undo', 'redo',
+        '|', 'heading',
+        '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+        '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+        '|', 'link', 'uploadImage', 'blockQuote', 'codeBlock',
+        '|', 'alignment',
+        '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
+    ],
+    shouldNotGroupWhenFull: true
+}
+
 ````
 
 
@@ -1054,3 +1117,4 @@ typescript                          5.1.6
 zone.js                             0.13.1
 ````
 
+Installation de

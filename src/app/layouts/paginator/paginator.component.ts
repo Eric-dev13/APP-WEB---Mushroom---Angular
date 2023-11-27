@@ -31,7 +31,6 @@ export class PaginatorComponent implements OnChanges {
 
   // Actualise le composant si un changement sur un @input est capturé 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("changement");
     // console.log("changes", changes);
     const totalItemsChange = changes['totalItems'];
     if (totalItemsChange) {

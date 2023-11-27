@@ -10,12 +10,12 @@
                 {{ user.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}
             </p>
             <div *ngIf="user?.filename ; else iconUserByDefault">
-                <div class="containerImageCircle">
-                    <img [src]="PUBLIC_URL_GET_FILE_USER + user.filename" class="img-fluid" alt="Avatar"  />
+                <div class="avatarForProfil">
+                    <img [src]="PUBLIC_URL_GET_FILE_USER + user.filename" class="img-fluid" alt="Avatar" />
                 </div>
             </div>
             <ng-template #iconUserByDefault>
-                <img src="assets/images/icones/connexion.png" alt="Avatar" class="">
+                <img src="assets/images/icones/connexion.png" alt="Avatar" class="avatar-file-size">
             </ng-template>
             <div class="text-nowrap" *ngIf="user?.updatedAt">
                 <div class="col">

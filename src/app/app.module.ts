@@ -50,9 +50,12 @@ import { SubjectsComponent } from './pages/forum/subjects/subjects.component';
 import { SubjectComponent } from './pages/forum/subject/subject.component';
 import { CharteComponent } from './pages/forum/charte/charte.component';
 
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { PaginatorComponent } from './layouts/paginator/paginator.component';
 import { ActualiteComponent } from './pages/actualite/actualite/actualite.component'; 
+
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CategoryComponent } from './pages/authentication/admin/forum/category/category.component';
+
 
 
 @NgModule({
@@ -81,6 +84,7 @@ import { ActualiteComponent } from './pages/actualite/actualite/actualite.compon
     CharteComponent,
     PaginatorComponent,
     ActualiteComponent,
+    CategoryComponent,
   ],
   imports: [
     BrowserModule,
