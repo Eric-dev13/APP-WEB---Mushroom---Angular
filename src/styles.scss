@@ -59,12 +59,16 @@
     border-radius: 50%;
 }
 
-.avatarForforumSubject {
+.avatar-for-forum-subject {
     @include containerImageCircle(100px);
 }
 
-.avatarForProfil {
+.avatar-for-profil {
     @include containerImageCircle(200px);
+}
+
+.avatar-for-forum-commentary {
+    @include containerImageCircle(50px);
 }
 
 .avatar-file-size {

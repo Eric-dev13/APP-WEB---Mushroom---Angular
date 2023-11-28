@@ -10,6 +10,7 @@ import { PaginatorComponent } from 'src/app/layouts/paginator/paginator.componen
 import { ForumCategory } from 'src/app/interfaces/forum-category.interface';
 
 
+
 @Component({
   selector: 'app-subjects',
   templateUrl: './subjects.component.html',
@@ -25,7 +26,7 @@ export class SubjectsComponent implements OnInit {
   readonly PUBLIC_URL_GET_FILE_USER: string = PUBLIC_URL_GET_FILE_USER;
 
   // Nombre d'élément par page
-  itemsPerPage: number = 5;
+  itemsPerPage: number = 15;
 
   // Accéder aux propriétés du composant enfant 
   @ViewChild(PaginatorComponent) childPaginator!: PaginatorComponent;
@@ -35,16 +36,24 @@ export class SubjectsComponent implements OnInit {
 
   public Editor = ClassicEditor;
 
-  contentEditor: string= "";
-  titleSubject: string= "";
+  contentEditor: string = "";
+  titleSubject: string = "";
 
   // Affiche la liste des catégories dans les options du select input 
-  categories:ForumCategory[]= [];
+  categories: ForumCategory[] = [];
   // binder la propriété filterCategoryId avec le choix du select input
   filterCategoryId: number | undefined;
 
   errors: { [key: string]: string } = {};
 
+  isShowCommentary: boolean[] = [];
+
+  isExpanded = false;
+
+  toggleCommentary(index: number): void {
+    this.isShowCommentary[index] = !this.isShowCommentary[index];
+    // console.log(index,': ',this.isShowCommentary[index]);
+  }
 
   ngOnInit(): void {
     // Charger les données initiales
@@ -56,9 +65,10 @@ export class SubjectsComponent implements OnInit {
     this.forumService.findAllCategories().subscribe({
       next: (data: ForumCategory[]) => {
         this.categories = data;
+        // console.log("Categories",data);
       },
-      error: (err:Error) => console.log()
-      
+      error: (err: Error) => console.log()
+
     })
   }
 
@@ -71,7 +81,7 @@ export class SubjectsComponent implements OnInit {
   addSubject = (form: NgForm) => {
     let isAddSubject: boolean = false;
 
-    if(form.value.titre != '' && form.value.description !=''){}
+    if (form.value.titre != '' && form.value.description != '') { }
     this.forumService.add(form).subscribe({
       next: (data) => {
         if (data) {
@@ -95,16 +105,16 @@ export class SubjectsComponent implements OnInit {
     this.findAll(this.itemsPerPage, 0);
     // Lorsque l'on change de catégorie on retourne  sur la page n°1
     this.childPaginator.paginator.currentPage = 1;
-  } 
+  }
 
   // Méthode pour récupérer les données paginées
   findAll(limit?: number, offset?: number) {
     this.forumService.findAllPaginate(limit, offset, this.filterCategoryId).subscribe({
       next: (data: ForumSubjectsPaginator) => {
-        // console.log("findAllPaginate", data),
+        console.log("findAllPaginate", data),
           // Retourne la liste et le nombre total d'enregistrements.
           this.forumSubjectPaginate = data;
-          console.log(data.forumSubjects.length + " sujet(s) sur un total de " + data.forumSubjectLength);
+        console.log(data.forumSubjects.length + " sujet(s) sur un total de " + data.forumSubjectLength);
       },
       error: (err: Error) => {
         console.log("erreur");
@@ -119,8 +129,8 @@ export class SubjectsComponent implements OnInit {
       for (const fieldName in err.error) {
         if (err.error.hasOwnProperty(fieldName)) {
           // Mise à jour de la structure de données "errors" avec les messages d'erreur
-          console.log("errors",this.errors);
-          
+          console.log("errors", this.errors);
+
           this.errors[fieldName] = err.error[fieldName];
         }
       }

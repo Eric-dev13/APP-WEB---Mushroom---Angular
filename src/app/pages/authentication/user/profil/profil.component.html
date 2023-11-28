@@ -10,7 +10,7 @@
                 {{ user.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}
             </p>
             <div *ngIf="user?.filename ; else iconUserByDefault">
-                <div class="avatarForProfil">
+                <div class="avatar-for-profil">
                     <img [src]="PUBLIC_URL_GET_FILE_USER + user.filename" class="img-fluid" alt="Avatar" />
                 </div>
             </div>

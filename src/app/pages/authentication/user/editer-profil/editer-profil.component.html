@@ -3,7 +3,7 @@
         <h1 class="text-center">Modifier mes données personnelles</h1>
     </header>
 
-    <div *ngIf="user.filename ; else iconUserByDefault" class="avatarForProfil">
+    <div *ngIf="user.filename ; else iconUserByDefault" class="avatar-for-profil">
         <img [src]="PUBLIC_URL_GET_FILE_USER + user.filename" alt="Avatar" class="img-fluid"/>
     </div>
     <ng-template #iconUserByDefault >

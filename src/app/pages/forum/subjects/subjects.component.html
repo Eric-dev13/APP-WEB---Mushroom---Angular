@@ -5,7 +5,7 @@
     <header>
         <div class="col-12 py-2 text-light text-center">
             <div>
-                <h1>Bienvenue sur ce salon</h1>
+                <h1 class="title-text-shadow">Bienvenue sur ce salon</h1>
                 <h2>Vous avez besoin d'aide ?</h2>
             </div>
         </div>
@@ -26,7 +26,7 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Règles du forum</h5>
+                                <h5 class="modal-title" id="staticBackdropLabel">Charte de la communauté</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -52,8 +52,8 @@
                         <form #form="ngForm" (submit)="addSubject(form)" enctype="multipart/form-data">
                             <div class="form-group mb-3">
                                 <label for="title">Titre</label>
-                                <input [(ngModel)]="titleSubject" type="text" class="form-control" id="title" name="title"
-                                    aria-describedby="title" placeholder="Saisir un titre" required>
+                                <input [(ngModel)]="titleSubject" type="text" class="form-control" id="title"
+                                    name="title" aria-describedby="title" placeholder="Saisir un titre" required>
                                 <small class="text-danger" *ngIf="errors['title']">{{ errors['title'] }}</small>
                                 <!-- <small *ngIf="form.controls['title'].hasError('required')" id="title_error" class="form-text text-danger"></small> -->
                             </div>
@@ -72,7 +72,8 @@
                                             ]
                                         },
                                     }" required></ckeditor>
-                                    <small class="text-danger" *ngIf="errors['description']">{{ errors['description'] }}</small>
+                                    <small class="text-danger" *ngIf="errors['description']">{{ errors['description']
+                                        }}</small>
                                 </div>
                                 <small id="description_error" class="form-text text-muted"></small>
                             </div>
@@ -84,18 +85,20 @@
         </div>
 
         <div class="row mb-3">
-            <select class="form-select" aria-label="Multiple select example" [(ngModel)]="filterCategoryId" (ngModelChange)="onCategoryChange($event)">
-                <option selected [ngValue]="undefined">Toutes catégories</option>
-                <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+            <select class="form-select" aria-label="Multiple select example" [(ngModel)]="filterCategoryId"
+                (ngModelChange)="onCategoryChange($event)">
+                <option selected [ngValue]="undefined">Toutes catégorie</option>
+                <option *ngFor="let category of categories" [value]="category.id">{{category.name}} -
+                    {{category.forumSubjects.length}} sujets</option>
             </select>
         </div>
 
         <!-- LES SUJETS -->
         <div class="row">
-            <div class="card mb-3" *ngFor="let sujet of forumSubjectPaginate.forumSubjects">
+            <div class="card mb-3" *ngFor="let sujet of forumSubjectPaginate.forumSubjects; index as i">
                 <div class="card-body">
                     <div *ngIf="sujet.user.filename ; else iconUserByDefault">
-                        <div class="avatarForforumSubject">
+                        <div class="avatar-for-forum-subject">
                             <img [src]="PUBLIC_URL_GET_FILE_USER + sujet.user.filename" class="img-fluid"
                                 alt="Avatar" />
                         </div>
@@ -110,9 +113,10 @@
 
                     <div class="d-flex flex-column flex-lg-row justify-content-between">
                         <h5 class="card-title">{{sujet.title}}</h5>
-                        <p *ngIf="sujet.forumCategories.length > 0">
-                            <span *ngFor="let category of sujet.forumCategories; let last = last">{{category.name}}{{
-                                !last ? ', ' : '' }}</span>
+                        <p *ngIf="sujet.forumCategories">
+                            <span
+                                *ngFor="let category of sujet.forumCategories; let last = last">{{category.name}}{{!last
+                                ? ', ' : '' }}</span>
                         </p>
                     </div>
 
@@ -121,13 +125,41 @@
                             [disabled]="true"></ckeditor>
                     </div>
 
-                    <button type="button" class="btn btn-primary position-relative" *ngIf="sujet.comments.length > 0 ">
-                        Réponses
+                    <!-- COMMENTARY -->
+                    <button type="button" class="btn btn-primary position-relative mb-3"
+                        *ngIf="sujet.forumCommentaries.length > 0" (click)="toggleCommentary(i)">Commentaires
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            {{sujet.comments.length}}
+                            {{sujet.forumCommentaries.length}}
                         </span>
                     </button>
+                    <div *ngIf="isShowCommentary[i]" [ngClass]="{ 'expandable': isExpanded }">
+                        <div class="p-4 border rounded shadow mb-3 " *ngFor="let comment of sujet.forumCommentaries">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span class="fw-bold text-muted">{{comment.user.pseudo}} le {{comment.createdAt |
+                                    date:"dd/MM/yyyy "}}</span>
+
+                                <div *ngIf="sujet.user.filename ; else iconUserByDefault">
+                                    <div class="avatar-for-forum-commentary">
+                                        <img [src]="PUBLIC_URL_GET_FILE_USER + comment.user.filename" class="img-fluid"
+                                            alt="Avatar" />
+                                    </div>
+                                </div>
+                                <ng-template #iconUserByDefault>
+                                    <img src="assets/images/icones/connexion.png" alt="Avatar" class="">
+                                </ng-template>
+
+                            </div>
+                            <div class="showEditor">
+                                <ckeditor [editor]="Editor" [data]="comment.commentary"
+                                    [config]="{ toolbar: {items: []} }" [disabled]="true"></ckeditor>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
+
+
             </div>
         </div>
     </div>

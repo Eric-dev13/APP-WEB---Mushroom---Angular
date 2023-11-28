@@ -10,5 +10,13 @@
         }
     }
 
-    
+    .max-height {
+        height: 500px; /* Ajustez cette valeur en fonction de votre contenu */
+      }
+
+    .expandable {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 1s ease-in-out;
+    }
 }

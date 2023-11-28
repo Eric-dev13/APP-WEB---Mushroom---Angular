@@ -1,4 +1,5 @@
 import { Commentary } from "./commentary.interface"
+import { ForumCategory } from "./forum-category.interface"
 import { User } from "./user.interface"
 
 export interface ForumSubject {
@@ -6,6 +7,7 @@ export interface ForumSubject {
     title: string,
     description: string,
     user: User,
-    comments: Commentary[],
-    forumCategories: any
+    forumCommentaries: Commentary[],
+    forumCategories: ForumCategory[]
+
 }
