@@ -12,7 +12,7 @@
     </header>
 
     <div class="container">
-        <div class="row rounded text-bg-light bg-opacity-10 pt-3 mb-3">
+        <div class="row rounded text-bg-light bg-opacity-10 pt-3 mb-3 justify-content-center">
             <!-- CHARTE DU FORUM -->
             <div class="col-12">
                 <p class="text-light forumCharte">Ici, vous pouvez discuter, questionner, échanger avec les autres
@@ -21,6 +21,7 @@
                         lire la suite
                     </a>
                 </p>
+
                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
@@ -41,6 +42,10 @@
                 </div>
             </div>
 
+            <div *ngIf="!auth.isAuth()" class="col-lg-8 text-center mb-3">
+                 <button type="button" class="btn btn-outline-warning" routerLink="/securite/authentification">Connecte-toi ou inscrit-toi maintenant pour participer aux discussions !</button>
+            </div>
+
             <!-- {# AJOUTER UN SUJET #} -->
             <div *ngIf="auth.isAuth()" class="text-center text-bg-light bg-opacity-10 py-4">
                 <a class="h5 btn btn-warning" data-bs-toggle="collapse" href="#collapseExample1" role="button"
@@ -52,15 +57,26 @@
                         <form #form="ngForm" (submit)="addSubject(form)" enctype="multipart/form-data">
                             <div class="form-group mb-3">
                                 <label for="title">Titre</label>
-                                <input [(ngModel)]="titleSubject" type="text" class="form-control" id="title"
+                                <input [(ngModel)]="forumSubjectAdd.title" type="text" class="form-control" id="title"
                                     name="title" aria-describedby="title" placeholder="Saisir un titre" required>
                                 <small class="text-danger" *ngIf="errors['title']">{{ errors['title'] }}</small>
-                                <!-- <small *ngIf="form.controls['title'].hasError('required')" id="title_error" class="form-text text-danger"></small> -->
                             </div>
+
+                            <div class="mb-3">
+                                <label for="title">Catégories</label>
+                                <select class="form-select" multiple size="5"
+                                    [(ngModel)]="forumSubjectAdd.forumCategories" name="categoriesId">
+                                    <option selected [ngValue]="-1">Toutes catégories</option>
+                                    <option *ngFor="let category of categories" [value]="category.id">{{category.name}}
+                                    </option>
+                                </select>
+                            </div>
+
                             <div class="form-group mb-3">
                                 <label for="description">Description</label>
                                 <div id="forum-editor">
-                                    <ckeditor [(ngModel)]="contentEditor" [editor]="Editor" name="description" [config]="{ 
+                                    <ckeditor [(ngModel)]="forumSubjectAdd.description" [editor]="Editor"
+                                        name="description" [config]="{ 
                                         toolbar: {
                                             items: [
                                                 'undo', 'redo',
@@ -125,6 +141,10 @@
                             [disabled]="true"></ckeditor>
                     </div>
 
+                    <div class="text-center mb-3">
+                        <button *ngIf="auth.isAuth()" type="button" class="btn btn-outline-dark" routerLink="/securite/authentification">Répondre</button>
+                   </div>
+
                     <!-- COMMENTARY -->
                     <button type="button" class="btn btn-primary position-relative mb-3"
                         *ngIf="sujet.forumCommentaries.length > 0" (click)="toggleCommentary(i)">Commentaires
@@ -132,8 +152,9 @@
                             {{sujet.forumCommentaries.length}}
                         </span>
                     </button>
-                    <div *ngIf="isShowCommentary[i]" [ngClass]="{ 'expandable': isExpanded }">
-                        <div class="p-4 border rounded shadow mb-3 " *ngFor="let comment of sujet.forumCommentaries">
+
+                    <div *ngIf="isShowCommentary[i]">
+                        <div class="p-4 border rounded shadow mb-3" *ngFor="let comment of sujet.forumCommentaries">
                             <div class="d-flex align-items-center justify-content-between">
                                 <span class="fw-bold text-muted">{{comment.user.pseudo}} le {{comment.createdAt |
                                     date:"dd/MM/yyyy "}}</span>

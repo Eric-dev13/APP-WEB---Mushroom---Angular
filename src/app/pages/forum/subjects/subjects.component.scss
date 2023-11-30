@@ -14,9 +14,15 @@
         height: 500px; /* Ajustez cette valeur en fonction de votre contenu */
       }
 
+    @keyframes grow-height {
+        to {
+            height: auto;
+        }
+    }
+
     .expandable {
-        max-height: 0;
+        height: 0;
         overflow: hidden;
-        transition: max-height 1s ease-in-out;
+        animation: grow-height 1s ease-in-out;
     }
 }

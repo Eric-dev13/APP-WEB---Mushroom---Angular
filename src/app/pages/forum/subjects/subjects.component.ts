@@ -8,7 +8,7 @@ import { Paginator } from 'src/app/interfaces/paginator.interface';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { PaginatorComponent } from 'src/app/layouts/paginator/paginator.component';
 import { ForumCategory } from 'src/app/interfaces/forum-category.interface';
-
+import { ForumSubjectAdd } from 'src/app/interfaces/forum-subject-add.interface';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class SubjectsComponent implements OnInit {
   readonly PUBLIC_URL_GET_FILE_USER: string = PUBLIC_URL_GET_FILE_USER;
 
   // Nombre d'élément par page
-  itemsPerPage: number = 15;
+  itemsPerPage: number = 5;
 
   // Accéder aux propriétés du composant enfant 
   @ViewChild(PaginatorComponent) childPaginator!: PaginatorComponent;
@@ -36,8 +36,14 @@ export class SubjectsComponent implements OnInit {
 
   public Editor = ClassicEditor;
 
-  contentEditor: string = "";
-  titleSubject: string = "";
+  // contentEditor: string = "";
+  // titleSubject: string = "";
+
+  forumSubjectAdd: ForumSubjectAdd = {
+    title: '',
+    description: '',
+    forumCategories: []
+  };
 
   // Affiche la liste des catégories dans les options du select input 
   categories: ForumCategory[] = [];
@@ -48,10 +54,11 @@ export class SubjectsComponent implements OnInit {
 
   isShowCommentary: boolean[] = [];
 
-  isExpanded = false;
+  // isCollapsed:boolean = true;
 
   toggleCommentary(index: number): void {
     this.isShowCommentary[index] = !this.isShowCommentary[index];
+    // this.isCollapsed= !this.isCollapsed;
     // console.log(index,': ',this.isShowCommentary[index]);
   }
 
@@ -65,7 +72,7 @@ export class SubjectsComponent implements OnInit {
     this.forumService.findAllCategories().subscribe({
       next: (data: ForumCategory[]) => {
         this.categories = data;
-        // console.log("Categories",data);
+        console.log("Categories", data);
       },
       error: (err: Error) => console.log()
 
@@ -79,11 +86,13 @@ export class SubjectsComponent implements OnInit {
   }
 
   addSubject = (form: NgForm) => {
+    console.log("addSubject", form.value);
+
     let isAddSubject: boolean = false;
 
     if (form.value.titre != '' && form.value.description != '') { }
     this.forumService.add(form).subscribe({
-      next: (data) => {
+      next: (data: ForumSubjectAdd) => {
         if (data) {
           isAddSubject = true;
         }
@@ -93,8 +102,9 @@ export class SubjectsComponent implements OnInit {
         if (isAddSubject) {
           this.findAll(this.childPaginator.paginator.itemsPerPage, this.childPaginator.paginator.offset);
           // Vide l'editeur
-          this.titleSubject = "";
-          this.contentEditor = "";
+          this.forumSubjectAdd.title = "";
+          this.forumSubjectAdd.description = "";
+          // this.forumSubjectAdd.categoriesId = undefined ;
         }
       }
     });
