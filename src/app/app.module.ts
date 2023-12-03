@@ -56,6 +56,9 @@ import { ActualiteComponent } from './pages/actualite/actualite/actualite.compon
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CategoryComponent } from './pages/authentication/admin/forum/category/category.component';
 
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 @NgModule({
@@ -92,7 +95,9 @@ import { CategoryComponent } from './pages/authentication/admin/forum/category/c
     FontAwesomeModule,
     FormsModule,
     HttpClientModule,
-    CKEditorModule
+    CKEditorModule,
+    MatSlideToggleModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {

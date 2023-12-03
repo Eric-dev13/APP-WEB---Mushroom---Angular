@@ -9,14 +9,21 @@
 
 // FORUM IMPOSSIBLE D'APPLIQUER LE STYLE A PARTIR DU SCSS DU COMPONENT
 .forumSubjects {
-    #forum-editor {
+    .forum-editor {
         .ck-editor__editable_inline {
             min-height: 200px;
             overflow-y: auto;
         }
     }
 
-    .showEditor {
+    .commentary-editor {
+        .ck-editor__editable_inline {
+            min-height: 100px;
+            overflow-y: auto;
+        }
+    }
+
+    .show-editor {
         .ck-editor__editable_inline {
             border :none;
         }
@@ -59,12 +66,16 @@
     border-radius: 50%;
 }
 
-.avatarForforumSubject {
+.avatar-for-forum-subject {
     @include containerImageCircle(100px);
 }
 
-.avatarForProfil {
+.avatar-for-profil {
     @include containerImageCircle(200px);
+}
+
+.avatar-for-forum-commentary {
+    @include containerImageCircle(50px);
 }
 
 .avatar-file-size {
@@ -83,3 +94,5 @@
 // .containerImageCircle {
 //     @include createContainerCircle(100px);
 // }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

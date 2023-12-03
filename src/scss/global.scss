@@ -1,16 +1,20 @@
 
 h1 {
     font-family: 'Tangerine', cursive;
-    text-shadow: 2px 1px 5px rgb(0, 0, 0);
+    // text-shadow: 2px 1px 5px rgb(0, 0, 0);
 }
 
 h2 {
     font-family: 'Roboto Condensed Regular';
-    text-shadow: 2px 1px 5px rgb(0, 0, 0);
+    // text-shadow: 2px 1px 5px rgb(0, 0, 0);
 }
 
 p,h5{
     font-family: 'Roboto Condensed Regular';
+}
+
+.title-text-shadow {
+    text-shadow: 2px 1px 5px rgb(0, 0, 0);
 }
 
 

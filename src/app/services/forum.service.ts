@@ -6,6 +6,8 @@ import { API_BASE_URL, API_ADMIN_BASE_URL } from 'src/environments/config';
 import { ForumSubject } from '../interfaces/forumSubject.interface';
 import { ForumSubjectsPaginator } from '../interfaces/forum-subjects-paginator.interface';
 import { ForumCategory } from '../interfaces/forum-category.interface';
+import { ForumSubjectAdd } from '../interfaces/forum-subject-add.interface';
+import { ForumCommentary } from '../interfaces/forum-commentary.interface';
 
 
 @Injectable({
@@ -35,8 +37,13 @@ export class ForumService {
     return this.http.get<ForumSubject>(this.API_BASE_URL + "forum/" + id);
   }
 
-  public add = (form: NgForm): Observable<any> => {
-    return this.http.post<any>(this.API_BASE_URL + "forum", form.value);
+  public add = (form: NgForm): Observable<ForumSubjectAdd> => {
+    // console.log("form", form.value);
+    return this.http.post<ForumSubjectAdd>(this.API_BASE_URL + "forum", form.value);
+  }
+
+  public addCommentary = (commentary: any): Observable<boolean> => {
+    return this.http.post<boolean>(this.API_BASE_URL + "forum/commentary", commentary);
   }
 
   public findAllCategories = (): Observable<ForumCategory[]> => {
