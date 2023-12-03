@@ -43,27 +43,35 @@
             </div>
 
             <div *ngIf="!auth.isAuth()" class="col-lg-8 text-center mb-3">
-                 <button type="button" class="btn btn-outline-warning" routerLink="/securite/authentification">Connecte-toi ou inscrit-toi maintenant pour participer aux discussions !</button>
+                <button type="button" class="btn btn-outline-warning"
+                    routerLink="/securite/authentification">Connecte-toi ou inscrit-toi maintenant pour participer aux
+                    discussions !</button>
             </div>
 
             <!-- {# AJOUTER UN SUJET #} -->
-            <div *ngIf="auth.isAuth()" class="text-center text-bg-light bg-opacity-10 py-4">
-                <a class="h5 btn btn-warning" data-bs-toggle="collapse" href="#collapseExample1" role="button"
-                    aria-expanded="false" aria-controls="multiCollapseExample1">
-                    Poser votre question
-                </a>
+            <div *ngIf="auth.isAuth()" class="text-bg-light bg-opacity-10 py-4">
+                <div class="text-center">
+                    <a class="h5 btn btn-warning" data-bs-toggle="collapse" href="#collapseExample1" role="button"
+                        aria-expanded="false" aria-controls="multiCollapseExample1">
+                        Créer une Publication
+                    </a>
+                </div>
+
                 <div class="collapse" id="collapseExample1">
-                    <div class="card card-body p-4">
+                    <div class="card card-body bg-light bg-opacity-25">
                         <form #form="ngForm" (submit)="addSubject(form)" enctype="multipart/form-data">
-                            <div class="form-group mb-3">
-                                <label for="title">Titre</label>
-                                <input [(ngModel)]="forumSubjectAdd.title" type="text" class="form-control" id="title"
-                                    name="title" aria-describedby="title" placeholder="Saisir un titre" required>
-                                <small class="text-danger" *ngIf="errors['title']">{{ errors['title'] }}</small>
-                            </div>
 
                             <div class="mb-3">
-                                <label for="title">Catégories</label>
+                                <label for="title" class="ms-3 mb-1">Titre</label>
+                                <input [(ngModel)]="forumSubjectAdd.title" type="text" class="form-control" id="title"
+                                    name="title" aria-describedby="title" placeholder="Saisir un titre" required>
+                                <small class="fw-bold text-raspberry" *ngIf="!errors['title']">{{
+                                    errors['title']}}</small>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label for="title" class="ms-3 mb-1">Catégories</label>
                                 <select class="form-select" multiple size="5"
                                     [(ngModel)]="forumSubjectAdd.forumCategories" name="categoriesId">
                                     <option selected [ngValue]="-1">Toutes catégories</option>
@@ -72,9 +80,9 @@
                                 </select>
                             </div>
 
-                            <div class="form-group mb-3">
-                                <label for="description">Description</label>
-                                <div id="forum-editor">
+                            <div class="mb-3">
+                                <label for="description" class="ms-3 mb-1">Description</label>
+                                <div class="forum-editor">
                                     <ckeditor [(ngModel)]="forumSubjectAdd.description" [editor]="Editor"
                                         name="description" [config]="{ 
                                         toolbar: {
@@ -88,18 +96,19 @@
                                             ]
                                         },
                                     }" required></ckeditor>
-                                    <small class="text-danger" *ngIf="errors['description']">{{ errors['description']
-                                        }}</small>
                                 </div>
-                                <small id="description_error" class="form-text text-muted"></small>
+                                <small class="fw-bold text-raspberry" *ngIf="errors['description']">{{
+                                    errors['description']
+                                    }}</small>
                             </div>
-                            <button class="btn btn-primary">Publier</button>
+                            <button class="btn btn-warning">Publier</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- LISTE DES CATEGORIES -->
         <div class="row mb-3">
             <select class="form-select" aria-label="Multiple select example" [(ngModel)]="filterCategoryId"
                 (ngModelChange)="onCategoryChange($event)">
@@ -136,23 +145,47 @@
                         </p>
                     </div>
 
-                    <div class="showEditor">
+                    <div class="show-editor">
                         <ckeditor [editor]="Editor" [data]="sujet.description" [config]="{ toolbar: {items: []} }"
                             [disabled]="true"></ckeditor>
                     </div>
 
-                    <div class="text-center mb-3">
-                        <button *ngIf="auth.isAuth()" type="button" class="btn btn-outline-dark" routerLink="/securite/authentification">Répondre</button>
-                   </div>
+                    <div *ngIf="auth.isAuth() && auth.getUser()?.username != sujet.user.email" class="mb-3">
+                        <h5>Répondre ...</h5>
+                        <div class="commentary-editor">
+                            <ckeditor placeholder="message..." [editor]="Editor" [(ngModel)]="commentarySend" [config]="{
+                                toolbar: {
+                                    items: [
+                                        'undo', 'redo',
+                                        '|', 'heading',
+                                        '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                                        '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                                        '|', 'link', 'uploadImage','insertTable',
+                                        '|', 'bulletedList', 'numberedList'
+                                    ]
+                                }
+                            }"></ckeditor>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-outline-dark rounded-0 w-100"
+                                (click)="addCommentary(sujet.id)">
+                                <fa-icon [icon]="faMessage"></fa-icon> Envoyer...
+                            </button>
+                        </div>
+                    </div>
 
-                    <!-- COMMENTARY -->
+                    <!-- AJOUTER UN COMMENTAIRE -->
+
+                    <!-- BOUTON VOIR LES COMMENTAIRES -->
                     <button type="button" class="btn btn-primary position-relative mb-3"
-                        *ngIf="sujet.forumCommentaries.length > 0" (click)="toggleCommentary(i)">Commentaires
+                        *ngIf="sujet.forumCommentaries.length > 0" (click)="toggleCommentary(i)">
+                        <fa-icon [icon]="faComments"></fa-icon> commentaires
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                             {{sujet.forumCommentaries.length}}
                         </span>
                     </button>
 
+                    <!-- AFFICHER LES COMMENTAIRES -->
                     <div *ngIf="isShowCommentary[i]">
                         <div class="p-4 border rounded shadow mb-3" *ngFor="let comment of sujet.forumCommentaries">
                             <div class="d-flex align-items-center justify-content-between">
@@ -168,19 +201,14 @@
                                 <ng-template #iconUserByDefault>
                                     <img src="assets/images/icones/connexion.png" alt="Avatar" class="">
                                 </ng-template>
-
                             </div>
-                            <div class="showEditor">
+                            <div class="show-editor">
                                 <ckeditor [editor]="Editor" [data]="comment.commentary"
                                     [config]="{ toolbar: {items: []} }" [disabled]="true"></ckeditor>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
-
             </div>
         </div>
     </div>

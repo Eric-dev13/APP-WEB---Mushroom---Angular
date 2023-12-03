@@ -9,6 +9,8 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { PaginatorComponent } from 'src/app/layouts/paginator/paginator.component';
 import { ForumCategory } from 'src/app/interfaces/forum-category.interface';
 import { ForumSubjectAdd } from 'src/app/interfaces/forum-subject-add.interface';
+import { faComments,faMessage } from '@fortawesome/free-solid-svg-icons';
+
 
 
 @Component({
@@ -25,6 +27,10 @@ export class SubjectsComponent implements OnInit {
 
   readonly PUBLIC_URL_GET_FILE_USER: string = PUBLIC_URL_GET_FILE_USER;
 
+  faComments = faComments; 
+  faMessage = faMessage;
+
+
   // Nombre d'élément par page
   itemsPerPage: number = 5;
 
@@ -36,14 +42,17 @@ export class SubjectsComponent implements OnInit {
 
   public Editor = ClassicEditor;
 
-  // contentEditor: string = "";
-  // titleSubject: string = "";
 
+  // Object lié à ckEditor 
   forumSubjectAdd: ForumSubjectAdd = {
     title: '',
     description: '',
     forumCategories: []
   };
+
+  // forumCommentaryAdd: ForumCommentary = { commentary: "" };
+  commentarySend: string = "";
+  
 
   // Affiche la liste des catégories dans les options du select input 
   categories: ForumCategory[] = [];
@@ -54,60 +63,61 @@ export class SubjectsComponent implements OnInit {
 
   isShowCommentary: boolean[] = [];
 
-  // isCollapsed:boolean = true;
 
   toggleCommentary(index: number): void {
     this.isShowCommentary[index] = !this.isShowCommentary[index];
-    // this.isCollapsed= !this.isCollapsed;
-    // console.log(index,': ',this.isShowCommentary[index]);
   }
 
   ngOnInit(): void {
+    console.log(this.auth.getUser());
+    
+    
     // Charger les données initiales
     this.findAllCategories();
     this.findAll(this.itemsPerPage, 0);
   }
 
-  findAllCategories = () => {
-    this.forumService.findAllCategories().subscribe({
-      next: (data: ForumCategory[]) => {
-        this.categories = data;
-        console.log("Categories", data);
-      },
-      error: (err: Error) => console.log()
-
-    })
-  }
-
   // Ecoute les changements du paginator (si click sur le btn next ou previous)
   handlePaginationEvent = (paginator: Paginator) => {
-    //console.log("click sur le btn precedent ou suivant = Event", paginator);
     this.findAll(paginator.itemsPerPage, paginator.offset);
   }
 
   addSubject = (form: NgForm) => {
-    console.log("addSubject", form.value);
-
     let isAddSubject: boolean = false;
 
     if (form.value.titre != '' && form.value.description != '') { }
     this.forumService.add(form).subscribe({
       next: (data: ForumSubjectAdd) => {
         if (data) {
-          isAddSubject = true;
-        }
-      },
-      error: (err: Error) => console.log(),
-      complete: () => {
-        if (isAddSubject) {
+          // Si le sujet a été ajouté dans la BDD on rafraichi la page.
           this.findAll(this.childPaginator.paginator.itemsPerPage, this.childPaginator.paginator.offset);
           // Vide l'editeur
           this.forumSubjectAdd.title = "";
           this.forumSubjectAdd.description = "";
-          // this.forumSubjectAdd.categoriesId = undefined ;
+          this.forumSubjectAdd.forumCategories = [] ;
         }
-      }
+      },
+      error: (err: Error) => console.log()       
     });
+  }
+
+  addCommentary = (sujet_id?: number) => {
+    const commentary: any = {
+      commentary: this.commentarySend,
+      user: {id: this.auth.getUser()?.id},
+      forumSubject: {id: sujet_id}
+    }
+    this.forumService.addCommentary(commentary).subscribe({
+      next: (data: boolean) => {
+        // Si le commentaire a été ajouté dans la BDD on rafraichi la page.
+        if(data) {
+          this.commentarySend = '';
+          this.findAll(this.childPaginator.paginator.itemsPerPage, this.childPaginator.paginator.offset);
+        }
+      },
+      error: (err: Error) => console.log()
+
+    })
   }
 
   onCategoryChange = (categoryId: number | undefined) => {
@@ -117,11 +127,22 @@ export class SubjectsComponent implements OnInit {
     this.childPaginator.paginator.currentPage = 1;
   }
 
+  findAllCategories = () => {
+    this.forumService.findAllCategories().subscribe({
+      next: (data: ForumCategory[]) => {
+        this.categories = data;
+        // console.log("Categories", data);
+      },
+      error: (err: Error) => console.log()
+
+    })
+  }
+
   // Méthode pour récupérer les données paginées
   findAll(limit?: number, offset?: number) {
     this.forumService.findAllPaginate(limit, offset, this.filterCategoryId).subscribe({
       next: (data: ForumSubjectsPaginator) => {
-        console.log("findAllPaginate", data),
+        console.log("findAll", data),
           // Retourne la liste et le nombre total d'enregistrements.
           this.forumSubjectPaginate = data;
         console.log(data.forumSubjects.length + " sujet(s) sur un total de " + data.forumSubjectLength);
