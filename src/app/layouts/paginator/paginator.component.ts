@@ -22,7 +22,7 @@ export class PaginatorComponent implements OnChanges {
     offset: 0           // numéro de l'enregistrement
   }
 
-  // EMETTRE : Émission d'un événement vers le parent
+  // EMETTRE : Émission d'un événement de l'enfant vers le parent
   @Output() paginationSettings: EventEmitter<Paginator> = new EventEmitter<Paginator>();
 
   // RECEVOIR : Réception des propriétés du parent

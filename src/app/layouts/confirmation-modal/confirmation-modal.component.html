@@ -1,0 +1,22 @@
+
+<!-- Button pour afficher le modal -->
+<button type="button" class="btn btn-outline-danger" (click)="open(content)"><fa-icon [icon]="faTrash"></fa-icon></button>
+
+<!-- Template du modal -->
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Supprimer</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		Êtes-vous sûr de vouloir supprimer cette image ?
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-danger" (click)="modal.close('confirm')">Confirmer</button>
+		<button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('cancel')">Annuler</button>
+	</div>
+</ng-template>
+
+
+<!-- <pre>{{ closeResult }}</pre> -->
+ 

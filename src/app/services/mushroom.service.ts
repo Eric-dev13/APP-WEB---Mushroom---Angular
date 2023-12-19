@@ -63,12 +63,12 @@ export class MushroomAdminService {
     return this.http.get<Mushroom>(this.API_ADMIN_BASE_URL + "mushroom/" + id);
   }
 
-  public add = (form: NgForm): Observable<Mushroom> => {
-    return this.http.post<Mushroom>(this.API_ADMIN_BASE_URL + 'mushroom', form.value);
+  public add = (form: NgForm): Observable<number> => {
+    return this.http.post<number>(this.API_ADMIN_BASE_URL + 'mushroom', form.value);
   }
 
-  public update = (id: number, form: NgForm): Observable<Mushroom> => {
-    return this.http.put<Mushroom>(this.API_ADMIN_BASE_URL + 'mushroom/' + id, form.value)
+  public update = (id: number, form: NgForm): Observable<number> => {
+    return this.http.put<number>(this.API_ADMIN_BASE_URL + 'mushroom/' + id, form.value)
   }
 
   // DELETE

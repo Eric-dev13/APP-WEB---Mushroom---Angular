@@ -69,7 +69,7 @@
         <div
             class="col-12 col-md-6 order-md-4 col-lg-6 order-lg-4 col-xl-7 order-xl-4 px-3 px-md-4 py-3 p-lg-5 rounded">
             <!-- Nom local -->
-            <p *ngIf="mushroom?.localnames">
+            <p *ngIf="mushroom?.localnames?.length">
                 <span class="fw-bold">Nom local</span><br>
                 <span *ngFor="let localname of mushroom?.localnames; let last = last">{{ localname.name }}{{ !last ? ', ' : '' }}</span>
             </p>

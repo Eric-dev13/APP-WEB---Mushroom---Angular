@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 
 import { SubjectsComponent, } from './pages/forum/subjects/subjects.component';
-import { SubjectComponent } from './pages/forum/subject/subject.component';
 
 import { NotFoundComponent } from './pages/error/not-found/not-found.component';
 import { AuthenticateComponent } from './pages/security/authenticate/authenticate.component';

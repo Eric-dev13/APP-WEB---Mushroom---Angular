@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM } from 'src/environments/config';
@@ -6,7 +6,6 @@ import { faEdit, faTrash, faRotateLeft, faSquarePlus } from '@fortawesome/free-s
 import { Mushroom } from 'src/app/interfaces/mushroom.interface';
 import { Edibility } from 'src/app/interfaces/edibility.interface';
 import { LamellaType } from 'src/app/interfaces/lamella-type.interface';
-import { MushroomInterface } from '../mushroom-interface';
 import { MediaInterface } from '../../media/media-interface';
 import { LocalName } from 'src/app/interfaces/local-name.interface';
 import { EdibilityService } from 'src/app/services/edibility.service';
@@ -15,6 +14,8 @@ import { MushroomAdminService } from 'src/app/services/mushroom.service';
 import { MediaService } from 'src/app/services/media.service';
 
 import { HttpClient } from '@angular/common/http';
+import { ConfirmationModalComponent } from 'src/app/layouts/confirmation-modal/confirmation-modal.component';
+
 
 
 
@@ -25,10 +26,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FormMushroomComponent implements OnInit {
 
-  // POST
   // Déclaration de constantes
   readonly API_ADMIN_BASE_URL: string = API_ADMIN_BASE_URL;
   readonly PUBLIC_URL_GET_FILE_MUSHROOM: string = PUBLIC_URL_GET_FILE_MUSHROOM;
+
 
   constructor(
     private lamellaTypeService: LamellaTypeService,
@@ -39,11 +40,16 @@ export class FormMushroomComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient
   ) { }
-
   faEdit = faEdit;
   faTrash = faTrash;
   faRotateLeft = faRotateLeft;
   faSquarePlus = faSquarePlus;
+
+  // Accéder aux propriétés du composant enfant 
+  @ViewChild(ConfirmationModalComponent) childModal!: ConfirmationModalComponent;
+
+
+  modalConfirm:boolean = false;
 
   id_mushroom: any; // id de l'enregistrement (mushroom) accessible dans l'URL.
 
@@ -75,10 +81,9 @@ export class FormMushroomComponent implements OnInit {
     localnames: [],
     medias: []
   }
-
+  
 
   load() {
-
     // FindAll edibility
     this.edibilityService.findAll().subscribe({
       next: (data) => {
@@ -123,6 +128,7 @@ export class FormMushroomComponent implements OnInit {
     this.load();
   }
 
+
   // Ajouter des noms - Form Emitter
   addLocalname(localname: LocalName) {
     if (localname.name) {
@@ -135,18 +141,17 @@ export class FormMushroomComponent implements OnInit {
   // Ajouter des photos - Form Emitter
   addMedia(media: any) {
     if (media.file) {
-      // stocke le chemin d'acces
+      // affiche la nouvelle image
       this.selectedImage[this.medias.length] = URL.createObjectURL(media.file!);
-      // Conserve dans un tableau les infos saisies dans le formulaire.
+      // Conserve dans un tableau les infos saisies dans le formulaire et mise a jour du HTML (binding)
       this.medias.push(
         {
           name: media.name,
           file: media.file,
           filename: media.filename
-        });
-      // puis on vide le formulaire
+        }
+      );
     }
-
   }
 
 
@@ -218,29 +223,11 @@ export class FormMushroomComponent implements OnInit {
       /* --------------------------------------------------------------- */
       /*    POST -  (En 2 étapes BD & FILE )  */
       /* --------------------------------------------------------------- */
-      // this.http.post<MushroomInterface>(this.API_ADMIN_BASE_URL + 'mushroom', form.value).subscribe({
-      //   next: (data) => {
-      //     // Envoie une deuxième requête POST pour ajouter les médias associés 
-      //     if (this.medias.length > 0) {
-      //       this.http.post(this.API_ADMIN_BASE_URL + 'media/' + data.id, formData).subscribe({
-      //         next: (data) => console.log('Medias: ', data),
-      //         error: (err) => console.log('Observer got an error: ' + err),
-      //         complete: () => console.log('Medias ajoutés!')
-      //       });
-      //     }
-
-      //     // Redirige l'utilisateur vers la liste des champignons après l'ajout
-      //     this.router.navigate(["admin/champignon/Liste-des-champignons"])
-      //   },
-      //   error: (err) => console.log('Observer got an error: ' + err),
-      //   complete: () => console.log('Champignon ajouté!')
-      // });
-
       this.mushroomAdminService.add(form).subscribe({
-        next: (data: MushroomInterface) => {
+        next: (mushroomId: number) => {
           // Envoie une deuxième requête POST avec l'ID de l'enregistrement champignon correspondant pour ajouter les médias associés 
-          if (this.medias.length > 0 && data.id) {
-            this.mediaService.add(data.id, formData).subscribe({
+          if (this.medias.length > 0 ) {
+            this.mediaService.add(mushroomId, formData).subscribe({
               next: (data) => console.log('Medias: ', data),
               error: (err) => console.log('Observer got an error: ' + err),
               complete: () => console.log('Média(s) ajouté(s)')
@@ -256,43 +243,38 @@ export class FormMushroomComponent implements OnInit {
     }
   }
 
+  // handleModalChoiceEvent = (event: any) => {
+  //   console.log("parent",event);
+  //   // modalConfirm
+  // }
+
   deleteMediaExistant(id: any) {
-    this.mediaService.delete(id).subscribe({
-      next: () => {
-        console.log('Champignon supprimée: ');
-        // Actualise le composant
-        this.load();
-      },
-      error: (err) => console.log('Observer got an error: ' + err),
-      complete: () => console.log('Observer got a complete notification')
-    })
+    const isConfirmed = window.confirm('Êtes-vous sûr de vouloir supprimer cette image ?');
+    if(isConfirmed) {
+      this.mediaService.delete(id).subscribe({
+        next: () => {
+          console.log('Champignon supprimée: ');
+          // Actualise le composant
+          this.load();
+        },
+        error: (err) => console.log('Observer got an error: ' + err),
+        complete: () => console.log('Observer got a complete notification')
+      })
+    }
   }
 
   deleteNewMedia(id: any) {
-    console.log("Va supprimer le media: ", id, this.medias[id]);
+    const isConfirmed = window.confirm('Êtes-vous sûr de vouloir supprimer cette image ?');
+    if(isConfirmed) {
     // supprime 1 élément à partir de l'index défini par l'id
     this.medias.splice(id, 1);
-
+    }
   }
-
-
 
   myFile!: File;
   handleFile = (event: any) => {
     this.myFile = event.target.files[0];
     console.log(this.myFile.name);
-  
   }
-
-  // send2() {
-  //   const formData2 = new FormData();
-  //   formData2.append("fileImage", this.myFile);
-  //   console.log(formData2);
-  //   this.http.post<any>("http://localhost:9000/api/v1/admin/media/upload/new", formData2).subscribe((res) => {
-  //     console.log("upload",res)
-  //   });
-  // }
-
-
 
 }
