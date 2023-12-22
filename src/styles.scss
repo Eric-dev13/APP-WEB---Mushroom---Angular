@@ -82,17 +82,6 @@
     width: 200px;
 }
 
-// CONTENEUR ROND POUR IMAGE avec argument $size en pixel (200 px par defaut)
-// @mixin createContainerCircle($size: 200px) {
-//     position: relative;
-//     width: $size;
-//     height: $size;
-//     overflow: hidden;
-//     border-radius: 50%;
-//   }
 
-// .containerImageCircle {
-//     @include createContainerCircle(100px);
-// }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';

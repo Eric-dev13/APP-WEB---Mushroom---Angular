@@ -55,7 +55,7 @@ export class AuthenticationService {
   public doLogged = (data: any): void => {
     this.setToken(data.token)
     this.setUser(data.user)
-    this.router.navigate([""]);
+    this.router.navigate(["/"]);
   }
 
   public getToken = (): string | null => {
@@ -91,11 +91,12 @@ export class AuthenticationService {
     let removeUser: void = sessionStorage.removeItem('user');
   }
 
-  // REQUETE HTTP / CRUD
+  // LOGIN
   public loggedIn = (formAuth: NgForm) => {
     return this.http.post<any>(this.API_URL_AUTH + "authenticate", formAuth.value);
   }
 
+  // REGISTER
   public registration = (formRegister: NgForm) => {
     return this.http.post<any>(this.API_URL_AUTH + "register", formRegister.value);
   }

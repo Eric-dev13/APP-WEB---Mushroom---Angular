@@ -898,9 +898,6 @@ npm install --save @ckeditor/ckeditor5-angular
 puis une des version prédéfini par exemple :
 
 npm install --save @ckeditor/ckeditor5-build-classic
-
-npm install --save @ckeditor/ckeditor5-core @ckeditor/ckeditor5-engine @ckeditor/ckeditor5-utils @ckeditor/ckeditor5-watchdog
-
 ````
 
 
@@ -908,67 +905,7 @@ npm install --save @ckeditor/ckeditor5-core @ckeditor/ckeditor5-engine @ckeditor
 ````
 // app.module.ts
 
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-
-import { AppComponent } from './app.component';
-
-@NgModule( {
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    CKEditorModule
-  ],
-  providers: [],
-  bootstrap: [ AppComponent ]
-} )
-export class AppModule { }
-
-````
-
-````
-// app.component.ts
-
-import { Component } from '@angular/core';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
-@Component( {
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: [ './app.component.css' ]
-} )
-export class AppComponent {
-  title = 'angular';
-  public Editor = ClassicEditor;
-}
-````
-
-````
-<!-- app.component.html -->
-
-<ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
-
-````
-
-### Config Toolbar
-
-````
-toolbar: {
-    items: [
-        'undo', 'redo',
-        '|', 'heading',
-        '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
-        '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
-        '|', 'link', 'uploadImage', 'blockQuote', 'codeBlock',
-        '|', 'alignment',
-        '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
-    ],
-    shouldNotGroupWhenFull: true
-}
-
 ````
 
 
@@ -1042,79 +979,25 @@ ngOnInit() { }
 
 
 
-````
-     _                      _                 ____ _     ___
-    / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
-   / △ \ | '_ \ / _` | | | | |/ _` | '__|   | |   | |    | |
-  / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | |
- /_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|
-                |___/
-    
+## Installation de Angular Material  
 
-Angular CLI: 16.1.5
-Node: 18.16.0
-Package Manager: npm 9.5.1
-OS: win32 x64
+```bash
+ng add @angular/material
+```
 
-Angular: 16.1.6
-... animations, common, compiler, compiler-cli, core, forms
-... platform-browser, platform-browser-dynamic, router
+```ts
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-Package                         Version
----------------------------------------------------------
-@angular-devkit/architect       0.1601.5
-@angular-devkit/build-angular   16.1.5
-@angular-devkit/core            16.1.5
-@angular-devkit/schematics      16.1.5
-@angular/cli                    16.1.5
-@schematics/angular             16.1.5
-rxjs                            7.8.1
-typescript                      5.1.6
-zone.js                         0.13.1
-
-
-Utilisateur@SIM-PC-5CG6324DZC MINGW64 /c/workspace/PROJET_EXAMEN/mushroom-angular (feat/authentication)
-$ npm install @angular/core@16.2.12
-````
-
-
+@NgModule ({
+  imports: [
+    MatSlideToggleModule,
+  ]
+})
+class AppModule {}
+```
 
 ````
-   _                      _                 ____ _     ___
-    / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
-   / △ \ | '_ \ / _` | | | | |/ _` | '__|   | |   | |    | |
-  / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | |
- /_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|
-                |___/
-    
-
-Angular CLI: 16.1.5
-Node: 18.16.0
-Package Manager: npm 9.5.1
-OS: win32 x64
-
-Angular: 16.2.12
-... core
-
-Package                             Version
--------------------------------------------------------------
-@angular-devkit/architect           0.1601.5
-@angular-devkit/build-angular       16.1.5
-@angular-devkit/core                16.1.5
-@angular-devkit/schematics          16.1.5
-@angular/animations                 16.1.6
-@angular/cli                        16.1.5
-@angular/common                     16.1.6
-@angular/compiler                   16.1.6
-@angular/compiler-cli               16.1.6
-@angular/forms                      16.1.6
-@angular/platform-browser           16.1.6
-@angular/platform-browser-dynamic   16.1.6
-@angular/router                     16.1.6
-@schematics/angular                 16.1.5
-rxjs                                7.8.1
-typescript                          5.1.6
-zone.js                             0.13.1
+ng serve
 ````
 
-Installation de
+​      

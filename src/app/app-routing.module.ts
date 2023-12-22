@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 
 import { SubjectsComponent, } from './pages/forum/subjects/subjects.component';
-import { SubjectComponent } from './pages/forum/subject/subject.component';
 
 import { NotFoundComponent } from './pages/error/not-found/not-found.component';
 import { AuthenticateComponent } from './pages/security/authenticate/authenticate.component';
@@ -20,6 +19,8 @@ import { DetailMushroomComponent } from './pages/authentication/admin/mushroom/d
 import { FormMushroomComponent } from './pages/authentication/admin/mushroom/form-mushroom/form-mushroom.component';
 import { EditerPasswordComponent } from './pages/authentication/user/editer-password/editer-password.component';
 import { ActualiteComponent } from './pages/actualite/actualite/actualite.component';
+import { authenticatedGuard } from './guards/authenticated.guard';
+import { isAdminGuard } from './guards/is-admin.guard';
 
 
 const routes: Routes = [
@@ -33,24 +34,24 @@ const routes: Routes = [
   {
     path: 'back-office', component: DashboardComponent, children: [
       // ADMIN - mushroom
-      { path: "admin/champignon/Liste-des-champignons", component: ListMushroomComponent },
-      { path: "admin/champignon/description/:id", component: DetailMushroomComponent },
-      { path: "admin/champignon/nouveau", component: FormMushroomComponent },
-      { path: "admin/champignon/editer/:id", component: FormMushroomComponent },
+      { path: "admin/champignon/Liste-des-champignons", component: ListMushroomComponent, canActivate: [isAdminGuard] },
+      { path: "admin/champignon/description/:id", component: DetailMushroomComponent, canActivate: [isAdminGuard] },
+      { path: "admin/champignon/nouveau", component: FormMushroomComponent, canActivate: [isAdminGuard] },
+      { path: "admin/champignon/editer/:id", component: FormMushroomComponent, canActivate: [isAdminGuard] },
 
       // ADMIN - edibility
-      { path: "admin/comestibilite/liste", component: EdibilitiesComponent },
-      { path: "admin/comestibilite/nouveau", component: FormEdibilityComponent },
-      { path: "admin/comestibilite/editer/:id", component: FormEdibilityComponent },
+      { path: "admin/comestibilite/liste", component: EdibilitiesComponent, canActivate: [isAdminGuard] },
+      { path: "admin/comestibilite/nouveau", component: FormEdibilityComponent, canActivate: [isAdminGuard] },
+      { path: "admin/comestibilite/editer/:id", component: FormEdibilityComponent, canActivate: [isAdminGuard] },
 
       //  ADMIN - USER ACCESS
       // { path: "admin/utilisateur/profils", component: },
       // { path: "admin/utilisateur/profil/:id", component: },
 
       // USER
-      { path: "utilisateur/profil", component: ProfilComponent },
-      { path: "utilisateur/profil/editer", component: EditerProfilComponent },
-      { path: "utilisateur/profil/mdp/editer", component: EditerPasswordComponent },
+      { path: "utilisateur/profil", component: ProfilComponent, canActivate: [authenticatedGuard] },
+      { path: "utilisateur/profil/editer", component: EditerProfilComponent, canActivate: [authenticatedGuard] },
+      { path: "utilisateur/profil/mdp/editer", component: EditerPasswordComponent, canActivate: [authenticatedGuard] },
     ]
   },
 

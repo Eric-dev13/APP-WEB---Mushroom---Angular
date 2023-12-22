@@ -30,18 +30,14 @@ export class EditerProfilComponent implements OnInit {
   user: User = {
     updatedAt: new Date(),
     pseudo: '',
-    lastname: '',
-    firstname: '',
-    email: '',
-    password: '',
-    filename: ''
+    email: ''
   }
 
 
   ngOnInit(): void {
     this.userService.getProfilCurrentUser().subscribe({
       next: (data) => {
-        this.user = data
+        this.user = data 
       },
       error: (err) => console.log('Observer got an error: ' + err),
       complete: () => console.log('current user ok')
@@ -60,7 +56,6 @@ export class EditerProfilComponent implements OnInit {
   send = (form: NgForm) => {
     // CREE UNE INSTANCE DE FORM DATA POUR PREPARER LA REQUETE MULTIPART
     const formData: FormData = new FormData();
-
     formData.append("pseudo", form.value.pseudo);
     formData.append("lastname", form.value.lastname);
     formData.append("firstname", form.value.firstname);
@@ -68,7 +63,7 @@ export class EditerProfilComponent implements OnInit {
 
 
     // ATTENTION PAS DE CONTENT-TYPE:application/json DANS L'INTERCEPTOR SINON ERREUR 400 !!!!!!
-    this.userService.updateProfilCurrentUser(formData).subscribe({
+    this.userService.updateProfilCurrentUser(this.user.id, formData).subscribe({
       next: (userSession: UserSessionStorage) => {
         if (userSession) {
           console.table(userSession);

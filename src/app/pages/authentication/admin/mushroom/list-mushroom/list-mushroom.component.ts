@@ -33,7 +33,7 @@ export class ListMushroomComponent implements OnInit {
   readonly PUBLIC_URL_GET_FILE_EDIBILITY: string = PUBLIC_URL_GET_FILE_EDIBILITY;
 
   // Configuration de la pagination : nombre d'élément par page
-  itemsPerPage: number = 5;
+  itemsPerPage: number = 10;
 
   // Objet pour stocker les données paginées
   mushroomsPaginate: MushroomsPaginator = { mushrooms: [], totalMushroom: 0 };

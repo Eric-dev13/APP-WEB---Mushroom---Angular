@@ -5,7 +5,6 @@ export interface  DecodeToken {
   sub: string,
   iat: number,
   exp: number
- 
 }
 
 @Injectable({
@@ -19,6 +18,7 @@ export class JwtTokenService {
   constructor() {
   }
 
+  // stocke le token précédement extrait de session storage.
   setToken(token: string): void {
     if (token) {
       this.jwtToken = token;

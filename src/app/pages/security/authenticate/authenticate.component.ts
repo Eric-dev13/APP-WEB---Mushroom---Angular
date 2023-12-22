@@ -3,10 +3,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { API_URL_AUTH } from '../../../../environments/config';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { throwError } from 'rxjs';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { faUser, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
-import { UserAuth } from 'src/app/interfaces/user-auth.interface';
+import { ToastService } from 'src/app/services/toast-service';
+import { TypeAlert } from 'src/app/enum/type-alert';
 
 
 @Component({
@@ -27,7 +27,8 @@ export class AuthenticateComponent implements OnInit {
   constructor(private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
-    protected authenticationService: AuthenticationService) { }
+    protected authenticationService: AuthenticationService,
+    private toastService: ToastService) { }
 
   errors: { [key: string]: string } = {};
 
@@ -40,13 +41,19 @@ export class AuthenticateComponent implements OnInit {
     if (formAuth.valid) {
       this.authenticationService.loggedIn(formAuth).subscribe({
         next: (data) => {
+          this.toastService.showExpiredSessionToast(
+            "LOGIN",
+            `Bienvenue ${formAuth.value.email} !`,
+            TypeAlert.SUCCESS,
+            2000
+          );
           // console.log('Utilisateur: ', data.user);
           // console.log('token: ', data.token);
           // console.log('token: ', data);
           // Enregistre le token et redirige vers la page d'acceuil
           this.authenticationService.doLogged(data);
         },
-        error: (errors :Error) => {
+        error: (errors: Error) => {
           // console.log('Observer got an error: ' + err);
           // Gestion des erreurs de validation provenat de l'API
           this.checkDataConstraints(errors);
@@ -62,6 +69,12 @@ export class AuthenticateComponent implements OnInit {
     if (formRegister.valid) {
       this.authenticationService.registration(formRegister).subscribe({
         next: (data) => {
+          this.toastService.showExpiredSessionToast(
+            "INSCRIPTION",
+            `Bienvenue ${formRegister.value.email} !`,
+            TypeAlert.SUCCESS,
+            2000
+          );
           // console.log('Utilisateur: ', data.user);
           // console.log('token: ', data.token);
           // Enregistre le token et redirige vers la page d'acceuil
@@ -82,6 +95,7 @@ export class AuthenticateComponent implements OnInit {
       for (const fieldName in err.error) {
         if (err.error.hasOwnProperty(fieldName)) {
           // Mise à jour de la structure de données "errors" avec les messages d'erreur
+          // errors: { [key: string]: string } = {};
           this.errors[fieldName] = err.error[fieldName];
         }
       }
