@@ -9,7 +9,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { PaginatorComponent } from 'src/app/layouts/paginator/paginator.component';
 import { ForumCategory } from 'src/app/interfaces/forum-category.interface';
 import { ForumSubjectAdd } from 'src/app/interfaces/forum-subject-add.interface';
-import { faComments,faMessage,faTrashArrowUp,faPencil, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
+import { faComments,faMessage,faTrashArrowUp,faPencil, faFloppyDisk, faCaretDown, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -32,6 +32,8 @@ export class SubjectsComponent implements OnInit {
   faTrashArrowUp=faTrashArrowUp;
   faPencil=faPencil;
   faFloppyDisk=faFloppyDisk;
+  faCaretDown=faCaretDown;
+  faPencilAlt=faPencilAlt;
 
   // Nombre d'élément par page
   itemsPerPage: number = 5;
@@ -62,15 +64,18 @@ export class SubjectsComponent implements OnInit {
 
   errors: { [key: string]: string } = {};
 
-  // tableau de 
+  // Tableau pour afficher masquer un commentaire
   isShowCommentary: boolean[] = [];
   toggleShowCommentary(index: number): void {
     this.isShowCommentary[index] = !this.isShowCommentary[index];
   }
 
-  isShowIcon:boolean[] = []; // Modifier ou supprimer un commentaire ajouté par l'utilsateur authentifé
-  toggleShowIconCommentary(index: number): void {
+  isShowIcon:boolean[] = []; // Modifier ou supprimer un commentaire ajouté par l'utilisateur authentifé
+  toggleShowIconCommentary(index: number, user:string): void {
+   if( this.auth.isAuth() && this.auth.getUser()?.username == user) {
     this.isShowIcon[index] = !this.isShowIcon[index];
+   }
+   
   }
 
   ngOnInit(): void {

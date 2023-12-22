@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
+import { ToastService } from './services/toast-service';
 
 
 @Component({
@@ -9,7 +10,9 @@ import { Title, Meta } from '@angular/platform-browser';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private titleService: Title, private metaService: Meta) { }
+  constructor(private titleService: Title, private metaService: Meta, private toastService: ToastService) { }
+
+  //@Input() toastMessage: string = "";
 
   ngOnInit(): void {
 
@@ -19,7 +22,6 @@ export class AppComponent implements OnInit {
     // Mettre à jour l'icône (favicon)
     // const favIconUrl = "/assets/images/icones/mushromLogo.png";
     // this.metaService.updateTag({ name: 'icon', content: favIconUrl });
-     
   }
 
 }
