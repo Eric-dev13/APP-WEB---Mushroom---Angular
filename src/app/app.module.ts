@@ -56,6 +56,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CategoryComponent } from './pages/authentication/admin/forum/category/category.component';
 import { ConfirmationModalComponent } from './layouts/confirmation-modal/confirmation-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastComponent } from './layouts/toast/toast.component';
 
 
 
@@ -87,6 +88,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ActualiteComponent,
     CategoryComponent,
     ConfirmationModalComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,

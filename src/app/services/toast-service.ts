@@ -1,12 +1,13 @@
-import { Injectable, TemplateRef } from '@angular/core';
+import { Injectable, TemplateRef, ViewChild } from '@angular/core';
 import { TypeAlert } from '../enum/type-alert';
+import { ToastComponent } from '../layouts/toast/toast.component';
 
 
 @Injectable({ providedIn: 'root' })
 export class ToastService {
 
+
 	showExpiredSessionToast = (title:string, message:string, typeAlert: TypeAlert, delai: number) => {
-  
 		const toastElement = document.getElementById('messageToast');
 		console.log("Execute toast");
 		

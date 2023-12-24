@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { API_URL_AUTH } from '../../../../environments/config';
 import { NgForm } from '@angular/forms';
@@ -14,7 +14,7 @@ import { TypeAlert } from 'src/app/enum/type-alert';
   templateUrl: './authenticate.component.html',
   styleUrls: ['./authenticate.component.scss']
 })
-export class AuthenticateComponent implements OnInit {
+export class AuthenticateComponent implements OnInit  {
 
   faUser = faUser;
   faEnvelope = faEnvelope;
@@ -23,8 +23,8 @@ export class AuthenticateComponent implements OnInit {
   // Déclaration de constantes
   readonly API_URL_AUTH: string = API_URL_AUTH;
 
-
-  constructor(private http: HttpClient,
+  constructor(
+    private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
     protected authenticationService: AuthenticationService,
@@ -32,7 +32,14 @@ export class AuthenticateComponent implements OnInit {
 
   errors: { [key: string]: string } = {};
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    // this.toastService.showExpiredSessionToast(
+    //   "LOGIN",
+    //   `Bienvenue !`,
+    //   TypeAlert.SUCCESS,
+    //   2000
+    // );
+  }
 
   loggedIn = (formAuth: NgForm) => {
     // POST :  Si l'utilisateur est enregistrer dans la base de données le serveur lui renverra un token
