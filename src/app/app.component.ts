@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { ToastComponent } from './layouts/toast/toast.component';
+import { ToastService } from './services/toast-service';
 
 
 @Component({
@@ -10,7 +11,12 @@ import { ToastComponent } from './layouts/toast/toast.component';
 })
 export class AppComponent implements OnInit, AfterViewInit {
 
-  constructor(private titleService: Title, private metaService: Meta) { }
+  constructor(
+    private titleService: Title,
+    private metaService: Meta,
+    private toastService: ToastService
+  ) { }
+
 
   ngOnInit(): void {
     // Mettre à jour le titre de la page de la balise <head>
@@ -20,11 +26,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     // this.metaService.updateTag({ name: 'icon', content: favIconUrl });
   }
 
-  // OK
-  @ViewChild(ToastComponent) toast!: ToastComponent;
+
+
+  // Permet au composant parent d'accèder au propriétés et méthode de l'enfant 
+  @ViewChild('toastComponent') toast!: ToastComponent;
+
   ngAfterViewInit(): void {
-    this.toast.active='show';
-    this.toast.message= "ceci est un test"
+    this.toastService.setToastComponent(this.toast);
   }
 
 }

@@ -18,4 +18,5 @@ export class FooterComponent {
   logout() {
     this.authenticated.doLogout();
   }
+
 }

@@ -920,11 +920,124 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 
-## TOAST - afficher des messages 
-
 
 
 ## Communiquer entre les composants
+
+Composant enfant TOAST
+
+***HTML** : toast.component.html*
+
+````
+<div class="toast-container position-fixed top-50 start-50 translate-middle p-3">
+    <div id="messageToast" class="toast" [ngClass]="{'show': toast.isActive}" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <img src="assets/images/icones/mushromLogo.png" class="rounded me-2" alt="logo SpitForm" width="20">
+            <strong class="me-auto">{{toast.title}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="fs-6 toast-body py-4">
+          {{toast.message}}
+        </div>
+    </div>
+  </div>
+````
+
+***TS** : toast.component.ts*
+
+````
+import { Component, Input } from '@angular/core';
+import { TypeAlert } from 'src/app/enum/type-alert';
+
+export interface ToastInterface {
+  isActive:boolean, 	// Affiche/masque le composant
+  title?: string,		// Titre de
+  message?: string,
+  typeAlert?: TypeAlert,
+  delay?: string
+}
+
+@Component({
+  selector: 'app-toast',
+  templateUrl: './toast.component.html',
+  styleUrls: ['./toast.component.scss']
+})
+export class ToastComponent {
+
+  toast: ToastInterface = {
+    isActive: false,
+    delai: '5000',
+    title: '',
+    message: '',
+    typeAlert: TypeAlert.INFO,
+  }
+
+}
+
+````
+
+
+
+***HTML** : app.component.html*
+
+````
+<main class="d-flex flex-column">
+  <app-nav></app-nav>
+  <div class="flex-grow-1">
+    <router-outlet></router-outlet>
+  </div>
+  <app-footer></app-footer>
+</main>
+
+<!-- COMPOSANT TOAST #toastComponent est une référence (id) -->
+<app-toast #toastComponent></app-toast>
+````
+
+***TS** : app.component.ts*
+
+````
+export class AppComponent implements OnInit, AfterViewInit {
+	
+	// inject ToastService
+	constructor(private toastService: ToastService){ }
+	
+	// Permet au composant parent d'accèder/modifier les propriétés et méthodes de l'enfant 
+  	@ViewChild('toastComponent') toast!: ToastComponent;
+  	
+  	// 
+  	ngAfterViewInit(): void {
+    	this.toastService.setToastComponent(this.toast);
+  	}
+  }
+````
+
+
+
+
+
+On utilise un service partager
+
+   On injecte le service `ToastService`
+
+   vice" dans le constructeur du composant parent
+
+   On injecte le service `ToastService` dans le constructeur du composant enfant celui qui veux envoyer les infos au Toast
+
+   On injecte le composant taost (celui dans app.component.html) dans le service via un setter
+
+​    \- this.toastService.setToastComponent(this.toast);
+
+   Coté composant enfant qui souhaite envoyer les données au Toast on 
+
+​    \-  messageToast: ToastComponent;
+
+​    constructor (private toastService: ToastService) {
+
+​      this.messageToast = this.toastService.getToastComponent();
+
+​     }
+
+ */
 
 #### composant parent 
 
