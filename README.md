@@ -930,7 +930,7 @@ Composant enfant TOAST
 
 ````
 <div class="toast-container position-fixed top-50 start-50 translate-middle p-3">
-    <div id="messageToast" class="toast" [ngClass]="{'show': toast.isActive}" role="alert" aria-live="assertive" aria-atomic="true">
+    <div id="messageToast" class="toast" [ngClass]="showStateAndTypeAlertToast()" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
             <img src="assets/images/icones/mushromLogo.png" class="rounded me-2" alt="logo SpitForm" width="20">
             <strong class="me-auto">{{toast.title}}</strong>
@@ -949,31 +949,67 @@ Composant enfant TOAST
 import { Component, Input } from '@angular/core';
 import { TypeAlert } from 'src/app/enum/type-alert';
 
-export interface ToastInterface {
-  isActive:boolean, 	// Affiche/masque le composant
-  title?: string,		// Titre de
-  message?: string,
-  typeAlert?: TypeAlert,
-  delay?: string
-}
-
 @Component({
   selector: 'app-toast',
   templateUrl: './toast.component.html',
   styleUrls: ['./toast.component.scss']
 })
 export class ToastComponent {
-
-  toast: ToastInterface = {
-    isActive: false,
-    delai: '5000',
+  toast: Toast = {
+    showStateToast: 'hide',
     title: '',
     message: '',
-    typeAlert: TypeAlert.INFO,
+    typeAlert: undefined,
+    delay: '5000'
+  }
+
+
+  // Affiche / masque  le composant toast
+  showStateAndTypeAlertToast = (): string => {
+    return this.toast.typeAlert + ' ' + this.toast.showStateToast;
   }
 
 }
 
+````
+
+***SERVICE PARTAGE***: toast-service.ts
+
+````
+export class toast-service {
+
+	private toastComponent!: ToastComponent;
+
+	setToastComponent(toast: ToastComponent): void {
+		this.toastComponent = toast;
+	}
+
+	getToastComponent(): ToastComponent {
+		return this.toastComponent;
+	}
+
+	showToast = (title: string, message: string, typeAlert: TypeAlert, delay: string) => {
+		if (this.toastComponent) {
+			this.toastComponent.toast = {
+				showStateToast: 'show',
+				title: title,
+				message: message,
+				typeAlert: typeAlert
+			}
+			// Masquer le toast après un délai
+			this.hideToast(delay);
+		} else {
+			console.error('Le composant de toast n\'est pas correctement initialisé dans le service.');
+		}
+	}
+
+	hideToast = (delay:string) => {
+		// Optionnel : Masquer le toast après un délai
+		setTimeout(() => {
+			this.toastComponent.toast.showStateToast = 'hide';
+		}, parseInt(delay));
+	}
+}
 ````
 
 
@@ -1004,22 +1040,18 @@ export class AppComponent implements OnInit, AfterViewInit {
 	// Permet au composant parent d'accèder/modifier les propriétés et méthodes de l'enfant 
   	@ViewChild('toastComponent') toast!: ToastComponent;
   	
-  	// 
+  	// envoie le composant au service
   	ngAfterViewInit(): void {
     	this.toastService.setToastComponent(this.toast);
   	}
   }
 ````
 
-
-
-
-
 On utilise un service partager
 
-   On injecte le service `ToastService`
+   On injecte le service `ToastService`dans le constructeur du composant `app.component.ts` et partage le `toast` avec les composants qui ont besoin  d'afficher des messages.
 
-   vice" dans le constructeur du composant parent
+
 
    On injecte le service `ToastService` dans le constructeur du composant enfant celui qui veux envoyer les infos au Toast
 
