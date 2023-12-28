@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { API_URL_AUTH } from '../../../../environments/config';
 import { NgForm } from '@angular/forms';
@@ -7,6 +7,7 @@ import { AuthenticationService } from '../../../services/authentication.service'
 import { faUser, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import { ToastService } from 'src/app/services/toast-service';
 import { TypeAlert } from 'src/app/enum/type-alert';
+import { ToastComponent } from 'src/app/layouts/toast/toast.component';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { TypeAlert } from 'src/app/enum/type-alert';
   templateUrl: './authenticate.component.html',
   styleUrls: ['./authenticate.component.scss']
 })
-export class AuthenticateComponent implements OnInit {
+export class AuthenticateComponent{
 
   faUser = faUser;
   faEnvelope = faEnvelope;
@@ -23,16 +24,20 @@ export class AuthenticateComponent implements OnInit {
   // Déclaration de constantes
   readonly API_URL_AUTH: string = API_URL_AUTH;
 
+  messageToast: ToastComponent;
 
-  constructor(private http: HttpClient,
+  constructor(
+    private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
     protected authenticationService: AuthenticationService,
-    private toastService: ToastService) { }
+    private toastService: ToastService
+    ) {
+      this.messageToast = this.toastService.getToastComponent();
+    }
 
   errors: { [key: string]: string } = {};
 
-  ngOnInit(): void { }
 
   loggedIn = (formAuth: NgForm) => {
     // POST :  Si l'utilisateur est enregistrer dans la base de données le serveur lui renverra un token
@@ -41,12 +46,7 @@ export class AuthenticateComponent implements OnInit {
     if (formAuth.valid) {
       this.authenticationService.loggedIn(formAuth).subscribe({
         next: (data) => {
-          this.toastService.showExpiredSessionToast(
-            "LOGIN",
-            `Bienvenue ${formAuth.value.email} !`,
-            TypeAlert.SUCCESS,
-            2000
-          );
+          this.toastService.showToast("LOGIN", "Authentification réussie. Accès autorisé.", TypeAlert.SUCCESS, "2000");
           // console.log('Utilisateur: ', data.user);
           // console.log('token: ', data.token);
           // console.log('token: ', data);
@@ -69,12 +69,7 @@ export class AuthenticateComponent implements OnInit {
     if (formRegister.valid) {
       this.authenticationService.registration(formRegister).subscribe({
         next: (data) => {
-          this.toastService.showExpiredSessionToast(
-            "INSCRIPTION",
-            `Bienvenue ${formRegister.value.email} !`,
-            TypeAlert.SUCCESS,
-            2000
-          );
+          this.toastService.showToast("INSCRIPTION", `Bienvenue ${formRegister.value.email} !`, TypeAlert.SUCCESS, "2000");
           // console.log('Utilisateur: ', data.user);
           // console.log('token: ', data.token);
           // Enregistre le token et redirige vers la page d'acceuil
@@ -102,6 +97,7 @@ export class AuthenticateComponent implements OnInit {
     }
   }
 
+  // Vide la liste d'erreurs.
   emptyErrors = (): void => {
     this.errors = {};
   }

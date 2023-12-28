@@ -19,8 +19,6 @@ export class AddMediaComponent{
 
   @Output() mediaEvent: EventEmitter<any> = new EventEmitter<any>();
 
-
-
   onFileSelected(event: any) {
     // Accéder au fichier sélectionné à partir de l'événement
     this.selectedFile = event.target.files[0];
