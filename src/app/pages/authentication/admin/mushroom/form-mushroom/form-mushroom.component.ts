@@ -6,7 +6,7 @@ import { faEdit, faTrash, faRotateLeft, faSquarePlus } from '@fortawesome/free-s
 import { Mushroom } from 'src/app/interfaces/mushroom.interface';
 import { Edibility } from 'src/app/interfaces/edibility.interface';
 import { LamellaType } from 'src/app/interfaces/lamella-type.interface';
-import { MediaInterface } from '../../media/media-interface';
+import { MediaInterface } from 'src/app/pages/authentication/admin/media/media-interface';
 import { LocalName } from 'src/app/interfaces/local-name.interface';
 import { EdibilityService } from 'src/app/services/edibility.service';
 import { LamellaTypeService } from 'src/app/services/lamella-type.service';
@@ -215,7 +215,7 @@ export class FormMushroomComponent implements OnInit {
           // redirige vers la liste
           this.router.navigate(["/back-office/admin/champignon/Liste-des-champignons"]);
         },
-        error: (err) => console.log('Observer got an error: ' + err),
+       
         complete: () => console.log('Enregistrement modifié!')
       });
 

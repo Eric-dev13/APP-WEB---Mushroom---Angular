@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../interfaces/user.interface';
+import { User } from 'src/app/interfaces/user.interface';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { API_URL_AUTH } from 'src/environments/config';
@@ -9,7 +9,8 @@ import { JwtTokenService } from './jwt-token.service';
 @Injectable({
   providedIn: 'root' // Le service est disponible dans toute l'application
 })
-export class AuthenticationService {
+export class 
+AuthenticationService {
 
   readonly API_URL_AUTH = API_URL_AUTH;
 
@@ -31,6 +32,10 @@ export class AuthenticationService {
       // Configurez le service de gestion des jetons avec le token récupéré
       this.jwtTokenService.setToken(token);
 
+      // si le token a expiré on deconnecte l'utilisateur (supprime les infos stocké dans la session).
+      if(this.jwtTokenService.isTokenExpired()) {
+        this.doLogout();
+      }
       // Retournez true si le token n'a pas expiré, indiquant que l'utilisateur est authentifié
       return !this.jwtTokenService.isTokenExpired();
     }

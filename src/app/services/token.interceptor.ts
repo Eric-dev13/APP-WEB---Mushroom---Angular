@@ -32,7 +32,7 @@ export class TokenInterceptor implements HttpInterceptor {
       const urlInterne = this.router.url;
       const urlDistante = request.url;
 
-    if (urlInterne.includes('back-office') || (urlDistante.includes('api/v1/forum') && request.method === 'POST')) {
+    if (urlInterne.includes('back-office') || (urlDistante.includes('api/v1/forum') && request.method != 'GET' )) {
       // Récupération du token d'authentification
       const token: string | null = this.auth.getToken();
       // Ajout du token dans les entêtes de la requête

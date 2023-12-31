@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { API_URL_AUTH } from '../../../../environments/config';
+import { API_URL_AUTH } from 'src/environments/config';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from '../../../services/authentication.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { faUser, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import { ToastService } from 'src/app/services/toast-service';
 import { TypeAlert } from 'src/app/enum/type-alert';

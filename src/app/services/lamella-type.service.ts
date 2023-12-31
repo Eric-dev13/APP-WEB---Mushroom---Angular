@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_ADMIN_BASE_URL } from 'src/environments/config';
-import { LamellaType } from '../interfaces/lamella-type.interface';
+import { LamellaType } from 'src/app/interfaces/lamella-type.interface';
 
 @Injectable({
   providedIn: 'root'

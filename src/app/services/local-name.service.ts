@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, empty } from 'rxjs';
 import { API_ADMIN_BASE_URL } from 'src/environments/config';
-import { LocalName } from '../interfaces/local-name.interface';
 
 @Injectable({
   providedIn: 'root'
