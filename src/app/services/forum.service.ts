@@ -3,11 +3,10 @@ import { NgForm } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_BASE_URL, API_ADMIN_BASE_URL } from 'src/environments/config';
-import { ForumSubject } from '../interfaces/forumSubject.interface';
-import { ForumSubjectsPaginator } from '../interfaces/forum-subjects-paginator.interface';
-import { ForumCategory } from '../interfaces/forum-category.interface';
-import { ForumSubjectAdd } from '../interfaces/forum-subject-add.interface';
-import { ForumCommentary } from '../interfaces/forum-commentary.interface';
+import { ForumSubject } from 'src/app/interfaces/forumSubject.interface';
+import { ForumSubjectsPaginator } from 'src/app/interfaces/forum-subjects-paginator.interface';
+import { ForumCategory } from 'src/app/interfaces/forum-category.interface';
+import { ForumSubjectAdd } from 'src/app/interfaces/forum-subject-add.interface';
 
 
 @Injectable({
@@ -44,6 +43,10 @@ export class ForumService {
 
   public addCommentary = (commentary: any): Observable<boolean> => {
     return this.http.post<boolean>(this.API_BASE_URL + "forum/commentary", commentary);
+  }
+
+  public putCommentary = (commentaryId: number, commentary: any): Observable<boolean> => {
+    return this.http.put<boolean>(this.API_BASE_URL + `forum/commentary/${commentaryId}`, commentary);
   }
 
   public findAllCategories = (): Observable<ForumCategory[]> => {

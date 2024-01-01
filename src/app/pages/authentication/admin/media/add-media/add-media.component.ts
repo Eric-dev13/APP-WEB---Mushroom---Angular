@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { MediaInterface } from '../media-interface';
+import { MediaInterface } from 'src/app/pages/authentication/admin/media/media-interface';
 
 
 @Component({

@@ -51,9 +51,10 @@
             <!-- {# AJOUTER UN SUJET #} -->
             <div *ngIf="auth.isAuth()" class="text-bg-light bg-opacity-10 py-4">
                 <div class="text-center">
-                    <button type="button" class="btn btn-warning mb-2" data-bs-toggle="collapse" data-bs-target="#collapseEditor"
-                        aria-expanded="false" aria-controls="multicollapseEditor">
-                        <fa-icon [icon]="faCaretDown"></fa-icon><span class="mx-2">SHARE</span><fa-icon [icon]="faPencilAlt"></fa-icon>
+                    <button type="button" class="btn btn-warning mb-2" data-bs-toggle="collapse"
+                        data-bs-target="#collapseEditor" aria-expanded="false" aria-controls="multicollapseEditor">
+                        <fa-icon [icon]="faCaretDown"></fa-icon><span class="mx-2">SHARE</span><fa-icon
+                            [icon]="faPencilAlt"></fa-icon>
                     </button>
                 </div>
 
@@ -146,13 +147,13 @@
                         </p>
                     </div>
 
-                    <!-- AFFICHE LE CONTENU DU SUJET -->
+                    <!-- AFFICHE L'EDITEUR EN MODE LECTURE LE CONTENU DU SUJET -->
                     <div class="show-editor">
                         <ckeditor [editor]="Editor" [data]="sujet.description" [config]="{ toolbar: {items: []} }"
                             [disabled]="true"></ckeditor>
                     </div>
 
-                    <!-- AFFICHE UN EDITEUR POUR REPONDRE  -->
+                    <!-- AFFICHE L'EDITEUR EN MODE EDIT POUR REPONDRE  -->
                     <div *ngIf="auth.isAuth() && auth.getUser()?.username != sujet.user.email" class="mb-3">
                         <h5>Répondre ...</h5>
                         <div class="commentary-editor">
@@ -187,10 +188,12 @@
 
                     <!-- AFFICHER CHAQUE COMMENTAIRE -->
                     <div *ngIf="isShowCommentary[i]">
-                        <div class="p-4 border rounded shadow mb-3" *ngFor="let comment of sujet.forumCommentaries; index as c" (click)="toggleShowIconCommentary(c,sujet.user.email)">
+                        <div class="p-4 border rounded shadow mb-3 position-relative" *ngFor="let comment of sujet.forumCommentaries; index as c"
+                            (mouseenter)="showEditorButtonCommentary(c, auth.getUser()?.username, comment.user.email)"
+                            (mouseleave)="hideEditorButtonCommentary(c, auth.getUser()?.username, comment.user.email)">
+
                             <div class="d-flex align-items-center justify-content-between">
-                                <span class="fw-bold text-muted">{{comment.user.pseudo}} le {{comment.createdAt |
-                                    date:"dd/MM/yyyy "}}</span>
+                                <span class="fw-bold text-muted">{{comment.user.pseudo}} le {{comment.createdAt | date:"dd/MM/yyyy "}}</span>
 
                                 <div *ngIf="sujet.user.filename ; else iconUserByDefault">
                                     <div class="avatar-for-forum-commentary">
@@ -203,10 +206,9 @@
                                 </ng-template>
                             </div>
 
-                            <div class="show-editor">
-                                <ckeditor [editor]="Editor" [data]="comment.commentary" [config]="{ toolbar: {items: []} }" [disabled]="true"></ckeditor>
-                                <!-- <ckeditor [editor]="Editor" [data]="comment.commentary"
-                                    [config]="isShowIcon[c] ? {
+                            <div class="my-4">
+                                <div class="show-editor" *ngIf="isYouWantPutCommentary[c] ; else showModeReadEditor">
+                                    <ckeditor [editor]="Editor" [ngModel]="comment.commentary" (ngModelChange)="saveChangesToCommentInMemory(c, $event)" [config]="{
                                         toolbar: {
                                             items: [
                                                 'undo', 'redo',
@@ -216,16 +218,34 @@
                                                 '|', 'link', 'uploadImage'
                                             ]
                                         }
-                                    }
-                                    : { toolbar: {items: []} }" 
-                                    [disabled]="isShowIcon[c]"></ckeditor> -->
-                            </div>
+                                    }"></ckeditor>
+                                </div>
+                                <ng-template #showModeReadEditor>
+                                    <div class="show-editor">
+                                        <ckeditor [editor]="Editor" [data]="comment.commentary"
+                                            [config]="{ toolbar: {items: []} }" [disabled]="true"></ckeditor>
+                                    </div>
+                                </ng-template>
 
-                            <!-- <div class="d-flex" *ngIf="isShowIcon[c]">
-                                <fa-icon [icon]="faPencil" class="me-2"></fa-icon>
-                                <fa-icon [icon]="faFloppyDisk" class="me-5"></fa-icon>
-                                <fa-icon [icon]="faTrashArrowUp"></fa-icon>
-                            </div> -->
+
+                               <!-- Affiche le bouton modifier sur les commentaires au survol de la souris -->
+                                 <div class="position-absolute bottom-0 start-50 translate-middle-x d-flex p-1" *ngIf="IsShowEditorButtonCommentary[c]">
+
+                                    <button type="button" class="btn btn-outline-dark" (click)="modifier(c)"*ngIf="!isYouWantPutCommentary[c]">
+                                        <fa-icon [icon]="faPencil"></fa-icon>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-dark" (click)="modifier(c)" *ngIf="isYouWantPutCommentary[c]">
+                                        <fa-icon [icon]="faXmark"></fa-icon>
+                                    </button>
+
+                                    <button type="button" class="btn  btn-outline-dark ms-2" (click)="putCommentary(c, comment.id)" *ngIf="isYouWantPutCommentary[c]">
+                                        <fa-icon [icon]="faFloppyDisk"></fa-icon>
+                                    </button>
+                                    <!-- <button type="button" class="btn btn-outline-info" (click)="modifier()">
+                                        <fa-icon [icon]="faTrashArrowUp"></fa-icon>
+                                    </button> -->
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

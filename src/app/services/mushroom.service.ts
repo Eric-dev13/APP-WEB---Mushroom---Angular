@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_BASE_URL, API_ADMIN_BASE_URL } from 'src/environments/config';
 import { Mushroom } from 'src/app/interfaces/mushroom.interface';
-import { MushroomsPaginator } from '../interfaces/mushroomsPaginator.interface';
+import { MushroomsPaginator } from 'src/app/interfaces/mushroomsPaginator.interface';
 
 
 

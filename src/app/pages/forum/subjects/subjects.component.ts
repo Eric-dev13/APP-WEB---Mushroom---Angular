@@ -9,7 +9,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { PaginatorComponent } from 'src/app/layouts/paginator/paginator.component';
 import { ForumCategory } from 'src/app/interfaces/forum-category.interface';
 import { ForumSubjectAdd } from 'src/app/interfaces/forum-subject-add.interface';
-import { faComments,faMessage,faTrashArrowUp,faPencil, faFloppyDisk, faCaretDown, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faComments, faMessage, faTrashArrowUp, faPencil, faFloppyDisk, faCaretDown, faPencilAlt, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -27,13 +27,14 @@ export class SubjectsComponent implements OnInit {
 
   readonly PUBLIC_URL_GET_FILE_USER: string = PUBLIC_URL_GET_FILE_USER;
 
-  faComments = faComments; 
+  faComments = faComments;
   faMessage = faMessage;
-  faTrashArrowUp=faTrashArrowUp;
+  faTrashArrowUp = faTrashArrowUp;
+  faFloppyDisk = faFloppyDisk;
+  faCaretDown = faCaretDown;
+  faPencilAlt = faPencilAlt;
   faPencil=faPencil;
-  faFloppyDisk=faFloppyDisk;
-  faCaretDown=faCaretDown;
-  faPencilAlt=faPencilAlt;
+  faXmark=faXmark;
 
   // Nombre d'élément par page
   itemsPerPage: number = 5;
@@ -53,9 +54,8 @@ export class SubjectsComponent implements OnInit {
     forumCategories: []
   };
 
-  // forumCommentaryAdd: ForumCommentary = { commentary: "" };
   commentarySend: string = "";
-  
+
 
   // Affiche la liste des catégories dans les options du select input 
   categories: ForumCategory[] = [];
@@ -64,18 +64,32 @@ export class SubjectsComponent implements OnInit {
 
   errors: { [key: string]: string } = {};
 
-  // Tableau pour afficher masquer un commentaire
+  // Afficher / masquer les commentaires
   isShowCommentary: boolean[] = [];
   toggleShowCommentary(index: number): void {
     this.isShowCommentary[index] = !this.isShowCommentary[index];
   }
 
-  isShowIcon:boolean[] = []; // Modifier ou supprimer un commentaire ajouté par l'utilisateur authentifé
-  toggleShowIconCommentary(index: number, user:string): void {
-   if( this.auth.isAuth() && this.auth.getUser()?.username == user) {
-    this.isShowIcon[index] = !this.isShowIcon[index];
-   }
-   
+  // Affiche le bouton Modifier au survol de la souris sur un commentaire redigé par l'utilisateur authentifié
+  IsShowEditorButtonCommentary: boolean[] = [];
+  showEditorButtonCommentary(index: number, userEmail: string|undefined, userEmailByCommentary: string) {
+    if (userEmail == userEmailByCommentary) {
+      this.IsShowEditorButtonCommentary[index] = true;
+    } 
+  }
+
+  // Masquer le bouton Modifier au survol de la souris sur un commentaire redigé par l'utilisateur authentifié
+  hideEditorButtonCommentary(index: number, userEmail: string|undefined, userEmailByCommentary: string) {
+    if (userEmail == userEmailByCommentary) {
+      this.IsShowEditorButtonCommentary[index] = false;
+    } 
+  }
+
+  // Affiche le commentaire en mode editeur
+  isYouWantPutCommentary: boolean[] = [];
+  modifier = (index: number) => {
+    // affiche le ckeditor en mode editeur
+    this.isYouWantPutCommentary[index] = !this.isYouWantPutCommentary[index];
   }
 
   ngOnInit(): void {
@@ -102,29 +116,56 @@ export class SubjectsComponent implements OnInit {
           // Vide l'editeur
           this.forumSubjectAdd.title = "";
           this.forumSubjectAdd.description = "";
-          this.forumSubjectAdd.forumCategories = [] ;
+          this.forumSubjectAdd.forumCategories = [];
         }
       },
-      error: (err: Error) => console.log()       
+      error: (err: Error) => console.log()
     });
   }
 
   addCommentary = (sujet_id?: number) => {
     const commentary: any = {
       commentary: this.commentarySend,
-      user: {id: this.auth.getUser()?.id},
-      forumSubject: {id: sujet_id}
+      user: { id: this.auth.getUser()?.id },
+      forumSubject: { id: sujet_id }
     }
+    // console.log("commentary",commentary);
+    
     this.forumService.addCommentary(commentary).subscribe({
       next: (data: boolean) => {
         // Si le commentaire a été ajouté dans la BDD on rafraichi la page.
-        if(data) {
+        if (data) {
           this.commentarySend = '';
           this.findAll(this.childPaginator.paginator.itemsPerPage, this.childPaginator.paginator.offset);
         }
       },
       error: (err: Error) => console.log()
+    })
+  }
 
+  // Conserve les changements effectué dans l'editeur
+  commentaryTextChanged: string[] = [];
+  saveChangesToCommentInMemory = (index:number, commentaryTextChanged: string) => {
+    this.commentaryTextChanged[index] = commentaryTextChanged;
+  }
+
+  // Valide les changements et envoi une requete a l'api pour la 
+  putCommentary = (index: number, commentaryId: number) => {
+    const commentary: any = {
+      commentary: this.commentaryTextChanged[index],
+      user: { id: this.auth.getUser()?.id },
+    }
+    console.log("commentary",commentary,"commentaryId",commentaryId);
+    
+    this.forumService.putCommentary(commentaryId, commentary).subscribe({
+      next: (data: boolean) => {
+        // Si le commentaire a été modifé dans la BDD on ne rafraichi pas la page on met a jour .
+        if (data) {
+          this.commentaryTextChanged[index] = '';
+          this.findAll(this.childPaginator.paginator.itemsPerPage, this.childPaginator.paginator.offset);
+        }
+      },
+      error: (err: Error) => console.log()
     })
   }
 
@@ -150,7 +191,7 @@ export class SubjectsComponent implements OnInit {
   findAll(limit?: number, offset?: number) {
     this.forumService.findAllPaginate(limit, offset, this.filterCategoryId).subscribe({
       next: (data: ForumSubjectsPaginator) => {
-        console.log("findAll", data),
+        // console.log("findAll", data),
           // Retourne la liste et le nombre total d'enregistrements.
           this.forumSubjectPaginate = data;
         console.log(data.forumSubjects.length + " sujet(s) sur un total de " + data.forumSubjectLength);

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_BASE_URL, API_ADMIN_BASE_URL } from 'src/environments/config';
-import { Edibility } from '../interfaces/edibility.interface';
+import { Edibility } from 'src/app/interfaces/edibility.interface';
 
 @Injectable({
   providedIn: 'root'

@@ -1,4 +1,4 @@
-import { TypeAlert } from "../enum/type-alert";
+import { TypeAlert } from "src/app/enum/type-alert";
 
 export interface Toast {
     showStateToast: string,

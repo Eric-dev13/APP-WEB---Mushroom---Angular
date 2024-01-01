@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TypeAlert } from '../enum/type-alert';
-import { ToastComponent } from '../layouts/toast/toast.component';
+import { TypeAlert } from 'src/app/enum/type-alert';
+import { ToastComponent } from 'src/app/layouts/toast/toast.component';
 
 
 @Injectable({ providedIn: 'root' })

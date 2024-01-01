@@ -1,7 +1,10 @@
-import { CommentaryUser } from "./commentary-user.interface";
+import { UserCommentary} from "./user-commentary.interface";
+import { ForumSubject } from "./forumSubject.interface";
 
 export interface Commentary {
+    id: number,
     createdAt: Date,
     commentary: string,
-    user: CommentaryUser
+    user: UserCommentary,
+    ForumSubject: ForumSubject
 }

@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthenticationService } from '../services/authentication.service';
-import { TypeAlert } from '../enum/type-alert';
-import { ToastService } from '../services/toast-service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { TypeAlert } from 'src/app/enum/type-alert';
+import { ToastService } from 'src/app/services/toast-service';
 
 
 export const isAdminGuard: CanActivateFn = () => {

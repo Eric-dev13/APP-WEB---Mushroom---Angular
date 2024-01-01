@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_ADMIN_BASE_URL } from 'src/environments/config';
-
-import { Mushroom } from '../interfaces/mushroom.interface';
-import { Media } from '../interfaces/media.interface';
+import { Media } from 'src/app/interfaces/media.interface';
 
 @Injectable({
   providedIn: 'root'
