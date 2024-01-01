@@ -121,40 +121,83 @@
 
         <!-- LES SUJETS -->
         <div class="row">
-            <div class="card mb-3" *ngFor="let sujet of forumSubjectPaginate.forumSubjects; index as i">
+            <div class="card mb-3" *ngFor="let subject of forumSubjectPaginate.forumSubjects; index as i">
                 <div class="card-body">
-                    <div *ngIf="sujet.user.filename ; else iconUserByDefault">
-                        <div class="avatar-for-forum-subject">
-                            <img [src]="PUBLIC_URL_GET_FILE_USER + sujet.user.filename" class="img-fluid"
-                                alt="Avatar" />
+                    <div class="position-relative"
+                        (mouseenter)="showEditorButtonSubject(i, auth.getUser()?.username, subject.user.email)"
+                        (mouseleave)="hideEditorButtonSubject(i, auth.getUser()?.username, subject.user.email)">
+                        <div *ngIf="subject.user.filename ; else iconUserByDefault">
+                            <div class="avatar-for-forum-subject">
+                                <img [src]="PUBLIC_URL_GET_FILE_USER + subject.user.filename" class="img-fluid"
+                                    alt="Avatar" />
+                            </div>
                         </div>
+                        <ng-template #iconUserByDefault>
+                            <img src="assets/images/icones/connexion.png" alt="Avatar" class="">
+                        </ng-template>
+                        <p>
+                            <span class="me-2">{{subject.user.pseudo}}</span>
+                            <small class="text-body-secondary">{{subject.createdAt | date:"dd/MM/yyyy hh:mm:ss"}}</small>
+                        </p>
 
+                        <!-- Affiche le bouton modifier sur le subjet au survol de la souris -->
+                        <div class="position-absolute top-0 end-0"
+                            *ngIf="IsShowEditorButtonSubject[i]">
+
+                            <button type="button" class="btn btn-outline-info" title="Modifer" (click)="wantPutSubject(i)"
+                                *ngIf="!isYouWantPutSubject[i]">
+                                <fa-icon [icon]="faPencil" class="fa-2x"></fa-icon>
+                            </button>
+
+                            <button type="button" class="btn btn-outline-dark" title="Annuler" (click)="wantPutSubject(i)"
+                                *ngIf="isYouWantPutSubject[i]">
+                                <fa-icon [icon]="faXmark" class="fa-2x"></fa-icon>
+                            </button>
+
+                            <button type="button" class="btn  btn-outline-success ms-2" title="Enregistrer" (click)="putSubject(i, subject.id)"
+                                *ngIf="isYouWantPutSubject[i]">
+                                <fa-icon [icon]="faFloppyDisk" class="fa-2x"></fa-icon>
+                            </button>
+                        </div>
                     </div>
-                    <ng-template #iconUserByDefault>
-                        <img src="assets/images/icones/connexion.png" alt="Avatar" class="">
-                    </ng-template>
-                    <p>
-                        <span class="me-2">{{sujet.user.pseudo}}</span>
-                        <small class="text-body-secondary">{{sujet.createdAt | date:"dd/MM/yyyy hh:mm:ss"}}</small>
-                    </p>
 
+                    <!-- Titre du sujet -->
                     <div class="d-flex flex-column flex-lg-row justify-content-between">
-                        <h5 class="card-title">{{sujet.title}}</h5>
-                        <p *ngIf="sujet.forumCategories">
+                        <h5 class="card-title">{{subject.title}}</h5>
+                        <p *ngIf="subject.forumCategories">
                             <span
-                                *ngFor="let category of sujet.forumCategories; let last = last">{{category.name}}{{!last
+                                *ngFor="let category of subject.forumCategories; let last = last">{{category.name}}{{!last
                                 ? ', ' : '' }}</span>
                         </p>
                     </div>
 
-                    <!-- AFFICHE L'EDITEUR EN MODE LECTURE LE CONTENU DU SUJET -->
-                    <div class="show-editor">
-                        <ckeditor [editor]="Editor" [data]="sujet.description" [config]="{ toolbar: {items: []} }"
-                            [disabled]="true"></ckeditor>
+                    <!-- AFFICHE LE CONTENU SUJET DANS L'EDITEUR READ / UPDATE -->
+                    <div class="my-4">
+                        <div class="show-editor border border-2 border-raspberry" *ngIf="isYouWantPutSubject[i] ; else showModeReadEditorSubject">
+                            <ckeditor [editor]="Editor" [ngModel]="subject.description"
+                                (ngModelChange)="saveChangesToSubjectInMemory(i, $event)" [config]="{
+                                toolbar: {
+                                    items: [
+                                        'undo', 'redo',
+                                        '|', 'heading',
+                                        '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                                        '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                                        '|', 'link', 'uploadImage'
+                                    ]
+                                }
+                            }"></ckeditor>
+                        </div>
+                        <ng-template #showModeReadEditorSubject>
+                            <div class="show-editor">
+                                <ckeditor [editor]="Editor" [data]="subject.description"
+                                    [config]="{ toolbar: {items: []} }" [disabled]="true"></ckeditor>
+                            </div>
+                        </ng-template>
                     </div>
 
-                    <!-- AFFICHE L'EDITEUR EN MODE EDIT POUR REPONDRE  -->
-                    <div *ngIf="auth.isAuth() && auth.getUser()?.username != sujet.user.email" class="mb-3">
+
+                    <!-- REPONDRE - AFFICHE L'EDITEUR EN MODE EDIT  -->
+                    <div *ngIf="auth.isAuth() && auth.getUser()?.username != subject.user.email" class="mb-3">
                         <h5>Répondre ...</h5>
                         <div class="commentary-editor">
                             <ckeditor placeholder="message..." [editor]="Editor" [(ngModel)]="commentarySend" [config]="{
@@ -171,7 +214,7 @@
                         </div>
                         <div>
                             <button type="button" class="btn btn-outline-dark rounded-0 w-100"
-                                (click)="addCommentary(sujet.id)">
+                                (click)="addCommentary(subject.id)">
                                 <fa-icon [icon]="faMessage"></fa-icon> Envoyer...
                             </button>
                         </div>
@@ -179,36 +222,39 @@
 
                     <!-- BOUTON VOIR LES COMMENTAIRES -->
                     <button type="button" class="btn btn-primary position-relative mb-3"
-                        *ngIf="sujet.forumCommentaries.length > 0" (click)="toggleShowCommentary(i)">
+                        *ngIf="subject.forumCommentaries.length > 0" (click)="toggleShowCommentary(i)">
                         <fa-icon [icon]="faComments"></fa-icon> commentaires
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            {{sujet.forumCommentaries.length}}
+                            {{subject.forumCommentaries.length}}
                         </span>
                     </button>
 
                     <!-- AFFICHER CHAQUE COMMENTAIRE -->
                     <div *ngIf="isShowCommentary[i]">
-                        <div class="p-4 border rounded shadow mb-3 position-relative" *ngFor="let comment of sujet.forumCommentaries; index as c"
+                        <div class="p-4 border rounded shadow mb-3 position-relative"
+                            *ngFor="let comment of subject.forumCommentaries; index as c"
                             (mouseenter)="showEditorButtonCommentary(c, auth.getUser()?.username, comment.user.email)"
                             (mouseleave)="hideEditorButtonCommentary(c, auth.getUser()?.username, comment.user.email)">
 
                             <div class="d-flex align-items-center justify-content-between">
-                                <span class="fw-bold text-muted">{{comment.user.pseudo}} le {{comment.createdAt | date:"dd/MM/yyyy "}}</span>
+                                <span class="fw-bold text-muted">{{comment.user.pseudo}} le {{comment.createdAt |
+                                    date:"dd/MM/yyyy "}}</span>
 
-                                <div *ngIf="sujet.user.filename ; else iconUserByDefault">
+                                <div *ngIf="subject.user.filename ; else iconUserByDefault">
                                     <div class="avatar-for-forum-commentary">
                                         <img [src]="PUBLIC_URL_GET_FILE_USER + comment.user.filename" class="img-fluid"
                                             alt="Avatar" />
                                     </div>
                                 </div>
                                 <ng-template #iconUserByDefault>
-                                    <img src="assets/images/icones/connexion.png" alt="Avatar" class="">
+                                    <img src="assets/images/icones/connexion.png" alt="Avatar">
                                 </ng-template>
                             </div>
 
                             <div class="my-4">
-                                <div class="show-editor" *ngIf="isYouWantPutCommentary[c] ; else showModeReadEditor">
-                                    <ckeditor [editor]="Editor" [ngModel]="comment.commentary" (ngModelChange)="saveChangesToCommentInMemory(c, $event)" [config]="{
+                                <div class="show-editor border border-2 border-raspberry" *ngIf="isYouWantPutCommentary[c] ; else showModeReadEditor">
+                                    <ckeditor [editor]="Editor" [ngModel]="comment.commentary"
+                                        (ngModelChange)="saveChangesToCommentInMemory(c, $event)" [config]="{
                                         toolbar: {
                                             items: [
                                                 'undo', 'redo',
@@ -228,22 +274,23 @@
                                 </ng-template>
 
 
-                               <!-- Affiche le bouton modifier sur les commentaires au survol de la souris -->
-                                 <div class="position-absolute bottom-0 start-50 translate-middle-x d-flex p-1" *ngIf="IsShowEditorButtonCommentary[c]">
-
-                                    <button type="button" class="btn btn-outline-dark" (click)="modifier(c)"*ngIf="!isYouWantPutCommentary[c]">
+                                <!-- Affiche le bouton modifier sur les commentaires au survol de la souris -->
+                                <div class="position-absolute bottom-0 start-50 translate-middle-x d-flex p-1"
+                                    *ngIf="IsShowEditorButtonCommentary[c]">
+                                    <button type="button" class="btn btn-outline-info" (click)="wantPutCommentary(c)"
+                                        *ngIf="!isYouWantPutCommentary[c]">
                                         <fa-icon [icon]="faPencil"></fa-icon>
                                     </button>
-                                    <button type="button" class="btn btn-outline-dark" (click)="modifier(c)" *ngIf="isYouWantPutCommentary[c]">
+
+                                    <button type="button" class="btn btn-outline-dark" (click)="wantPutCommentary(c)"
+                                        *ngIf="isYouWantPutCommentary[c]">
                                         <fa-icon [icon]="faXmark"></fa-icon>
                                     </button>
 
-                                    <button type="button" class="btn  btn-outline-dark ms-2" (click)="putCommentary(c, comment.id)" *ngIf="isYouWantPutCommentary[c]">
+                                    <button type="button" class="btn  btn-outline-success ms-2"
+                                        (click)="putCommentary(c, comment.id)" *ngIf="isYouWantPutCommentary[c]">
                                         <fa-icon [icon]="faFloppyDisk"></fa-icon>
                                     </button>
-                                    <!-- <button type="button" class="btn btn-outline-info" (click)="modifier()">
-                                        <fa-icon [icon]="faTrashArrowUp"></fa-icon>
-                                    </button> -->
                                 </div>
                             </div>
                         </div>
