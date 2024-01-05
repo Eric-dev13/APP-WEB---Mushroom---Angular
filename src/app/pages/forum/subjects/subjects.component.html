@@ -123,6 +123,7 @@
         <div class="row">
             <div class="card mb-3" *ngFor="let subject of forumSubjectPaginate.forumSubjects; index as i">
                 <div class="card-body">
+                    <!-- SURVEILLER LES EVENEMENT AU SURVOL -->
                     <div class="position-relative"
                         (mouseenter)="showEditorButtonSubject(i, auth.getUser()?.username, subject.user.email)"
                         (mouseleave)="hideEditorButtonSubject(i, auth.getUser()?.username, subject.user.email)">
@@ -161,7 +162,7 @@
                         </div>
                     </div>
 
-                    <!-- Titre du sujet -->
+                    <!-- TITRE DU SUJET -->
                     <div class="d-flex flex-column flex-lg-row justify-content-between">
                         <h5 class="card-title">{{subject.title}}</h5>
                         <p *ngIf="subject.forumCategories">
@@ -231,10 +232,20 @@
 
                     <!-- AFFICHER CHAQUE COMMENTAIRE -->
                     <div *ngIf="isShowCommentary[i]">
+
+                    ********************************************************************************
+                    <app-commentary *ngFor="let comment of subject.forumCommentaries"
+                    [commentary]="comment"></app-commentary>
+                    ********************************************************************************
+
                         <div class="p-4 border rounded shadow mb-3 position-relative"
-                            *ngFor="let comment of subject.forumCommentaries; index as c"
+                            *ngFor="let comment of subject.forumCommentaries; let c = index; let last = last;let odd=odd"
                             (mouseenter)="showEditorButtonCommentary(c, auth.getUser()?.username, comment.user.email)"
                             (mouseleave)="hideEditorButtonCommentary(c, auth.getUser()?.username, comment.user.email)">
+
+                            <!-- new index: {{ i + ':' + c }} / last: {{ last }}  / odd: {{ odd }} <br> -->
+                            <!-- mèthode compteur : {{incrementerCompteur()}}
+                            compteur : {{compteur}} -->
 
                             <div class="d-flex align-items-center justify-content-between">
                                 <span class="fw-bold text-muted">{{comment.user.pseudo}} le {{comment.createdAt |
@@ -252,7 +263,7 @@
                             </div>
 
                             <div class="my-4">
-                                <div class="show-editor border border-2 border-raspberry" *ngIf="isYouWantPutCommentary[c] ; else showModeReadEditor">
+                                <div class="show-editor border border-2 border-raspberry" *ngIf="isYouWantUpdateCommentary[c] ; else showModeReadEditor">
                                     <ckeditor [editor]="Editor" [ngModel]="comment.commentary"
                                         (ngModelChange)="saveChangesToCommentInMemory(c, $event)" [config]="{
                                         toolbar: {
@@ -277,18 +288,18 @@
                                 <!-- Affiche le bouton modifier sur les commentaires au survol de la souris -->
                                 <div class="position-absolute bottom-0 start-50 translate-middle-x d-flex p-1"
                                     *ngIf="IsShowEditorButtonCommentary[c]">
-                                    <button type="button" class="btn btn-outline-info" (click)="wantPutCommentary(c)"
-                                        *ngIf="!isYouWantPutCommentary[c]">
+                                    <button type="button" class="btn btn-outline-raspberry" (click)="wantUpdateCommentary(c)"
+                                        *ngIf="!isYouWantUpdateCommentary[c]">
                                         <fa-icon [icon]="faPencil"></fa-icon>
                                     </button>
 
-                                    <button type="button" class="btn btn-outline-dark" (click)="wantPutCommentary(c)"
-                                        *ngIf="isYouWantPutCommentary[c]">
+                                    <button type="button" class="btn btn-outline-dark" (click)="wantUpdateCommentary(c)"
+                                        *ngIf="isYouWantUpdateCommentary[c]">
                                         <fa-icon [icon]="faXmark"></fa-icon>
                                     </button>
 
                                     <button type="button" class="btn  btn-outline-success ms-2"
-                                        (click)="putCommentary(c, comment.id)" *ngIf="isYouWantPutCommentary[c]">
+                                        (click)="putCommentary(c, comment.id)" *ngIf="isYouWantUpdateCommentary[c]">
                                         <fa-icon [icon]="faFloppyDisk"></fa-icon>
                                     </button>
                                 </div>

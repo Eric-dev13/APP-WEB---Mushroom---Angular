@@ -38,7 +38,6 @@ export class AuthenticateComponent{
 
   errors: { [key: string]: string } = {};
 
-
   loggedIn = (formAuth: NgForm) => {
     // POST :  Si l'utilisateur est enregistrer dans la base de données le serveur lui renverra un token
     // a chaque fois que l'on souhaite acceder a une route privée on dois envoyer le token

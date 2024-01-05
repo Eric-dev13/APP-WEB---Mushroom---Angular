@@ -56,6 +56,7 @@ AuthenticationService {
     return false;
   }
 
+
   // Après une inscription ou authentification réussi
   public doLogged = (data: any): void => {
     this.setToken(data.token)
