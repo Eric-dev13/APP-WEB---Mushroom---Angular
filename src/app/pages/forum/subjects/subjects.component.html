@@ -233,10 +233,11 @@
                     <!-- AFFICHER CHAQUE COMMENTAIRE -->
                     <div *ngIf="isShowCommentary[i]">
 
-                    ********************************************************************************
-                    <app-commentary *ngFor="let comment of subject.forumCommentaries"
-                    [commentary]="comment"></app-commentary>
-                    ********************************************************************************
+                    <!-- 
+                        ********************************************************************************
+                    <app-commentary *ngFor="let comment of subject.forumCommentaries" [commentary]="comment"></app-commentary>
+                    ******************************************************************************** 
+                -->
 
                         <div class="p-4 border rounded shadow mb-3 position-relative"
                             *ngFor="let comment of subject.forumCommentaries; let c = index; let last = last;let odd=odd"

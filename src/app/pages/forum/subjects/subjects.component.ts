@@ -156,12 +156,20 @@ export class SubjectsComponent implements OnInit {
     }
   }
 
-
   // Méthode pour récupérer les données paginées
   findAll(limit?: number, offset?: number) {
     this.forumService.findAllPaginate(limit, offset, this.filterCategoryId).subscribe({
       next: (data: ForumSubjectsPaginator) => {
         // console.log("findAll", data),
+        this.isYouWantPutSubject.map(() => false);
+
+        // Utilisation de la boucle for pour itérer sur chaque élément du tableau
+        for (var i = 0; i < this.isYouWantPutSubject.length; i++) {
+          this.isYouWantPutSubject[i]=false;
+          this.isShowCommentary[i]=false;
+          this.IsShowEditorButtonCommentary[i]=false;
+        }
+
         // Retourne la liste et le nombre total d'enregistrements.
         this.forumSubjectPaginate = data;
         console.log(data.forumSubjects.length + " sujet(s) sur un total de " + data.forumSubjectLength);

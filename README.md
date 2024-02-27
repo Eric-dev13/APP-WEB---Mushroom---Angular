@@ -484,12 +484,10 @@ export class MushroomModule {
 // src\app\pages\mushroom\mushroom-routing.module.ts
 
 
-
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MushroomsComponent } from './mushrooms/mushrooms.component';
 import { MushromComponent } from './mushroom/mushroom.component';
-
 
 const mushroomRoute: Routes = [
   { path: "guide-des-champignons", component: MushroomsComponent },
