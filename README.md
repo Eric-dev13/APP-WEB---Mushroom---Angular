@@ -2,11 +2,7 @@
 
 
 
-## Royaume des champignons
-
-
-
-## Installation
+## INSTALLATION NOUVEAU PROJET
 
 Installer `Node Js` pour bénéficier du gestionnaire de package`npm`
 
@@ -14,7 +10,7 @@ Installer `Node Js` pour bénéficier du gestionnaire de package`npm`
 
 
 
-## Version d'angular
+## VERSION ANGULAR
 
 ````
 ng v
@@ -22,7 +18,9 @@ ng v
 
 
 
-## Demarrage du serveur
+
+
+## DEMARRER LE SERVER
 
 localhost:4200
 
@@ -31,12 +29,14 @@ ng serve --open
 ````
 
 
-## Génère et/ou modifie des fichiers
+
+
+
+## GENERER DES FICHIERS
 
 https://angular.io/cli/generate#interface-command
 
-
-## Création composant (controller)
+### CREER UN COMPOSANT (controller)
 
 ````
 ng generate component nom-du-composant
@@ -44,8 +44,7 @@ OU
 ng g c nom-du-composant
 ````
 
-
-## Création service
+### CREER UN SERVICE
 
 ````
 ng g service nom-du-service
@@ -55,7 +54,7 @@ Mettre a disposition de méthode pour les traitements
 
 Exemple :CRUD
 
-## Création d'une interface
+### CREER UNE INTERFACE
 
 ````
 ng generate interface [name] [type]
@@ -65,7 +64,9 @@ ng generate interface [name] [type]
 
 
 
-## Bootstrap
+
+
+## BOOTSTRAP
 
 ### Installation Bootstrap widgets - angular
 
@@ -74,8 +75,6 @@ https://ng-bootstrap.github.io/#/getting-started
 ````
 ng add @ng-bootstrap/ng-bootstrap
 ````
-
-
 
 ### Installation classic bootstrap
 
@@ -136,11 +135,15 @@ ng add @ng-bootstrap/ng-bootstrap
 
 Le préfixe `~` est utilisé pour indiquer à Angular de rechercher la dépendance dans le dossier `node_modules`.
 
+
+
+
+
 ## Fontawesome
 
 ### Installation
 
-```
+```bash
 $ npm install @fortawesome/fontawesome-svg-core
 $ npm install @fortawesome/free-solid-svg-icons
 # See Compatibility table below to choose a correct version
@@ -151,7 +154,7 @@ $ npm i @fortawesome/angular-fontawesome
 
 Ajouter `FontAwesomeModule` aux `imports` dans `src/app/app.module.ts`:
 
-````
+````tsx
 // src/app/app.module.ts
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -171,7 +174,7 @@ import { AppComponent } from './app.component';
 export class AppModule { }
 ````
 
-````
+````tsx
 // src/app/nav/nav.component.ts
 
 import { Component } from '@angular/core';
@@ -189,7 +192,10 @@ export class NavComponent {
 ````
 
 
-## Variables d' environnement
+
+
+
+## VARIABLE D'ENVIRONNEMENT
 
 `ng generate environments` 
 
@@ -207,7 +213,7 @@ L'utilisation de constantes pour stocker les URL de base et les URL spécifiques
 
 En résumé, l'utilisation de constantes pour gérer les URL dans un fichier de configuration centralisé améliore la cohérence, la maintenance, la lisibilité et la sécurité de votre code. C'est une pratique recommandée pour la gestion des URL dans les applications Web.
 
-````
+````tsx
 // config.ts
 export const API_BASE_URL = 'http://localhost:9000/api/v1/';
 
@@ -231,7 +237,60 @@ export const PUBLIC_URL_GET_FILE_USER = PUBLIC_BASE_URL + 'users/';
 
 
 
-## Les évenements
+
+
+## SYMBOLE
+
+En Angular, le symbole `?` est utilisé pour définir une variable en option (déclarer une propriété facultative) dans des modèles de liaison (templates) lorsque vous traitez avec des propriétés potentiellement nulles ou indéfinies. Cette fonctionnalité est appelée le "safe navigation operator" ou "Elvis operator". Il vous permet d'accéder à une propriété d'un objet tout en évitant des erreurs si l'objet lui-même ou la propriété que vous essayez d'accéder est nul(le) ou indéfini(e).
+
+
+
+En Angular, le symbole `!` est utilisé pour indiquer au compilateur TypeScript qu'une variable est garantie de ne pas être nulle (non-nullable). Cela permet d'éviter les erreurs de compilation potentielles liées aux valeurs nulles ou indéfinies.
+
+````
+// Crée une instance de FormData pour préparer la requête multipart
+      const formData: FormData = new FormData();
+      
+      // Parcourt chaque élément dans la liste des médias
+      for (const media of this.medias) {
+        // Ajoute le fichier média à FormData avec la clé 'mediasFiles'
+        formData.append('mediasFiles', media.file!);
+        // Ajoute le nom du média à FormData avec la clé 'mediasNames'
+        formData.append('mediasNames', media.name!);
+      }
+````
+
+
+
+
+
+## CYCLE DE VIE - composants
+
+1. Elle sera déclenchée une seule fois.
+2. `ngOnInit()`: déclenchée après l’exécution du constructeur. Elle permet d’initialiser le composant avec le 1er affichage des données de la vue ayant un *binding* avec des propriétés de la classe du composant. Cette *callback* est déclenchée une seule fois à l’initialisation du composant même si `ngOnChanges()` n’est pas déclenchée.
+3. `ngDoCheck()` permet d’indiquer des changements si Angular ne les a pas détecté.
+4. `ngAfterContentInit()` est déclenchée à l’initialisation après [la projection de contenu](https://cdiese.fr/angular-child-component/#angular_child_component-content_projection). Elle est déclenchée même s’il n’y a pas de contenu à projeter.
+5. `ngAfterContentChecked()`: déclenchée après la détection de changement dans [le contenu projeté](https://cdiese.fr/angular-child-component/#angular_child_component-content_projection). Cette *callback* est déclenchée même s’il n’y a pas de projection de contenu.
+6. `ngAfterViewInit()`: déclenchée après l’initialisation de la vue du composant et après l’initialisation de la vue des composants enfant.
+7. `ngAfterViewChecked()` est déclenchée après détection d’un changement dans la vue du composant et dans la vue des composants enfant.
+8. `ngOnDestroy()` est déclenchée avant la destruction du composant.
+
+A chaque détection de changements, les *callbacks* déclanchées sont, dans l’ordre:
+
+1. `ngOnChanges()` si les paramètres en entrée du composant sont modifiés.
+2. `ngDoCheck()`
+3. `ngAfterContentChecked()` est déclenchée même s’il n’y a pas de contenu projeté.
+4. `ngAfterViewChecked()`.
+
+#### Rafraichissement d'un composant de la page
+
+Pour actualiser une page sans devoir la recharger  il suffit de modifier les données et angular regénère le bloc incriminé.
+
+
+
+
+
+## EVENTS
 
 Bien sûr, je vais réorganiser les événements pour qu'ils soient plus lisibles :
 
@@ -297,11 +356,48 @@ Bien sûr, je vais réorganiser les événements pour qu'ils soient plus lisible
 
 
 
-## PIPE
+## DIRECTIVES
+
+### ngIf
+
+````tsx
+ <ng-template [ngIf]="mushroom?.localnames" [ngIfElse]="message" *ngFor="let localname of mushroom.localnames; index as i;">
+	{{ localname.name }} <span *ngIf="i < mushroom.localnames.length - 1">, </span>
+</ng-template>
+<ng-template #message>Aucun nom n'a été renseigné!</ng-template>
+````
+
+### ngFor
+
+````
+ <div class="mb-3" *ngFor="let detail of liste; let index = index; let last = last;let odd=odd">
+ </div>
+ 
+ index: number - renvoie l'indice de l'élément dans la liste.
+ last: boolean - renvoie true si dernier élément sinon false.
+ odd : boolean - renvoie true si l'index est impaire, false si l'index paire.
+````
+
+### NgClass
+
+````tsx
+<p>
+  The condition is currently
+  <span [ngClass]="{ 'a': !condition, 'b': condition, 'unless': true }">{{condition}}</span>.
+  <button
+    type="button"
+    (click)="condition = !condition"
+    [ngClass] = "{ 'a': condition, 'b': !condition }" >
+    Toggle condition to {{condition ? 'false' : 'true'}}
+  </button>
+</p>
+````
+
+### PIPE - JSON
 
 Utiliser la directive `json` pour afficher tout l'objet et vérifier son contenu.
 
-````
+````tsx
 // Exemple en TypeScript
 comment = {
   text: 'Contenu du commentaire',
@@ -312,15 +408,19 @@ comment = {
 {{ comment | json }}
 ````
 
-
-
-
-
-
-
-## Système de routage - naviguer entre les URLs
+### PIPE - Date
 
 ````
+ {{ user.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}
+````
+
+
+
+
+
+## ROUTER - naviguer entre les URLs
+
+````tsx
 // src\app\app-routing.module.ts
 
 const routes: Routes = [
@@ -343,7 +443,7 @@ ng generate module nom_module --route url_dans_app-routing_parent --module app.m
 
 
 
-````
+````tsx
 // src\app\app-routing.module.ts
 
 const routes: Routes = [
@@ -355,7 +455,7 @@ const routes: Routes = [
 
 ![image-20230910140216071](.\assets.readme\image-20230910140216071.png)
 
-````
+````tsx
 // src\app\pages\mushroom\mushroom.module.ts
 
 import { NgModule } from '@angular/core';
@@ -380,16 +480,14 @@ export class MushroomModule {
 }
 ````
 
-````
+````tsx
 // src\app\pages\mushroom\mushroom-routing.module.ts
-
 
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MushroomsComponent } from './mushrooms/mushrooms.component';
 import { MushromComponent } from './mushroom/mushroom.component';
-
 
 const mushroomRoute: Routes = [
   { path: "guide-des-champignons", component: MushroomsComponent },
@@ -404,31 +502,18 @@ const mushroomRoute: Routes = [
 export class MushroomRoutingModule { }
 ````
 
+### Redirection
+
+````tsx
+import { Router, ActivatedRoute } from '@angular/router';
+
+...
+constructor(private router: Router, private route: ActivatedRoute) { }
+...
+this.router.navigate(['admin/champignons/Liste-des-champignons']);
+````
 
 
-## Cycle de vie des composants
-
-1. Elle sera déclenchée une seule fois.
-2. `ngOnInit()`: déclenchée après l’exécution du constructeur. Elle permet d’initialiser le composant avec le 1er affichage des données de la vue ayant un *binding* avec des propriétés de la classe du composant. Cette *callback* est déclenchée une seule fois à l’initialisation du composant même si `ngOnChanges()` n’est pas déclenchée.
-3. `ngDoCheck()` permet d’indiquer des changements si Angular ne les a pas détecté.
-4. `ngAfterContentInit()` est déclenchée à l’initialisation après [la projection de contenu](https://cdiese.fr/angular-child-component/#angular_child_component-content_projection). Elle est déclenchée même s’il n’y a pas de contenu à projeter.
-5. `ngAfterContentChecked()`: déclenchée après la détection de changement dans [le contenu projeté](https://cdiese.fr/angular-child-component/#angular_child_component-content_projection). Cette *callback* est déclenchée même s’il n’y a pas de projection de contenu.
-6. `ngAfterViewInit()`: déclenchée après l’initialisation de la vue du composant et après l’initialisation de la vue des composants enfant.
-7. `ngAfterViewChecked()` est déclenchée après détection d’un changement dans la vue du composant et dans la vue des composants enfant.
-8. `ngOnDestroy()` est déclenchée avant la destruction du composant.
-
-A chaque détection de changements, les *callbacks* déclanchées sont, dans l’ordre:
-
-1. `ngOnChanges()` si les paramètres en entrée du composant sont modifiés.
-2. `ngDoCheck()`
-3. `ngAfterContentChecked()` est déclenchée même s’il n’y a pas de contenu projeté.
-4. `ngAfterViewChecked()`.
-
-
-
-## Rafraichissement d'un composant de la page
-
-Pour actualiser une page sans devoir la recharger  il suffit de modifier les données et angular regénère le bloc incriminé.
 
 
 
@@ -438,22 +523,18 @@ Pour actualiser une page sans devoir la recharger  il suffit de modifier les don
 
 Exporte les fournisseurs et directives requis pour les formulaires  pilotés par modèle, les rendant disponibles pour l’importation par les  NgModules qui importent ce module.
 
-````
+````tsx
 // src\app\app.module.ts
 
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';  // Gestion de formulaire lié a ngModel
 ````
 
-
-
-
-
 #### Bibliothèque  HttpClient
 
 Declare `HttpClientModule` dans `src\app\app.module.ts`
 
-````
+````tsx
 // src\app\app.module.ts
 
 ...
@@ -477,11 +558,9 @@ export class AppModule {
 }
 ````
 
-
-
 ##### Requête GET (controller)
 
-````
+````tsx
 // src\app\mushrooms\mushrooms.component.ts
 
 import { Component,OnInit } from '@angular/core';
@@ -555,10 +634,6 @@ Pour lier un asset dans un composant, vous pouvez utiliser la balise HTML <img> 
 L’élément <ng-template> d’Angular définit un modèle qui n’est pas rendu par défaut.
 Notez que si vous encapsulez du contenu dans un <ng-template> sans demander à Angular de le rendre, ce contenu n’apparaîtra pas sur une page.
 
-
-
-
-
 Notre objectif est de vous aider à identifier facilement les champignons que vous croisez lors de vos balades en forêt. Grâce à notre système de recherche avancée, vous pouvez filtrer les espèces par couleur, forme, habitat et bien plus encore. Que vous soyez un débutant enthousiaste ou un mycologue chevronné, Le Royaume des Champignons est là pour enrichir vos connaissances et votre passion.
 
 Mais ce n'est pas tout ! Nous croyons en la force de la communauté. C'est pourquoi nous avons créé un forum interactif où vous pourrez échanger vos découvertes, poser vos questions, partager vos photos et discuter avec d'autres amateurs de champignons. Notre communauté bienveillante est prête à vous accueillir et à vous aider dans votre aventure mycologique.
@@ -566,32 +641,6 @@ Mais ce n'est pas tout ! Nous croyons en la force de la communauté. C'est pourq
 Alors, rejoignez-nous dès aujourd'hui et partons ensemble à la découverte du merveilleux royaume des champignons de Provence. Faisons de cette passion commune une source d'apprentissage, de partage et d'émerveillement !
 
 Prêt à plonger dans ce monde mystérieux et fascinant ? Rejoignez-nous au Royaume des Champignons !
-
-
-
-## Routage
-
-````
-import { Router, ActivatedRoute } from '@angular/router';
-
-...
-constructor(private router: Router, private route: ActivatedRoute) { }
-...
-this.router.navigate(['admin/champignons/Liste-des-champignons']);
-````
-
-
-
-## DIRECTIVE
-
-### ngIf
-
-````
- <ng-template [ngIf]="mushroom?.localnames" [ngIfElse]="message" *ngFor="let localname of mushroom.localnames; index as i;">
-	{{ localname.name }} <span *ngIf="i < mushroom.localnames.length - 1">, </span>
-</ng-template>
-<ng-template #message>Aucun nom n'a été renseigné!</ng-template>
-````
 
 
 
@@ -870,48 +919,6 @@ export class AuthenticationService {
 ````
 
 
-
-
-
-# A FAIRE
-
-```
-# RESTE A FAIRE
-
-Activer l'authentification avec gestion des roles.
-- Afficher masquer liens de navbar
-- Afficher masquer liens de footer
-- Parcourir les pages avec la console du navigateur pour corriger les erreurs.
-- Construire une page avec un slide bar latérale pour le menu administration ()
-
-
-ACTION SUR LE CRUD  ADMIN : MUSHROOM, EDIBILITY, LAMELLATYPE 
-- Gèrer pour MUSHROOM, EDIBILITY, LAMELLATYPE  l'ajout d'un nouvel enregistrement avec envoi des fichiers images renommage avec nom unique.
-- Gèrer pour MUSHROOM, EDIBILITY, LAMELLATYPE la mise à jour, gestion des images
-
-
-```
-
-
-
-En Angular, le symbole `?` est utilisé pour définir une variable en option (déclarer une propriété facultative) dans des modèles de liaison (templates) lorsque vous traitez avec des propriétés potentiellement nulles ou indéfinies. Cette fonctionnalité est appelée le "safe navigation operator" ou "Elvis operator". Il vous permet d'accéder à une propriété d'un objet tout en évitant des erreurs si l'objet lui-même ou la propriété que vous essayez d'accéder est nul(le) ou indéfini(e).
-
-
-
-En Angular, le symbole `!` est utilisé pour indiquer au compilateur TypeScript qu'une variable est garantie de ne pas être nulle (non-nullable). Cela permet d'éviter les erreurs de compilation potentielles liées aux valeurs nulles ou indéfinies.
-
-````
-// Crée une instance de FormData pour préparer la requête multipart
-      const formData: FormData = new FormData();
-      
-      // Parcourt chaque élément dans la liste des médias
-      for (const media of this.medias) {
-        // Ajoute le fichier média à FormData avec la clé 'mediasFiles'
-        formData.append('mediasFiles', media.file!);
-        // Ajoute le nom du média à FormData avec la clé 'mediasNames'
-        formData.append('mediasNames', media.name!);
-      }
-````
 
 
 

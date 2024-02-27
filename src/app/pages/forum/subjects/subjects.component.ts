@@ -9,7 +9,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { PaginatorComponent } from 'src/app/layouts/paginator/paginator.component';
 import { ForumCategory } from 'src/app/interfaces/forum-category.interface';
 import { ForumSubjectAdd } from 'src/app/interfaces/forum-subject-add.interface';
-import { faComments, faMessage, faTrashArrowUp, faPencil, faFloppyDisk, faCaretDown, faPencilAlt, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faComments, faMessage, faTrashArrowUp, faPencil, faFloppyDisk, faCaretDown, faPencilAlt, faXmark, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -33,11 +33,18 @@ export class SubjectsComponent implements OnInit {
   faFloppyDisk = faFloppyDisk;
   faCaretDown = faCaretDown;
   faPencilAlt = faPencilAlt;
-  faPencil=faPencil;
-  faXmark=faXmark;
+  faPencil = faPencil;
+  faXmark = faXmark;
+  faPenToSquare = faPenToSquare;
 
   // Nombre d'élément par page
   itemsPerPage: number = 5;
+
+  // compteur:number = 0;
+  // incrementerCompteur(): void {
+  //   console.log("compteur");
+  //   this.compteur = this.compteur + 1;
+  // }
 
   // Accéder aux propriétés du composant enfant 
   @ViewChild(PaginatorComponent) childPaginator!: PaginatorComponent;
@@ -64,33 +71,6 @@ export class SubjectsComponent implements OnInit {
 
   errors: { [key: string]: string } = {};
 
-  // Afficher / masquer les commentaires
-  isShowCommentary: boolean[] = [];
-  toggleShowCommentary(index: number): void {
-    this.isShowCommentary[index] = !this.isShowCommentary[index];
-  }
-
-  // Affiche le bouton Modifier au survol de la souris sur un commentaire redigé par l'utilisateur authentifié
-  IsShowEditorButtonCommentary: boolean[] = [];
-  showEditorButtonCommentary(index: number, userEmail: string|undefined, userEmailByCommentary: string) {
-    if (userEmail == userEmailByCommentary) {
-      this.IsShowEditorButtonCommentary[index] = true;
-    } 
-  }
-
-  // Masquer le bouton Modifier au survol de la souris sur un commentaire redigé par l'utilisateur authentifié
-  hideEditorButtonCommentary(index: number, userEmail: string|undefined, userEmailByCommentary: string) {
-    if (userEmail == userEmailByCommentary) {
-      this.IsShowEditorButtonCommentary[index] = false;
-    } 
-  }
-
-  // Affiche le commentaire en mode editeur
-  isYouWantPutCommentary: boolean[] = [];
-  modifier = (index: number) => {
-    // affiche le ckeditor en mode editeur
-    this.isYouWantPutCommentary[index] = !this.isYouWantPutCommentary[index];
-  }
 
   ngOnInit(): void {
     // console.log(this.auth.getUser());
@@ -104,11 +84,36 @@ export class SubjectsComponent implements OnInit {
     this.findAll(paginator.itemsPerPage, paginator.offset);
   }
 
+
+  /* ******************************************** */
+  /*             GESTION DES SUJETS               */
+  /* ******************************************** */
+  // Affiche le bouton Modifier au survol de la souris sur un commentaire redigé par l'utilisateur authentifié
+  IsShowEditorButtonSubject: boolean[] = [];
+  showEditorButtonSubject(index: number, userEmail: string | undefined, userEmailBySubject: string) {
+    if (userEmail == userEmailBySubject) {
+      this.IsShowEditorButtonSubject[index] = true;
+    }
+  }
+
+  // Masquer le bouton Modifier au survol de la souris sur un commentaire redigé par l'utilisateur authentifié
+  hideEditorButtonSubject(index: number, userEmail: string | undefined, userEmailBySubject: string) {
+    if (userEmail == userEmailBySubject) {
+      this.IsShowEditorButtonSubject[index] = false;
+    }
+  }
+
+  // Affiche le commentaire en mode editeur
+  isYouWantPutSubject: boolean[] = [];
+  wantPutSubject = (index: number) => {
+    // affiche le ckeditor en mode editeur
+    this.isYouWantPutSubject[index] = !this.isYouWantPutSubject[index];
+  }
+
   addSubject = (form: NgForm) => {
     let isAddSubject: boolean = false;
-
     if (form.value.titre != '' && form.value.description != '') { }
-    this.forumService.add(form).subscribe({
+    this.forumService.addSubject(form).subscribe({
       next: (data: ForumSubjectAdd) => {
         if (data) {
           // Si le sujet a été ajouté dans la BDD on rafraichi la page.
@@ -123,68 +128,32 @@ export class SubjectsComponent implements OnInit {
     });
   }
 
-  addCommentary = (sujet_id?: number) => {
-    const commentary: any = {
-      commentary: this.commentarySend,
-      user: { id: this.auth.getUser()?.id },
-      forumSubject: { id: sujet_id }
-    }
-    // console.log("commentary",commentary);
-    
-    this.forumService.addCommentary(commentary).subscribe({
-      next: (data: boolean) => {
-        // Si le commentaire a été ajouté dans la BDD on rafraichi la page.
-        if (data) {
-          this.commentarySend = '';
-          this.findAll(this.childPaginator.paginator.itemsPerPage, this.childPaginator.paginator.offset);
-        }
-      },
-      error: (err: Error) => console.log()
-    })
-  }
-
-  // Conserve les changements effectué dans l'editeur
-  commentaryTextChanged: string[] = [];
-  saveChangesToCommentInMemory = (index:number, commentaryTextChanged: string) => {
-    this.commentaryTextChanged[index] = commentaryTextChanged;
+  // Conserve les changements effectué dans l'editeur sur le sujet
+  subjectTextChanged: string[] = [];
+  saveChangesToSubjectInMemory = (index: number, subjectTextChanged: string) => {
+    this.subjectTextChanged[index] = subjectTextChanged;
   }
 
   // Valide les changements et envoi une requete a l'api pour la 
-  putCommentary = (index: number, commentaryId: number) => {
-    const commentary: any = {
-      commentary: this.commentaryTextChanged[index],
+  putSubject = (index: number, subjectId: number | undefined): void => {
+    const subject: any = {
+      subject: this.commentaryTextChanged[index],
       user: { id: this.auth.getUser()?.id },
     }
-    console.log("commentary",commentary,"commentaryId",commentaryId);
-    
-    this.forumService.putCommentary(commentaryId, commentary).subscribe({
-      next: (data: boolean) => {
-        // Si le commentaire a été modifé dans la BDD on ne rafraichi pas la page on met a jour .
-        if (data) {
-          this.commentaryTextChanged[index] = '';
-          this.findAll(this.childPaginator.paginator.itemsPerPage, this.childPaginator.paginator.offset);
-        }
-      },
-      error: (err: Error) => console.log()
-    })
-  }
-
-  onCategoryChange = (categoryId: number | undefined) => {
-    // this.filterCategoryId = categoryId;
-    this.findAll(this.itemsPerPage, 0);
-    // Lorsque l'on change de catégorie on retourne  sur la page n°1
-    this.childPaginator.paginator.currentPage = 1;
-  }
-
-  findAllCategories = () => {
-    this.forumService.findAllCategories().subscribe({
-      next: (data: ForumCategory[]) => {
-        this.categories = data;
-        // console.log("Categories", data);
-      },
-      error: (err: Error) => console.log()
-
-    })
+    // console.log("commentary", subject, "commentaryId", subjectId);
+    if (subjectId) {
+      this.forumService.putSubject(subjectId, subject).subscribe({
+        next: (data: boolean) => {
+          // Si le commentaire a été modifé dans la BDD on ne rafraichi pas la page on met a jour .
+          if (data) {
+            this.isYouWantPutSubject[index] = !this.isYouWantPutSubject[index];
+            this.findAll(this.childPaginator.paginator.itemsPerPage, this.childPaginator.paginator.offset);
+            this.subjectTextChanged[index] = '';
+          }
+        },
+        error: (err: Error) => console.log()
+      })
+    }
   }
 
   // Méthode pour récupérer les données paginées
@@ -192,8 +161,17 @@ export class SubjectsComponent implements OnInit {
     this.forumService.findAllPaginate(limit, offset, this.filterCategoryId).subscribe({
       next: (data: ForumSubjectsPaginator) => {
         // console.log("findAll", data),
-          // Retourne la liste et le nombre total d'enregistrements.
-          this.forumSubjectPaginate = data;
+        this.isYouWantPutSubject.map(() => false);
+
+        // Utilisation de la boucle for pour itérer sur chaque élément du tableau
+        for (var i = 0; i < this.isYouWantPutSubject.length; i++) {
+          this.isYouWantPutSubject[i]=false;
+          this.isShowCommentary[i]=false;
+          this.IsShowEditorButtonCommentary[i]=false;
+        }
+
+        // Retourne la liste et le nombre total d'enregistrements.
+        this.forumSubjectPaginate = data;
         console.log(data.forumSubjects.length + " sujet(s) sur un total de " + data.forumSubjectLength);
       },
       error: (err: Error) => {
@@ -221,5 +199,104 @@ export class SubjectsComponent implements OnInit {
     this.errors = {};
   }
 
+  /* ******************************************** */
+  /*             GESTION DES COMMENTAIRES         */
+  /* ******************************************** */
+  // Afficher / masquer les commentaires
+  isShowCommentary: boolean[] = [];
+  toggleShowCommentary(index: number): void {
+    this.isShowCommentary[index] = !this.isShowCommentary[index];
+  }
+
+  // Affiche le bouton Modifier au survol de la souris sur un commentaire redigé par l'utilisateur authentifié
+  IsShowEditorButtonCommentary: boolean[] = [];
+  showEditorButtonCommentary(index: number, userEmailAuth: string | undefined, userEmailByCommentary: string) {
+    if (userEmailAuth == userEmailByCommentary) {
+      this.IsShowEditorButtonCommentary[index] = true;
+    }
+  }
+
+  // Masquer le bouton Modifier au survol de la souris sur un commentaire redigé par l'utilisateur authentifié
+  hideEditorButtonCommentary(index: number, userEmailAuth: string | undefined, userEmailByCommentary: string) {
+    if (userEmailAuth == userEmailByCommentary) {
+      this.IsShowEditorButtonCommentary[index] = false;
+    }
+  }
+
+  // Affiche le commentaire en mode editeur
+  isYouWantUpdateCommentary: boolean[] = [];
+  wantUpdateCommentary = (index: number) => {
+    // affiche le ckeditor en mode editeur
+    this.isYouWantUpdateCommentary[index] = !this.isYouWantUpdateCommentary[index];
+  }
+
+  // Conserve les changements effectué dans l'editeur
+  commentaryTextChanged: string[] = [];
+  saveChangesToCommentInMemory = (index: number, commentaryTextChanged: string) => {
+    this.commentaryTextChanged[index] = commentaryTextChanged;
+  }
+
+  addCommentary = (sujet_id?: number) => {
+    const commentary: any = {
+      commentary: this.commentarySend,
+      user: { id: this.auth.getUser()?.id },
+      forumSubject: { id: sujet_id }
+    }
+    // console.log("commentary",commentary);
+
+    this.forumService.addCommentary(commentary).subscribe({
+      next: (data: boolean) => {
+        // Si le commentaire a été ajouté dans la BDD on rafraichi la page.
+        if (data) {
+          this.commentarySend = '';
+          this.findAll(this.childPaginator.paginator.itemsPerPage, this.childPaginator.paginator.offset);
+        }
+      },
+      error: (err: Error) => console.log()
+    })
+  }
+
+  // Valide les changements et envoi une requete a l'api pour la 
+  putCommentary = (index: number, commentaryId: number) => {
+    const commentary: any = {
+      commentary: this.commentaryTextChanged[index],
+      user: { id: this.auth.getUser()?.id },
+    }
+    console.log("commentary", commentary, "commentaryId", commentaryId);
+
+    this.forumService.putCommentary(commentaryId, commentary).subscribe({
+      next: (data: boolean) => {
+        // Si le commentaire a été modifé dans la BDD on ne rafraichi pas la page on met a jour .
+        if (data) {
+          this.isYouWantUpdateCommentary[index] = !this.isYouWantUpdateCommentary[index];
+          this.findAll(this.childPaginator.paginator.itemsPerPage, this.childPaginator.paginator.offset);
+          this.commentaryTextChanged[index] = '';
+        }
+      },
+      error: (err: Error) => console.log()
+    })
+  }
+
+
+  /* ******************************************** */
+  /*             GESTION DES CATEGORIES           */
+  /* ******************************************** */
+  onCategoryChange = (categoryId: number | undefined) => {
+    // this.filterCategoryId = categoryId;
+    this.findAll(this.itemsPerPage, 0);
+    // Lorsque l'on change de catégorie on retourne  sur la page n°1
+    this.childPaginator.paginator.currentPage = 1;
+  }
+
+  findAllCategories = () => {
+    this.forumService.findAllCategories().subscribe({
+      next: (data: ForumCategory[]) => {
+        this.categories = data;
+        // console.log("Categories", data);
+      },
+      error: (err: Error) => console.log()
+
+    })
+  }
 
 }

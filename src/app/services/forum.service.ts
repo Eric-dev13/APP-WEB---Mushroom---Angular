@@ -20,6 +20,9 @@ export class ForumService {
 
   constructor(private http: HttpClient) { }
 
+  /* ***************** */
+  /*      SUBJECT      */
+  /* ***************** */
   public findAllPaginate = (limit?: number, offset?: number, category?: number): Observable<ForumSubjectsPaginator> => {
     if (category != null && limit != null && offset != null) {
       // Si oui, récupère les entités paginées avec filtre par catégorie
@@ -32,15 +35,22 @@ export class ForumService {
     }
   }
 
-  public findById = (id: number): Observable<ForumSubject> => {
-    return this.http.get<ForumSubject>(this.API_BASE_URL + "forum/" + id);
-  }
+  // public findById = (id: number): Observable<ForumSubject> => {
+  //   return this.http.get<ForumSubject>(this.API_BASE_URL + "forum/" + id);
+  // }
 
-  public add = (form: NgForm): Observable<ForumSubjectAdd> => {
+  public addSubject = (form: NgForm): Observable<ForumSubjectAdd> => {
     // console.log("form", form.value);
     return this.http.post<ForumSubjectAdd>(this.API_BASE_URL + "forum", form.value);
   }
 
+  public putSubject = (subjectId: number, subject: any): Observable<boolean> => {
+    return this.http.put<boolean>(this.API_BASE_URL + `forum/subject/${subjectId}`, subject);
+  }
+
+  /* ***************** */
+  /*    COMMENTARY     */
+  /* ***************** */
   public addCommentary = (commentary: any): Observable<boolean> => {
     return this.http.post<boolean>(this.API_BASE_URL + "forum/commentary", commentary);
   }
@@ -49,6 +59,9 @@ export class ForumService {
     return this.http.put<boolean>(this.API_BASE_URL + `forum/commentary/${commentaryId}`, commentary);
   }
 
+  /* ***************** */
+  /*     CATEGORY      */
+  /* ***************** */
   public findAllCategories = (): Observable<ForumCategory[]> => {
     return this.http.get<ForumCategory[]>(this.API_BASE_URL + "forum/category");
   }

@@ -57,6 +57,8 @@ import { CategoryComponent } from './pages/authentication/admin/forum/category/c
 import { ConfirmationModalComponent } from './layouts/confirmation-modal/confirmation-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastComponent } from './layouts/toast/toast.component';
+import { CommentaryComponent } from './components/commentary/commentary.component';
+import { SubjectComponent } from './components/subject/subject.component';
 
 
 
@@ -89,6 +91,8 @@ import { ToastComponent } from './layouts/toast/toast.component';
     CategoryComponent,
     ConfirmationModalComponent,
     ToastComponent,
+    CommentaryComponent,
+    SubjectComponent,
   ],
   imports: [
     BrowserModule,

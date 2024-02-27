@@ -1,0 +1,39 @@
+<div class="p-4 border rounded shadow mb-3 position-relative">
+    <div class="d-flex align-items-center justify-content-between">
+        <span class="fw-bold text-muted">{{commentary.user.pseudo}} le {{commentary.createdAt | date:"dd/MM/yyyy "}}</span>
+        <div *ngIf="commentary.user.filename ; else iconUserByDefault">
+            <div class="avatar-for-forum-commentary">
+                <img [src]="PUBLIC_URL_GET_FILE_USER + commentary.user.filename" class="img-fluid" alt="Avatar" />
+            </div>
+        </div>
+        <ng-template #iconUserByDefault>
+            <img src="assets/images/icones/connexion.png" alt="Avatar">
+        </ng-template>
+    </div>
+
+    <div class="my-4">
+        <div class="show-editor border border-2 border-raspberry"
+            *ngIf="isYouWantUpdateCommentary ; else showModeReadEditor">
+            <ckeditor [editor]="Editor" [ngModel]="commentary.commentary"
+                (ngModelChange)="saveChangesToCommentInMemory($event)" [config]="{
+            toolbar: {
+                items: [
+                    'undo', 'redo',
+                    '|', 'heading',
+                    '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                    '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                    '|', 'link', 'uploadImage'
+                ]
+            }
+            }">
+            </ckeditor>
+        </div>
+        <ng-template #showModeReadEditor>
+            <div class="show-editor">
+                <ckeditor [editor]="Editor" [data]="commentary.commentary" [config]="{ toolbar: {items: []} }"
+                    [disabled]="true"></ckeditor>
+            </div>
+        </ng-template>
+    </div>
+
+</div>
