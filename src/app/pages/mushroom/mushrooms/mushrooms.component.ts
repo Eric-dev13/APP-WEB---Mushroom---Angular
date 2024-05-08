@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
+// import { PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 import { MushroomService } from 'src/app/services/mushroom.service';
 import { MushroomsPaginator } from 'src/app/interfaces/mushroomsPaginator.interface';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -14,8 +15,8 @@ import { Paginator } from 'src/app/interfaces/paginator.interface';
 export class MushroomsComponent implements OnInit {
 
   // Déclaration de constantes
-  readonly PUBLIC_URL_GET_FILE_MUSHROOM: string = PUBLIC_URL_GET_FILE_MUSHROOM;
-  readonly PUBLIC_URL_GET_FILE_EDIBILITY: string = PUBLIC_URL_GET_FILE_EDIBILITY;
+  readonly PUBLIC_URL_GET_FILE_MUSHROOM: string = environment.PUBLIC_URL_GET_FILE_MUSHROOM;
+  readonly PUBLIC_URL_GET_FILE_EDIBILITY: string = environment.PUBLIC_URL_GET_FILE_EDIBILITY;
 
   faChevronRight = faChevronRight;
   faChevronLeft = faChevronLeft;

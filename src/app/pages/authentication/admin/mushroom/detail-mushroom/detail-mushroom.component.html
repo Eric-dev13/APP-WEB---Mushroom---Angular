@@ -1,5 +1,5 @@
 <div class="detail-mushroom">
-    <h1 class="text-center my-3">{{mushroom?.commonname}}</h1>
+    <h1 class="text-center my-3">{{mushroom.commonname}}</h1>
 
     <div class="d-flex mb-3">
         <a [routerLink]="['/back-office/admin/champignon/Liste-des-champignons']" class="btn btn-info me-5" title="Retour">
@@ -7,13 +7,13 @@
             <span class="ms-2">Retour vers la liste des champignons</span>
         </a>
         <div>
-            <a [routerLink]="['/back-office/admin/champignon/editer', mushroom?.id]" class="btn btn-outline-success me-2"
+            <a [routerLink]="['/back-office/admin/champignon/editer', mushroom.id]" class="btn btn-outline-success me-2"
                 title="Editer">
                 <fa-icon [icon]="faEdit"></fa-icon>
                 <span class="ms-2">Mettre à jour</span>
             </a>
 
-            <a (click)="delete(mushroom?.id)" class="btn btn-outline-danger  me-2" title="Supprimer">
+            <a (click)="delete(mushroom.id)" class="btn btn-outline-danger  me-2" title="Supprimer">
                 <fa-icon [icon]="faTrash"></fa-icon>
                 <span class="ms-2">Supprimer</span>
             </a>
@@ -24,21 +24,21 @@
     <div class="row">
         <div class="col-2 border-top py-2 me-1">id</div>
         <div class="col-9 border-top py-2">
-            {{mushroom?.id}}
+            {{mushroom.id}}
         </div>
     </div>
 
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Créé le</div>
         <div class="col-9 border-top py-2">
-            {{mushroom?.createdAt}}
+            {{mushroom.createdAt}}
         </div>
     </div>
 
     <div class="row">
         <div class="col-2 border-top py-2 border-bottom me-1">Modifié le</div>
         <div class="col-9 border-top py-2 border-bottom">
-            {{mushroom?.updatedAt}}
+            {{mushroom.updatedAt}}
         </div>
     </div>
 
@@ -47,21 +47,21 @@
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Nom commun</div>
         <div class="col-9 border-top py-2">
-            {{ mushroom?.commonname }}
+            {{ mushroom.commonname }}
         </div>
     </div>
 
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Nom scientifique</div>
         <div class="col-9 border-top py-2">
-            {{ mushroom?.latinname }}
+            {{ mushroom.latinname }}
         </div>
     </div>
 
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Nom locale</div>
         <div class="col-9 border-top py-2">
-            <ng-template [ngIf]="mushroom?.localnames" [ngIfElse]="message"
+            <ng-template [ngIf]="mushroom.localnames" [ngIfElse]="message"
                 *ngFor="let localname of mushroom?.localnames; index as i;">
                 {{ localname?.name }}<span *ngIf="mushroom?.localnames">, </span>
             </ng-template>
@@ -72,7 +72,7 @@
     <div class="row">
         <div class="col-2 border-top border-bottom py-2 me-1">Consultable</div>
         <div class="col-9 border-top border-bottom py-2">
-            {{mushroom?.visibility ? 'Oui' : 'Non'}}
+            {{mushroom.visibility ? 'Oui' : 'Non'}}
         </div>
     </div>
 
@@ -81,7 +81,7 @@
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Nombre de photos</div>
         <div class="col-9 border-top py-2">
-            {{mushroom?.medias?.length}}
+            {{mushroom.medias.length}}
         </div>
     </div>
 
@@ -106,7 +106,7 @@
                     <tr *ngFor="let media of mushroom?.medias">
                         <td>
                             <img class="rounded" [src]="PUBLIC_URL_GET_FILE_MUSHROOM + media?.filename"
-                                alt="{{mushroom?.commonname}}" width="100">
+                                alt="{{mushroom.commonname}}" width="100">
                         </td>
                         <td>
                             {{ media?.filename }}
@@ -122,7 +122,7 @@
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Chapeau</div>
         <div class="col-9 border-top py-2">
-            {{mushroom?.hat}}
+            {{mushroom.hat}}
         </div>
     </div>
 
@@ -136,42 +136,42 @@
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Lamelle</div>
         <div class="col-9 border-top py-2">
-            {{mushroom?.medias?.length}}
+            {{mushroom.medias.length}}
         </div>
     </div>
 
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Pied</div>
         <div class="col-9 border-top py-2">
-            {{mushroom?.foot}}
+            {{mushroom.foot}}
         </div>
     </div>
 
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Chair</div>
         <div class="col-9 border-top py-2">
-            {{mushroom?.flesh}}
+            {{mushroom.flesh}}
         </div>
     </div>
 
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Habitat</div>
         <div class="col-9 border-top py-2">
-            {{mushroom?.habitat}}
+            {{mushroom.habitat}}
         </div>
     </div>
 
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Commentaire</div>
         <div class="col-9 border-top py-2">
-            {{mushroom?.comment}}
+            {{mushroom.comment}}
         </div>
     </div>
 
     <div class="row">
         <div class="col-2 border-top py-2 me-1">Appréciation Culinaire</div>
         <div class="col-9 border-top py-2">
-            <img *ngIf=" mushroom?.edibility" [src]="PUBLIC_URL_GET_FILE_EDIBILITY + mushroom?.edibility?.filename"
+            <img *ngIf=" mushroom?.edibility" [src]="PUBLIC_URL_GET_FILE_EDIBILITY + mushroom.edibility?.filename"
                 alt="?" style="filter: invert(1);" height="50">
         </div>
     </div>
@@ -179,7 +179,7 @@
     <div class="row mb-3">
         <div class="col-2 border-top py-2 me-1">Slug</div>
         <div class="col-9 border-top py-2">
-            {{mushroom?.slug}}
+            {{mushroom.slug}}
         </div>
     </div>
 </div>

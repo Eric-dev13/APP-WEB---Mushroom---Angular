@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { faAlignJustify } from '@fortawesome/free-solid-svg-icons';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { PUBLIC_URL_GET_FILE_USER } from 'src/environments/config';
+// import { PUBLIC_URL_GET_FILE_USER } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { PUBLIC_URL_GET_FILE_USER } from 'src/environments/config';
 })
 export class NavComponent implements OnInit {
 
-  readonly PUBLIC_URL_GET_FILE_USER = PUBLIC_URL_GET_FILE_USER; //constante d'environnement
+  readonly PUBLIC_URL_GET_FILE_USER = environment.PUBLIC_URL_GET_FILE_USER; //constante d'environnement
   faAlignJustify = faAlignJustify; // icon Font Awesome
 
   constructor(protected authenticated: AuthenticationService) { }

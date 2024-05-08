@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/user.interface';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
-import { API_URL_AUTH } from 'src/environments/config';
+// import { API_URL_AUTH } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 import { JwtTokenService } from './jwt-token.service';
 
 @Injectable({
@@ -12,7 +13,7 @@ import { JwtTokenService } from './jwt-token.service';
 export class 
 AuthenticationService {
 
-  readonly API_URL_AUTH = API_URL_AUTH;
+  readonly API_URL_AUTH = environment.API_URL_AUTH;
 
   // Injection des services dans le constructeur
   constructor(

@@ -1,0 +1,51 @@
+# Nom du workflow
+name: Build and Deploy Angular Application
+
+# Événement qui déclenche le workflow
+on:
+  push:
+    branches: [ "main" ] # Branche sur laquelle le workflow sera exécuté
+
+
+# Définition des tâches à exécuter
+jobs:
+  build-and-deploy: # Nom de la tâche
+    runs-on: ubuntu-latest # Système d'exploitation sur lequel la tâche sera exécutée
+
+    steps: # Liste des étapes à exécuter
+      - run: echo "🎉 Le travail a été automatiquement déclenché par l'évenement ${{ github.event_name }}."
+      - run: echo "🐧 Cette tâche s'exécute désormais sur un serveur ${{ runner.os }} hébergé par GitHub !"
+      - run: echo "🔎 Le nom de votre branche est ${{ github.ref }} et votre référentiel est  ${{ github.repository }}."
+
+
+      - name: Checkout code # Nom de l'étape
+        uses: actions/checkout@v2 # Action qui clone le dépôt GitHub sur le runner
+      - run: echo "💡 Le dépôt ${{ github.repository }} a été cloné sur le runner."
+
+      - name: Configuration de l'environnement Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16' # Version de Node.js à utiliser
+
+      - name: Installation des dépendances
+        run: npm install
+
+      - name: Build de l'application Angular
+        run: npm run build -- --production
+
+      - name: Déploiement sur serveur
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.IP_VPS }} # Adresse IP ou nom d'hôte du serveur
+          username: ${{ secrets.USERNAME_VPS }} # Nom d'utilisateur sur le serveur
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # Clé SSH privée pour se connecter au serveur, stockée en tant que secret GitHub
+          port: ${{ secrets.SERVER_PORT }} # Port SSH du serveur
+          script: |
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S mkdir /var/www/testAngular # Crée le répertoire pour le déploiement
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /var/www/testAngular/* # Supprimer les anciens fichiers
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S scp -r ${{ github.workspace }}/dist/mushroomkingdom/* /var/www/testAngular # Copier les fichiers depuis le workflow vers le serveur
+        env:
+          SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
+
+
+      - run: echo "🍏 Le statut de cette tâche est ${{ job.status }}."

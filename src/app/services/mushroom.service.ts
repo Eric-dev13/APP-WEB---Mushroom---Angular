@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_BASE_URL, API_ADMIN_BASE_URL } from 'src/environments/config';
+// import { API_BASE_URL, API_ADMIN_BASE_URL } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 import { Mushroom } from 'src/app/interfaces/mushroom.interface';
 import { MushroomsPaginator } from 'src/app/interfaces/mushroomsPaginator.interface';
 
@@ -16,7 +17,7 @@ import { MushroomsPaginator } from 'src/app/interfaces/mushroomsPaginator.interf
 })
 export class MushroomService {
   // Déclaration de constantes
-  readonly API_BASE_URL: string = API_BASE_URL;
+  readonly API_BASE_URL: string = environment.API_BASE_URL;
 
   constructor(private http: HttpClient) { }
 
@@ -48,7 +49,7 @@ export class MushroomService {
 })
 export class MushroomAdminService {
   // Déclaration de constantes
-  readonly API_ADMIN_BASE_URL: string = API_ADMIN_BASE_URL;
+  readonly API_ADMIN_BASE_URL: string = environment.API_ADMIN_BASE_URL;
 
   constructor(private http: HttpClient) { }
 

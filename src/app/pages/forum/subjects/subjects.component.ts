@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NgForm } from '@angular/forms';
 import { ForumService } from 'src/app/services/forum.service';
-import { PUBLIC_URL_GET_FILE_USER } from 'src/environments/config';
+// import { PUBLIC_URL_GET_FILE_USER } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 import { ForumSubjectsPaginator } from 'src/app/interfaces/forum-subjects-paginator.interface';
 import { Paginator } from 'src/app/interfaces/paginator.interface';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -25,7 +26,7 @@ export class SubjectsComponent implements OnInit {
     private forumService: ForumService
   ) { }
 
-  readonly PUBLIC_URL_GET_FILE_USER: string = PUBLIC_URL_GET_FILE_USER;
+  readonly PUBLIC_URL_GET_FILE_USER: string = environment.PUBLIC_URL_GET_FILE_USER;
 
   faComments = faComments;
   faMessage = faMessage;

@@ -4,7 +4,8 @@ import { NgForm, FormBuilder } from '@angular/forms';
 import { faEdit, faTrash, faRotateLeft, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EdibilityInterface } from 'src/app/pages/authentication/admin/edibility/edibility-interface';
-import { API_ADMIN_BASE_URL, API_URL_GET_FILE_EDIBILITY, API_BASE_URL, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
+// import { API_ADMIN_BASE_URL, API_BASE_URL, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
@@ -16,10 +17,9 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class FormEdibilityComponent implements OnInit {
 
   // Déclaration de constantes
-  readonly API_ADMIN_BASE_URL: string = API_ADMIN_BASE_URL;
-  readonly API_URL_GET_FILE_EDIBILITY: string = API_URL_GET_FILE_EDIBILITY;
-  readonly API_BASE_URL: string = API_BASE_URL;
-  readonly PUBLIC_URL_GET_FILE_EDIBILITY: string = PUBLIC_URL_GET_FILE_EDIBILITY;
+  readonly API_ADMIN_BASE_URL: string = environment.API_ADMIN_BASE_URL;
+  readonly API_BASE_URL: string = environment.API_BASE_URL;
+  readonly PUBLIC_URL_GET_FILE_EDIBILITY: string = environment.PUBLIC_URL_GET_FILE_EDIBILITY;
 
   constructor(
     private http: HttpClient,

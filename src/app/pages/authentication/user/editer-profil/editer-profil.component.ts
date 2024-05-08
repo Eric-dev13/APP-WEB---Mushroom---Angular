@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/pages/authentication/user/user.interface';
 import { NgForm } from '@angular/forms';
-import { PUBLIC_URL_GET_FILE_USER } from 'src/environments/config';
+// import { PUBLIC_URL_GET_FILE_USER } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserSessionStorage } from 'src/app/interfaces/user-session-storage.interface';
@@ -20,7 +21,7 @@ export class EditerProfilComponent implements OnInit {
     private auth: AuthenticationService
   ) { }
 
-  readonly PUBLIC_URL_GET_FILE_USER: string = PUBLIC_URL_GET_FILE_USER;
+  readonly PUBLIC_URL_GET_FILE_USER: string = environment.PUBLIC_URL_GET_FILE_USER;
 
   // Avatar
   selectedFile!: File;

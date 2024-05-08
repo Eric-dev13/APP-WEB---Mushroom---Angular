@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faEdit, faTrash, faCircleInfo, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
-import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config'
+// import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config'
+import { environment } from 'src/environments/environment.development';
 import { MushroomAdminService } from 'src/app/services/mushroom.service';
 import { Mushroom } from 'src/app/interfaces/mushroom.interface';
 
@@ -27,9 +28,9 @@ export class DetailMushroomComponent implements OnInit {
 
 
   // Déclaration de constantes
-  readonly API_ADMIN_BASE_URL:string = API_ADMIN_BASE_URL;
-  readonly PUBLIC_URL_GET_FILE_MUSHROOM:string = PUBLIC_URL_GET_FILE_MUSHROOM;
-  readonly PUBLIC_URL_GET_FILE_EDIBILITY: string = PUBLIC_URL_GET_FILE_EDIBILITY;
+  readonly API_ADMIN_BASE_URL:string = environment.API_ADMIN_BASE_URL;
+  readonly PUBLIC_URL_GET_FILE_MUSHROOM:string = environment.PUBLIC_URL_GET_FILE_MUSHROOM;
+  readonly PUBLIC_URL_GET_FILE_EDIBILITY: string = environment.PUBLIC_URL_GET_FILE_EDIBILITY;
 
 
   mushroom!: Mushroom;
