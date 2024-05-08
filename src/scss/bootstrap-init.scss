@@ -23,6 +23,22 @@ $custom-colors: (
 // Ajoute la nouvelle couleur au theme existant.
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
+// fixed toast
+$position-values: (
+  0: 0,
+  5: 5%,
+  10: 10%,
+  25: 25%,
+  50: 50%,
+  75: 75%,
+  80: 80%,
+  85: 85%,
+  90: 90%,
+  95: 95%,
+  100: 100%
+);
+
+
 
 // IMPORTATION de BOOTSTRAP
 @import "../../node_modules/bootstrap/scss/bootstrap";

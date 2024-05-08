@@ -1,7 +1,24 @@
-
-<main class="d-flex flex-column" style="min-height: 100vh;">
+<main class="d-flex flex-column">
   <app-nav></app-nav>
-  <router-outlet></router-outlet>
+  <div class="flex-grow-1">
+    <router-outlet></router-outlet>
+  </div>
   <app-footer></app-footer>
 </main>
+
+<!-- TOAST -->
+<app-toast #toastComponent></app-toast>
+
+<!-- <div class="toast-container position-fixed top-50 start-50 translate-middle p-3">
+  <div id="messageToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+          <img src="assets/images/icones/mushromLogo.png" class="rounded me-2" alt="logo SpitForm" width="20">
+          <strong class="me-auto" id="toastTitle">...</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="fs-6 toast-body py-4" id="bodyToast">
+        ...
+      </div>
+  </div>
+</div> -->
 

@@ -14,7 +14,6 @@
         </div>
       </div>
       <div class="back">
-        <!--<img class="backImg" src="images/backImg.jpg" alt="">-->
         <div class="text">
           <span class="text-1">Explorez, échangez <br> enrichissez vos connaissances <br> avec d'autres
             passionnés.</span>
@@ -26,7 +25,7 @@
       <div class="form-content">
         <div class="login-form">
           <div class="title">S'authentifier</div>
-          <form action="#" #formAuth="ngForm" (submit)="loggedIn(formAuth)">
+          <form #formAuth="ngForm" (ngSubmit)="loggedIn(formAuth)">
             <div class="input-boxes">
 
               <div class="input-box">
@@ -42,9 +41,11 @@
               <small class="text-danger" *ngIf="errors['password']">{{ errors['password'] }}</small>
 
               <div class="text"><a>Mot de passe oublié?</a></div>
+
               <div class="button input-box">
                 <input type="submit" value="Me connecter">
               </div>
+
               <div class="text sign-up-text">Vous n'avez pas de compte? <label for="flip"(click)="emptyErrors()">S'inscrire maintenant</label>
               </div>
             </div>
@@ -52,7 +53,7 @@
         </div>
         <div class="signup-form">
           <div class="title">S'inscrire</div>
-          <form action="#" #formRegister="ngForm" (submit)="registration(formRegister)">
+          <form #formRegister="ngForm" (ngSubmit)="registration(formRegister)">
             <div class="input-boxes">
 
               <div class="input-box">
@@ -76,6 +77,7 @@
               <div class="button input-box">
                 <input type="submit" value="M'inscrire">
               </div>
+
               <small class="text-danger">Vous avez déjà un compte? <label for="flip" (click)="emptyErrors()">Connecte-toi
                   maintenant</label></small>
             </div>

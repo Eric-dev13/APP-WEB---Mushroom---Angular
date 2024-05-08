@@ -1,36 +1,43 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../interfaces/user.interface';
+import { User } from 'src/app/interfaces/user.interface';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
-import { API_URL_AUTH } from 'src/environments/config';
+// import { API_URL_AUTH } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 import { JwtTokenService } from './jwt-token.service';
 
 @Injectable({
   providedIn: 'root' // Le service est disponible dans toute l'application
 })
-export class AuthenticationService {
+export class 
+AuthenticationService {
 
-  readonly API_URL_AUTH = API_URL_AUTH;
+  readonly API_URL_AUTH = environment.API_URL_AUTH;
 
   // Injection des services dans le constructeur
   constructor(
-    private router: Router, 
-    private http: HttpClient, 
+    private router: Router,
+    private http: HttpClient,
     private jwtTokenService: JwtTokenService
   ) { }
 
 
-  // Méthode pour vérifier si un utilisateur est authentifié
-  public isAuth = ():boolean => {
+  // Méthode pour vérifier si un utilisateur est authentifié + token n'a pas expiré
+  public isAuth = (): boolean => {
+
     // Récupérez le token depuis le stockage
     const token = this.getToken();
 
-    if(token) {
+    if (token) {
       // Configurez le service de gestion des jetons avec le token récupéré
       this.jwtTokenService.setToken(token);
 
-      // Retournez true si le token n'est pas expiré, indiquant que l'utilisateur est authentifié
+      // si le token a expiré on deconnecte l'utilisateur (supprime les infos stocké dans la session).
+      if(this.jwtTokenService.isTokenExpired()) {
+        this.doLogout();
+      }
+      // Retournez true si le token n'a pas expiré, indiquant que l'utilisateur est authentifié
       return !this.jwtTokenService.isTokenExpired();
     }
 
@@ -38,7 +45,7 @@ export class AuthenticationService {
     return false;
   }
 
-  public isAdmin = ():boolean => {
+  public isAdmin = (): boolean => {
     // Récupère l'objet utilisateur à partir du session storage
     const user = this.getUser();
     // Vérifie si un utilisateur a été récupéré
@@ -50,18 +57,19 @@ export class AuthenticationService {
     return false;
   }
 
+
   // Après une inscription ou authentification réussi
-  public doLogged = (data: any):void => {
+  public doLogged = (data: any): void => {
     this.setToken(data.token)
     this.setUser(data.user)
-    this.router.navigate([""]);
+    this.router.navigate(["/"]);
   }
 
-  public getToken = ():string | null => {
+  public getToken = (): string | null => {
     return sessionStorage.getItem('token');
   }
 
-  private setToken = (token:string) => {
+  private setToken = (token: string) => {
     sessionStorage.setItem("token", token);
   }
 
@@ -82,21 +90,22 @@ export class AuthenticationService {
     sessionStorage.setItem("user", userJSON);
   }
 
-  // CRUD
+  // Méthode pour effectuer la déconnexion de l'utilisateur
+  public doLogout = (): void => {
+    console.log("Déconnexion");
+    // Suppression du token et de l'utilisateur de la session de stockage
+    let removeToken: void = sessionStorage.removeItem('token');
+    let removeUser: void = sessionStorage.removeItem('user');
+  }
+
+  // LOGIN
   public loggedIn = (formAuth: NgForm) => {
     return this.http.post<any>(this.API_URL_AUTH + "authenticate", formAuth.value);
   }
 
+  // REGISTER
   public registration = (formRegister: NgForm) => {
     return this.http.post<any>(this.API_URL_AUTH + "register", formRegister.value);
   }
-
-    // Méthode pour effectuer la déconnexion de l'utilisateur
-    public doLogout = ():void => {
-      console.log("Déconnexion");
-      // Suppression du token et de l'utilisateur de la session de stockage
-      let removeToken: void = sessionStorage.removeItem('token');
-      let removeUser: void = sessionStorage.removeItem('user');
-    }
 
 }

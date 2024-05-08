@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { faHandPointUp } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -8,6 +9,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
+  
+  faHandPointUp = faHandPointUp;
 
   constructor(protected authenticated: AuthenticationService) { }
 
@@ -15,4 +18,5 @@ export class FooterComponent {
   logout() {
     this.authenticated.doLogout();
   }
+
 }

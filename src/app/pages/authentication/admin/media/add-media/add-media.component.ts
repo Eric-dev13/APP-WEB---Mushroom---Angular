@@ -1,18 +1,21 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { MediaInterface } from '../media-interface';
-import { Media, MediaFileToUpload } from 'src/app/interfaces/media.interface';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { MediaInterface } from 'src/app/pages/authentication/admin/media/media-interface';
+
 
 @Component({
   selector: 'app-add-media',
   templateUrl: './add-media.component.html',
   styleUrls: ['./add-media.component.scss']
 })
-export class AddMediaComponent {
+export class AddMediaComponent{
+
   selectedFile!: File;
-  selectedImage: any;
+  selectedImage: string = '';
 
+  @ViewChild('name') name!: ElementRef;
+  @ViewChild('path') path!: ElementRef;
 
-  media: MediaInterface={};
+  media: MediaInterface = {};
 
   @Output() mediaEvent: EventEmitter<any> = new EventEmitter<any>();
 
@@ -31,8 +34,13 @@ export class AddMediaComponent {
 
     // Émettre l'événement vers le composant parent
     this.mediaEvent.emit(this.media);
+
+    // vide le formulaire
+    this.media = {};
+    this.name.nativeElement.value= ''; // vide le champ nom
+    this.selectedImage = ''; // supprime l'image 
+    this.path.nativeElement.value = ''; // vide l'input type file
+    console.log(this.media);
   }
-
-
 
 }

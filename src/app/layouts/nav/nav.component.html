@@ -1,4 +1,4 @@
-<header>
+<header class="border-secondary border-bottom">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="anchor">
         <div class="container-fluid">
             <a class="navbar-brand" [routerLink]="['/']"><img src="assets/images/icones/mushromLogo.png" alt="Logo"
@@ -6,7 +6,6 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
-                <!-- <span class="navbar-toggler-icon"></span> -->
                 <fa-icon [icon]="faAlignJustify"></fa-icon>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -25,7 +24,6 @@
                         <a class="nav-link text-uppercase" [routerLink]="['/actualite']">Actualité</a>
                     </li>
                 </ul>
-
 
                 <div class="navbar-nav d-flex me-3">
                     <div *ngIf="authenticated.isAuth(); else login" class="d-flex flex-wrap flex-lg-nowrap">
@@ -66,6 +64,9 @@
                                 <a class="dropdown-item ftsz-9" [routerLink]="['/back-office/utilisateur/profil/editer']">Mettre à
                                     jour mon profil</a>
                             </li>
+                            <li>
+                                <a class="dropdown-item ftsz-9" [routerLink]="['/back-office/utilisateur/profil/mdp/editer']">Changer de mot de passe</a>
+                            </li>
 
                             <!-- BACK OFFICE ADMINISTRATEUR -->
                             <ng-template [ngIf]="authenticated.isAdmin()">
@@ -95,7 +96,7 @@
                                         [routerLink]="['/back-office/admin/comestibilite/nouveau']">Ajouter une nouvelle saveur ou
                                         toxicité</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
@@ -105,7 +106,7 @@
                                 <li>
                                     <a class="dropdown-item ftsz-9"
                                         [routerLink]="['/back-office/admin/comestibilite/nouveau']">Ajouter nouveau type</a>
-                                </li>
+                                </li> -->
                             </ng-template>
 
                             <!-- DECONNEXION -->

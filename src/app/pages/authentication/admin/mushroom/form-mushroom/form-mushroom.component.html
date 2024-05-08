@@ -3,15 +3,16 @@
         mushroom!.commonname : 'Ajouter nouvelle espèce'}}</h1>
 
     <div class="mb-3">
-        <a [routerLink]="['/back-office/admin/champignon/Liste-des-champignons']" class="btn btn-info me-4" title="Retour">
+        <a [routerLink]="['/back-office/admin/champignon/Liste-des-champignons']" class="btn btn-info me-4"
+            title="Retour">
             <fa-icon class="text-light" [icon]="faRotateLeft"></fa-icon>
             <span class="ms-2">Retour vers la liste des champignons</span>
         </a>
         <hr>
     </div>
-    
 
-    <form #form="ngForm" (submit)="send(form)" class="fw-bold" enctype="multipart/form-data">
+
+    <form #form="ngForm" (ngSubmit)="send(form)" class="fw-bold" enctype="multipart/form-data">
 
         <!-- NOM COMMUN - CHAMP OBLIGATOIRE -->
         <div class="h4 fw-semibold pb-2 mb-4 border-bottom border-danger">
@@ -39,7 +40,7 @@
             </ul>
         </div>
 
-        <!-- ////// COMESTIBILITE ////// -->
+        <!-- COMESTIBILITE -->
         <div class="h4 fw-semibold pb-2 mb-4 border-bottom border-secondary">
             <label for="edibility" class="form-label">Comestibilité</label>
             <select class="form-select border-2 border-start-0 border-top-0 border-end-0"
@@ -48,6 +49,8 @@
                 <option *ngFor="let edibility of edibilities" [value]="edibility.id">{{ edibility.name }}</option>
             </select>
         </div>
+
+
 
         <!-- MEDIAS -->
         <div class="pb-2 mb-4 border-bottom border-secondary">
@@ -66,7 +69,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let media of mushroom?.medias" class="table-secondary">
+                            <tr *ngFor="let media of mushroom?.medias; index as m" class="table-secondary">
                                 <td>
                                     <!-- Affichage de l'image -->
                                     <img class="rounded" [src]="PUBLIC_URL_GET_FILE_MUSHROOM + media?.filename"
@@ -81,14 +84,40 @@
                                 <td>
                                     <div class="d-flex">
                                         <ng-template [ngIf]="media.id">
-                                            <!-- <a [routerLink]="['/back-office/admin/media/editer/', media?.id]"
-                                            class="btn btn-outline-success me-2" title="Editer">
-                                            <fa-icon [icon]="faEdit"></fa-icon>
-                                        </a> -->
-                                            <a (click)="deleteMediaExistant(media?.id)" class="btn btn-outline-danger"
-                                                title="Supprimer">
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal-' + m">
                                                 <fa-icon [icon]="faTrash"></fa-icon>
-                                            </a>
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" [id]="'#deleteModal-' + m" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal
+                                                                title</h1>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            ...
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary">Save
+                                                                changes</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- <app-confirmation-modal (ModalChoice)="handleModalChoiceEvent($event)"></app-confirmation-modal> -->
+                                            <button type="button" (click)="deleteMediaExistant(media?.id)"
+                                                class="btn btn-outline-danger" title="Supprimer">
+                                                <fa-icon [icon]="faTrash"></fa-icon>
+                                            </button>
                                         </ng-template>
                                     </div>
                                 </td>
@@ -135,9 +164,10 @@
                                         class="btn btn-outline-success me-2" title="Editer">
                                         <fa-icon [icon]="faEdit"></fa-icon>
                                     </a> -->
-                                        <a (click)="deleteNewMedia(i)" class="btn btn-outline-danger" title="Supprimer">
+                                        <button type="button" (click)="deleteNewMedia(i)" class="btn btn-outline-danger"
+                                            title="Supprimer">
                                             <fa-icon [icon]="faTrash"></fa-icon>
-                                        </a>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>

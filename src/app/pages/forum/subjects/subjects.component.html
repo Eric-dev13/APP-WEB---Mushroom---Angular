@@ -1,34 +1,33 @@
-<div class="bgfullSize bg-image--forest"></div> foret/foret-3.jpg
+<div class="bgfullSize bg-image--forest opacity-75"></div>
 <div class="bgfullSize bgColor--filterBlack"></div>
 
 <article class="forumSubjects">
-    <div class="container bg-dark mt-1">
-        <header class="row">
-            <div class="col-12 py-5 text-light text-center">
-                <div>
-                    <h1>Bienvenue sur ce salon</h1>
-                    <h2>Vous avez besoin d'aide ?</h2>
-                </div>
+    <header>
+        <div class="col-12 py-2 text-light text-center">
+            <div>
+                <h1 class="title-text-shadow">Bienvenue sur ce salon</h1>
+                <h2>Vous avez besoin d'aide ?</h2>
             </div>
-        </header>
-    </div>
+        </div>
+    </header>
 
-    <div class="container mb-1 bg-dark border-top border-secondary">
-        <div class="row py-3 m-md-3 rounded">
+    <div class="container">
+        <div class="row rounded text-bg-light bg-opacity-10 pt-3 mb-3 justify-content-center">
             <!-- CHARTE DU FORUM -->
-            <div class="col-12 p-3">
-                <p class="text-light forumCharte">ici, vous pouvez discuter, questionner, échanger avec les autres
+            <div class="col-12">
+                <p class="text-light forumCharte">Ici, vous pouvez discuter, questionner, échanger avec les autres
                     membres de la communauté. Afin que tout se passe bien, voici quelques règles à respecter...
                     <a class="forumCharte" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         lire la suite
                     </a>
                 </p>
+
                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Règles du forum</h5>
+                                <h5 class="modal-title" id="staticBackdropLabel">Charte de la communauté</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -43,155 +42,276 @@
                 </div>
             </div>
 
+            <div *ngIf="!auth.isAuth()" class="col-lg-8 text-center mb-3">
+                <button type="button" class="btn btn-outline-warning"
+                    routerLink="/securite/authentification">Connecte-toi ou inscrit-toi maintenant pour participer aux
+                    discussions !</button>
+            </div>
+
             <!-- {# AJOUTER UN SUJET #} -->
-            <div *ngIf="auth.isAuth()" class="text-center border-bottom border-secondary pb-4">
-            
-                <a class="h5 btn btn-warning" data-bs-toggle="collapse" href="#collapseExample1" role="button"
-                    aria-expanded="false" aria-controls="multiCollapseExample1">
-                    Poser votre question
-                </a>
-                <div class="collapse" id="collapseExample1">
-                    <div class="card card-body bg-dark text-light p-4">
+            <div *ngIf="auth.isAuth()" class="text-bg-light bg-opacity-10 py-4">
+                <div class="text-center">
+                    <button type="button" class="btn btn-warning mb-2" data-bs-toggle="collapse"
+                        data-bs-target="#collapseEditor" aria-expanded="false" aria-controls="multicollapseEditor">
+                        <fa-icon [icon]="faCaretDown"></fa-icon><span class="mx-2">SHARE</span><fa-icon
+                            [icon]="faPencilAlt"></fa-icon>
+                    </button>
+                </div>
+
+                <div class="collapse" id="collapseEditor">
+                    <div class="card card-body bg-light bg-opacity-25">
                         <form #form="ngForm" (submit)="addSubject(form)" enctype="multipart/form-data">
-                            <div class="form-group mb-3">
-                                <label for="title">Titre</label>
-                                <input ngModel type="text" class="form-control" id="title" aria-describedby="title"
-                                    placeholder="Saisir un titre">
-                                <small id="title_error" class="form-text text-muted"></small>
+
+                            <div class="mb-3">
+                                <label for="title" class="ms-3 mb-1">Titre</label>
+                                <input [(ngModel)]="forumSubjectAdd.title" type="text" class="form-control" id="title"
+                                    name="title" aria-describedby="title" placeholder="Saisir un titre" required>
+                                <small class="fw-bold text-raspberry" *ngIf="!errors['title']">{{
+                                    errors['title']}}</small>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="description">Description</label>
-                                <ckeditor [editor]="Editor" data="" ngModel name="description" ></ckeditor>
-                                <!-- <input ngModel type="text" class="form-control" id="description"
-                                    aria-describedby="description" placeholder="Description"> -->
-                                <small id="description_error" class="form-text text-muted"></small>
+
+
+                            <div class="mb-3">
+                                <label for="title" class="ms-3 mb-1">Catégories</label>
+                                <select class="form-select" multiple size="5"
+                                    [(ngModel)]="forumSubjectAdd.forumCategories" name="categoriesId">
+                                    <option selected [ngValue]="-1">Toutes catégories</option>
+                                    <option *ngFor="let category of categories" [value]="category.id">{{category.name}}
+                                    </option>
+                                </select>
                             </div>
-                            <button class="btn btn-primary">Publier</button>
+
+                            <div class="mb-3">
+                                <label for="description" class="ms-3 mb-1">Description</label>
+                                <div class="forum-editor">
+                                    <ckeditor [(ngModel)]="forumSubjectAdd.description" [editor]="Editor"
+                                        name="description" [config]="{ 
+                                        toolbar: {
+                                            items: [
+                                                'undo', 'redo',
+                                                '|', 'heading',
+                                                '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                                                '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                                                '|', 'link', 'uploadImage','insertTable',
+                                                '|', 'bulletedList', 'numberedList'
+                                            ]
+                                        },
+                                    }" required></ckeditor>
+                                </div>
+                                <small class="fw-bold text-raspberry" *ngIf="errors['description']">{{
+                                    errors['description']
+                                    }}</small>
+                            </div>
+                            <button class="btn btn-warning">Publier</button>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LISTE DES CATEGORIES -->
+        <div class="row mb-3">
+            <select class="form-select" aria-label="Multiple select example" [(ngModel)]="filterCategoryId"
+                (ngModelChange)="onCategoryChange($event)">
+                <option selected [ngValue]="undefined">Toutes catégories</option>
+                <option *ngFor="let category of categories" [value]="category.id">{{category.name}} -
+                    {{category.forumSubjects.length}} sujets</option>
+            </select>
+        </div>
+
+        <!-- LES SUJETS -->
+        <div class="row">
+            <div class="card mb-3" *ngFor="let subject of forumSubjectPaginate.forumSubjects; index as i">
+                <div class="card-body">
+                    <!-- SURVEILLER LES EVENEMENT AU SURVOL -->
+                    <div class="position-relative"
+                        (mouseenter)="showEditorButtonSubject(i, auth.getUser()?.username, subject.user.email)"
+                        (mouseleave)="hideEditorButtonSubject(i, auth.getUser()?.username, subject.user.email)">
+                        <div *ngIf="subject.user.filename ; else iconUserByDefault">
+                            <div class="avatar-for-forum-subject">
+                                <img [src]="PUBLIC_URL_GET_FILE_USER + subject.user.filename" class="img-fluid"
+                                    alt="Avatar" />
+                            </div>
+                        </div>
+                        <ng-template #iconUserByDefault>
+                            <img src="assets/images/icones/connexion.png" alt="Avatar" class="">
+                        </ng-template>
+                        <p>
+                            <span class="me-2">{{subject.user.pseudo}}</span>
+                            <small class="text-body-secondary">{{subject.createdAt | date:"dd/MM/yyyy hh:mm:ss"}}</small>
+                        </p>
+
+                        <!-- Affiche le bouton modifier sur le subjet au survol de la souris -->
+                        <div class="position-absolute top-0 end-0"
+                            *ngIf="IsShowEditorButtonSubject[i]">
+
+                            <button type="button" class="btn btn-outline-info" title="Modifer" (click)="wantPutSubject(i)"
+                                *ngIf="!isYouWantPutSubject[i]">
+                                <fa-icon [icon]="faPencil" class="fa-2x"></fa-icon>
+                            </button>
+
+                            <button type="button" class="btn btn-outline-dark" title="Annuler" (click)="wantPutSubject(i)"
+                                *ngIf="isYouWantPutSubject[i]">
+                                <fa-icon [icon]="faXmark" class="fa-2x"></fa-icon>
+                            </button>
+
+                            <button type="button" class="btn  btn-outline-success ms-2" title="Enregistrer" (click)="putSubject(i, subject.id)"
+                                *ngIf="isYouWantPutSubject[i]">
+                                <fa-icon [icon]="faFloppyDisk" class="fa-2x"></fa-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- TITRE DU SUJET -->
+                    <div class="d-flex flex-column flex-lg-row justify-content-between">
+                        <h5 class="card-title">{{subject.title}}</h5>
+                        <p *ngIf="subject.forumCategories">
+                            <span
+                                *ngFor="let category of subject.forumCategories; let last = last">{{category.name}}{{!last
+                                ? ', ' : '' }}</span>
+                        </p>
+                    </div>
+
+                    <!-- AFFICHE LE CONTENU SUJET DANS L'EDITEUR READ / UPDATE -->
+                    <div class="my-4">
+                        <div class="show-editor border border-2 border-raspberry" *ngIf="isYouWantPutSubject[i] ; else showModeReadEditorSubject">
+                            <ckeditor [editor]="Editor" [ngModel]="subject.description"
+                                (ngModelChange)="saveChangesToSubjectInMemory(i, $event)" [config]="{
+                                toolbar: {
+                                    items: [
+                                        'undo', 'redo',
+                                        '|', 'heading',
+                                        '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                                        '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                                        '|', 'link', 'uploadImage'
+                                    ]
+                                }
+                            }"></ckeditor>
+                        </div>
+                        <ng-template #showModeReadEditorSubject>
+                            <div class="show-editor">
+                                <ckeditor [editor]="Editor" [data]="subject.description"
+                                    [config]="{ toolbar: {items: []} }" [disabled]="true"></ckeditor>
+                            </div>
+                        </ng-template>
+                    </div>
+
+
+                    <!-- REPONDRE - AFFICHE L'EDITEUR EN MODE EDIT  -->
+                    <div *ngIf="auth.isAuth() && auth.getUser()?.username != subject.user.email" class="mb-3">
+                        <h5>Répondre ...</h5>
+                        <div class="commentary-editor">
+                            <ckeditor placeholder="message..." [editor]="Editor" [(ngModel)]="commentarySend" [config]="{
+                                toolbar: {
+                                    items: [
+                                        'undo', 'redo',
+                                        '|', 'heading',
+                                        '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                                        '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                                        '|', 'link', 'uploadImage'
+                                    ]
+                                }
+                            }"></ckeditor>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-outline-dark rounded-0 w-100"
+                                (click)="addCommentary(subject.id)">
+                                <fa-icon [icon]="faMessage"></fa-icon> Envoyer...
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- BOUTON VOIR LES COMMENTAIRES -->
+                    <button type="button" class="btn btn-primary position-relative mb-3"
+                        *ngIf="subject.forumCommentaries.length > 0" (click)="toggleShowCommentary(i)">
+                        <fa-icon [icon]="faComments"></fa-icon> commentaires
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{subject.forumCommentaries.length}}
+                        </span>
+                    </button>
+
+                    <!-- AFFICHER CHAQUE COMMENTAIRE -->
+                    <div *ngIf="isShowCommentary[i]">
+
+                    <!-- 
+                        ********************************************************************************
+                    <app-commentary *ngFor="let comment of subject.forumCommentaries" [commentary]="comment"></app-commentary>
+                    ******************************************************************************** 
+                -->
+
+                        <div class="p-4 border rounded shadow mb-3 position-relative"
+                            *ngFor="let comment of subject.forumCommentaries; let c = index; let last = last;let odd=odd"
+                            (mouseenter)="showEditorButtonCommentary(c, auth.getUser()?.username, comment.user.email)"
+                            (mouseleave)="hideEditorButtonCommentary(c, auth.getUser()?.username, comment.user.email)">
+
+                            <!-- new index: {{ i + ':' + c }} / last: {{ last }}  / odd: {{ odd }} <br> -->
+                            <!-- mèthode compteur : {{incrementerCompteur()}}
+                            compteur : {{compteur}} -->
+
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span class="fw-bold text-muted">{{comment.user.pseudo}} le {{comment.createdAt |
+                                    date:"dd/MM/yyyy "}}</span>
+
+                                <div *ngIf="subject.user.filename ; else iconUserByDefault">
+                                    <div class="avatar-for-forum-commentary">
+                                        <img [src]="PUBLIC_URL_GET_FILE_USER + comment.user.filename" class="img-fluid"
+                                            alt="Avatar" />
+                                    </div>
+                                </div>
+                                <ng-template #iconUserByDefault>
+                                    <img src="assets/images/icones/connexion.png" alt="Avatar">
+                                </ng-template>
+                            </div>
+
+                            <div class="my-4">
+                                <div class="show-editor border border-2 border-raspberry" *ngIf="isYouWantUpdateCommentary[c] ; else showModeReadEditor">
+                                    <ckeditor [editor]="Editor" [ngModel]="comment.commentary"
+                                        (ngModelChange)="saveChangesToCommentInMemory(c, $event)" [config]="{
+                                        toolbar: {
+                                            items: [
+                                                'undo', 'redo',
+                                                '|', 'heading',
+                                                '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                                                '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                                                '|', 'link', 'uploadImage'
+                                            ]
+                                        }
+                                    }"></ckeditor>
+                                </div>
+                                <ng-template #showModeReadEditor>
+                                    <div class="show-editor">
+                                        <ckeditor [editor]="Editor" [data]="comment.commentary"
+                                            [config]="{ toolbar: {items: []} }" [disabled]="true"></ckeditor>
+                                    </div>
+                                </ng-template>
+
+
+                                <!-- Affiche le bouton modifier sur les commentaires au survol de la souris -->
+                                <div class="position-absolute bottom-0 start-50 translate-middle-x d-flex p-1"
+                                    *ngIf="IsShowEditorButtonCommentary[c]">
+                                    <button type="button" class="btn btn-outline-raspberry" (click)="wantUpdateCommentary(c)"
+                                        *ngIf="!isYouWantUpdateCommentary[c]">
+                                        <fa-icon [icon]="faPencil"></fa-icon>
+                                    </button>
+
+                                    <button type="button" class="btn btn-outline-dark" (click)="wantUpdateCommentary(c)"
+                                        *ngIf="isYouWantUpdateCommentary[c]">
+                                        <fa-icon [icon]="faXmark"></fa-icon>
+                                    </button>
+
+                                    <button type="button" class="btn  btn-outline-success ms-2"
+                                        (click)="putCommentary(c, comment.id)" *ngIf="isYouWantUpdateCommentary[c]">
+                                        <fa-icon [icon]="faFloppyDisk"></fa-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <!-- LES SUJETS -->
-    <div class="col-12 mt-3">
-        <div class="row justify-content-center" *ngFor="let sujet of sujets">
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img [src]="PUBLIC_URL_GET_FILE_USER + sujet.user.filename" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <p>
-                                <span class="me-2">{{sujet.user.pseudo}}</span> 
-                                <small class="text-body-secondary" >{{sujet.createdAt | date:"dd/MM/yyyy hh:mm:ss"}}</small>
-                            </p>
-                            <h5 class="card-title">{{sujet.title}}</h5>
-                            <!-- <div [innerHtml]="sujet.description"></div> -->
-                            <ckeditor [editor]="Editor" [data]="extractFirstWords(sujet.description,10)" [config]="{}" [disabled]="isDisabled"></ckeditor>
-                            <button (click)="toggleDisabled()">
-                                 {{isDisabled ? 'Enable editor' : 'Disable editor' }}
-                            </button>
-                            <button type="button" class="btn btn-primary position-relative" *ngIf="sujet.comments.length > 0 ">
-                                Réponses
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{sujet.comments.length}}++
-                                </span>
-                              </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> 
-</article> 
-        <!-- <div class="col-12 border-bottom border-secondary">
-                        {{ form_start(formCategory,{'attr':{'class':'row g-3'}}) }}
-                        {{ form_row(formCategory.name) }}
-                        {{ form_row(formCategory.save) }}
-                        {{form_end(formCategory)}}
-                    </div> -->
-
-        <!-- <div class="col-12 my-5">
-                        {% if nameCategory is not empty %}
-                        <h4 class="text-light text-center">{{nameCategory}}</h4>
-                        {% endif %}
-                    </div> -->
-
-        <!-- <div class="col-12">
-                        <div class="table-responsive-md">
-                            <table class="table text-light">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">
-                                            sujet(s) sur le forum
-                                        </th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Auteur</th>
-                                        <th scope="col">Catégorie</th>
-                                        <th scope="col">Reponse(s)</th>
-                                        <th scope="col">
-                                            Activité
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let sujet of sujets">
-                                        <td>
-                                            <a routerLink="">{{sujet.title}}</a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" [data-bs-target] = "sujet.id">
-                                                Aperçu
-                                            </button>
-                                            <div class="modal fade" id="{{sujet.id}}" tabindex="-1"
-                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-lg text-dark" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLongTitle">{{
-                                                                subject.title|raw }}</h5>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="container">
-                                                                <div class="row">
-                                                                    <div
-                                                                        class="col forumSubjects__commentary__image--size">
-                                                                        {{subject.description|raw}}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Fermer</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {# {{subject.description|slice(0,100)|nl2br}}... #}
-                                        </td>
-                                        <td>
-                                            {{subject.userPseudo}}
-                                        </td>
-                                        <td>
-                                            {# {{subject.forumCategory|length}} #}
-                                            {% for categorie in subject.forumCategory %}
-                                            {{categorie.name}}
-                                            {% if subject.forumCategory|length %}<br>{% endif %}
-                                            {% endfor %}
-                                        </td>
-                                        <td>{{subject.forumCommentary|length}}</td>
-                                        <td>{{ dateDiff(subject.createdAt|date("m/d/Y H:i",false)) }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                    {% endif %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div> -->
+    <app-paginator [itemsPerPage]="itemsPerPage" [totalItems]="forumSubjectPaginate.forumSubjectLength"
+        (paginationSettings)="handlePaginationEvent($event)"></app-paginator>
+</article>

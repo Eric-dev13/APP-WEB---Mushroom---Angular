@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, empty } from 'rxjs';
-import { API_ADMIN_BASE_URL } from 'src/environments/config';
-import { LocalName } from '../interfaces/local-name.interface';
+// import { API_ADMIN_BASE_URL } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +9,7 @@ import { LocalName } from '../interfaces/local-name.interface';
 export class LocalNameAdminService {
 
   // Déclaration de constantes
-  readonly API_ADMIN_BASE_URL: string = API_ADMIN_BASE_URL;
+  readonly API_ADMIN_BASE_URL: string = environment.API_ADMIN_BASE_URL;
   
     constructor(private http: HttpClient) {}
 

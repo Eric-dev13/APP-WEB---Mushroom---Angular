@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { EdibilityInterface } from '../edibility-interface';
-import { API_ADMIN_BASE_URL, API_URL_GET_FILE_EDIBILITY, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
+import { EdibilityInterface } from 'src/app/pages/authentication/admin/edibility/edibility-interface'; 
+// import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 import { faEdit, faTrash, faRotateLeft, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,9 +16,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class EdibilitiesComponent implements OnInit {
 
   // Déclaration de constantes
-  readonly API_ADMIN_BASE_URL: string = API_ADMIN_BASE_URL;
-  readonly API_URL_GET_FILE_EDIBILITY = API_URL_GET_FILE_EDIBILITY;
-  readonly PUBLIC_URL_GET_FILE_EDIBILITY = PUBLIC_URL_GET_FILE_EDIBILITY;
+  readonly API_ADMIN_BASE_URL: string = environment.API_ADMIN_BASE_URL;
+  readonly PUBLIC_URL_GET_FILE_EDIBILITY = environment.PUBLIC_URL_GET_FILE_EDIBILITY;
 
   faEdit = faEdit;
   faTrash = faTrash;

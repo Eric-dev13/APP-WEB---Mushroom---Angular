@@ -21,18 +21,24 @@ export class TokenInterceptor implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Récupérez l'URL actuelle
-    const currentUrl: string = this.router.url;
+    /* 
+      Vérifiez si l'URL du Back-end (route dans l'API) contient le segment "api/v1/forum"
+      request.url.includes('api/v1/forum')
 
-    // Vérifiez si l'URL contient le segment "back-office"
-    if (currentUrl.includes('back-office')) {
+      Vérifiez si l'URL dans angular (routes interne) contient le segment "back-office"
+      this.router.url.includes('back-office')
+    */
+
+      const urlInterne = this.router.url;
+      const urlDistante = request.url;
+
+    if (urlInterne.includes('back-office') || (urlDistante.includes('api/v1/forum') && request.method != 'GET' )) {
       // Récupération du token d'authentification
       const token: string | null = this.auth.getToken();
       // Ajout du token dans les entêtes de la requête
       request = request.clone({
         headers: new HttpHeaders({
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Authorization': `Bearer ${token}`
         })
       });
     }
@@ -45,17 +51,16 @@ export class TokenInterceptor implements HttpInterceptor {
         console.log(`Code d'erreur HTTP : ${errorCode}`);
 
         if (errorCode === 403) {
-          this.auth.doLogout(); 
+          // this.auth.doLogout(); 
           // redirect vers login
           this.router.navigate(["securite/authentification"]);
         }
 
         if (errorCode === 400) {
           console.log(error.error);
-          
         }
 
-        // Vous pouvez également propager l'erreur pour qu'elle soit gérée ailleurs dans l'application
+        // Propager l'erreur pour qu'elle soit gérée ailleurs dans l'application
         return throwError(() => error);
       })
     );

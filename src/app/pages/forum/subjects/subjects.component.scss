@@ -1,58 +1,14 @@
-// Atténue la couleur 
-// @function setTextColorIfHover($baseColor) {
-//     @return(darken($baseColor, 15%));
-// }
-
-// // Personnaliser la couleur des liens de balise a {}
-// @mixin linkColor($myLinkColor) {
-//     text-decoration: none;
-//     color: $myLinkColor !important;
-
-//     &:link {
-//         color: $myLinkColor !important;
-//     }
-
-//     &:visited {
-//         color: $myLinkColor !important;
-//     }
-
-//     &:hover {
-//         color: setTextColorIfHover($myLinkColor) !important;
-//         text-decoration: underline;
-//     }
-// }
-
 
 .forumSubjects {
-    h1 {
-        font-size: 4.5rem;
-        letter-spacing: 10px;
+    header {
+        h1 {
+            font-size: 4.5rem;
+            letter-spacing: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
     }
-
-    h2 {
-       font-size: 1.5rem;
-    }
-
-    // table {
-    //     a {
-    //         @include linkColor(#e9cfc2);
-    //     }
-
-    //     &__description {
-    //         img {
-    //             max-width: 50%;
-    //         }
-    //     }
-    // }
-
-    // &__commentary {
-    //     &__image--size {
-    //         img {
-    //             max-width: 100%;
-    //         }
-    //     }
-    // }
-
-
 
 }

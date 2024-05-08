@@ -6,6 +6,39 @@
         -----------------------------------------------------------                     
         -->
         <nav id="sidebar" [ngClass]="{'active': isSidebarActive}">
+
+            <div class="sidebar-header">
+                <h3>Espace personnel</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a [routerLink]="['/back-office/utilisateur/profil']">Voir mon profil</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/back-office/utilisateur/profil/editer']">Modifier mes données personnelles</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/back-office/utilisateur/profil/mdp/editer']">Changer de mot de passe</a>
+                </li>
+                <li class="active">
+                    <a href="#forum" data-bs-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Forum</a>
+                    <ul class="collapse list-unstyled" id="forum">
+                        <li>
+                            <a>Mes questions</a>
+                        </li>
+                        <li>
+                            <a>Mes commentaires</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+             <!-- 
+                ------------------------------------------------------------------- 
+            -->
+
             <ng-template [ngIf]="auth.isAdmin()">
                 <!-- header sideBar -->
                 <div class="sidebar-header">
@@ -28,52 +61,20 @@
                     </li>
                     <li class="active">
                         <a data-bs-toggle="collapse" href="#" data-bs-target="#saveurToxicite" aria-expanded="false"
-                            class="dropdown-toggle">Saveur et toxicité</a>
+                            class="dropdown-toggle">Comestibilité</a>
                         <ul class="collapse list-unstyled" id="saveurToxicite">
                             <li>
-                                <a [routerLink]="['/back-office/admin/comestibilite/liste']">Afficher la liste des
-                                    saveurs et toxicités</a>
+                                <a [routerLink]="['/back-office/admin/comestibilite/liste']">Afficher la liste</a>
                             </li>
                             <li>
                                 <a [routerLink]="['/back-office/admin/comestibilite/nouveau']">Ajouter une nouvelle
-                                    saveur ou toxicité</a>
+                                    définition</a>
                             </li>
                         </ul>
                     </li>
                 </ul>
             </ng-template>
 
-            <!-- 
-                ------------------------------------------------------------------- 
-            -->
-
-            <div class="sidebar-header">
-                <h3>Espace personnel</h3>
-            </div>
-
-            <ul class="list-unstyled components">
-                <li>
-                    <a [routerLink]="['/back-office/utilisateur/profil']">Voir mon profil</a>
-                </li>
-                <li>
-                    <a [routerLink]="['/back-office/utilisateur/profil/editer']">Modifier mes données personnelles</a>
-                </li>
-                <li>
-                    <a>Changer de mot de passe</a>
-                </li>
-                <li class="active">
-                    <a href="#homeSubmenu-3" data-bs-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Forum</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu-3">
-                        <li>
-                            <a>Mes questions</a>
-                        </li>
-                        <li>
-                            <a>Mes commentaires</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
         </nav>
 
         <!-- 

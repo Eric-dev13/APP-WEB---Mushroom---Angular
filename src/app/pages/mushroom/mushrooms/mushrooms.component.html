@@ -4,14 +4,14 @@
 <article class="container listMushrooms">
     <div class="row">
         <header class="col text-light text-center">
-            <h1 class="pt-3">Guide des champignons</h1>
-            <p class="fs-5">Guide des champignons : Explorez la biodiversité fongique. Identifiez, apprenez et appréciez les
-                champignons avec notre guide complet. Parcourez les formes, couleurs et habitats fascinants.</p>
+            <h1 class="pt-3 title-text-shadow">Guide des champignons</h1>
+            <p class="fs-5">Guide des champignons : Explorez la biodiversité fongique. Identifiez, apprenez et appréciez
+                les champignons avec notre guide complet. Parcourez les formes, couleurs et habitats fascinants.</p>
         </header>
     </div>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-8">
-        <section class="col d-flex justify-content-center" *ngFor="let mushroom of mushrooms">
+        <section class="col d-flex justify-content-center" *ngFor="let mushroom of mushroomsPaginator.mushrooms">
             <div class="listMushrooms__card box-shadow-down">
                 <a [routerLink]="['/champignon', mushroom.id]">
                     <div class="listMushrooms__card__eat d-flex justify-content-center align-items-center"
@@ -24,7 +24,7 @@
                     </div>
                     <div class="listMushrooms__card__bloc-img">
                         <div class="listMushrooms__card__bloc-img__opacity"></div>
-                        <img class="listMushrooms__card__bloc-img__image" *ngIf="mushroom.medias[0]; else default" 
+                        <img class="listMushrooms__card__bloc-img__image" *ngIf="mushroom.medias[0]; else default"
                             [src]="PUBLIC_URL_GET_FILE_MUSHROOM + mushroom.medias[0].filename"
                             alt="{{mushroom.commonname}}">
                         <ng-template #default>
@@ -40,6 +40,29 @@
         </section>
     </div>
     <div class="my-4">
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item" [class]="isPreviousPageDisabled()">
+                    <a class="page-link" (click)="previousPage()">
+                        <fa-icon [icon]="faChevronLeft"></fa-icon>
+                    </a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link">{{paginator.currentPage}}</a>
+                </li>
+                <!-- <li class="page-item" *ngIf="pageExist(currentPage + 1)">
+                    <a class="page-link" (click)="show(currentPage + 1)">{{currentPage + 1}}</a>
+                </li>
+                <li class="page-item" *ngIf="pageExist(currentPage + 2)">
+                    <a class="page-link" (click)="show(currentPage + 1)">{{currentPage + 2}}</a>
+                </li> -->
+                <li class="page-item " [class]="isNextPageDisabled()">
+                    <a class="page-link" (click)="nextPage()">
+                        <fa-icon [icon]="faChevronRight"></fa-icon>
+                    </a>
+                </li>
+            </ul>
+        </nav>
         <!-- Pagination -->
     </div>
 </article>
