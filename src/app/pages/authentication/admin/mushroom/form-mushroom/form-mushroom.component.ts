@@ -1,7 +1,8 @@
 import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM } from 'src/environments/config';
+// import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 import { faEdit, faTrash, faRotateLeft, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { Mushroom } from 'src/app/interfaces/mushroom.interface';
 import { Edibility } from 'src/app/interfaces/edibility.interface';
@@ -27,8 +28,8 @@ import { ConfirmationModalComponent } from 'src/app/layouts/confirmation-modal/c
 export class FormMushroomComponent implements OnInit {
 
   // Déclaration de constantes
-  readonly API_ADMIN_BASE_URL: string = API_ADMIN_BASE_URL;
-  readonly PUBLIC_URL_GET_FILE_MUSHROOM: string = PUBLIC_URL_GET_FILE_MUSHROOM;
+  readonly API_ADMIN_BASE_URL: string = environment.API_ADMIN_BASE_URL;
+  readonly PUBLIC_URL_GET_FILE_MUSHROOM: string = environment.PUBLIC_URL_GET_FILE_MUSHROOM;
 
 
   constructor(

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY, PUBLIC_URL_GET_FILE_LAMELLATYPE } from 'src/environments/config';
+// import { PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY, PUBLIC_URL_GET_FILE_LAMELLATYPE } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 import { MushroomService } from 'src/app/services/mushroom.service';
 import {Mushroom} from 'src/app/interfaces/mushroom.interface';
 
@@ -19,9 +20,9 @@ export class MushromComponent implements OnInit {
   ) { }
 
   // Déclaration de constantes
-  readonly PUBLIC_URL_GET_FILE_MUSHROOM: string = PUBLIC_URL_GET_FILE_MUSHROOM;
-  readonly PUBLIC_URL_GET_FILE_EDIBILITY: string = PUBLIC_URL_GET_FILE_EDIBILITY;
-  readonly PUBLIC_URL_GET_FILE_LAMELLATYPE: string = PUBLIC_URL_GET_FILE_LAMELLATYPE
+  readonly PUBLIC_URL_GET_FILE_MUSHROOM: string = environment.PUBLIC_URL_GET_FILE_MUSHROOM;
+  readonly PUBLIC_URL_GET_FILE_EDIBILITY: string = environment.PUBLIC_URL_GET_FILE_EDIBILITY;
+  readonly PUBLIC_URL_GET_FILE_LAMELLATYPE: string = environment.PUBLIC_URL_GET_FILE_LAMELLATYPE
 
 
   // Variables

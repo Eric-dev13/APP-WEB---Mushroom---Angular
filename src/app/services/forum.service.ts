@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_BASE_URL, API_ADMIN_BASE_URL } from 'src/environments/config';
+// import { API_BASE_URL, API_ADMIN_BASE_URL } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 import { ForumSubject } from 'src/app/interfaces/forumSubject.interface';
 import { ForumSubjectsPaginator } from 'src/app/interfaces/forum-subjects-paginator.interface';
 import { ForumCategory } from 'src/app/interfaces/forum-category.interface';
@@ -15,8 +16,8 @@ import { ForumSubjectAdd } from 'src/app/interfaces/forum-subject-add.interface'
 export class ForumService {
 
   // Déclaration de constantes
-  readonly API_BASE_URL: string = API_BASE_URL;
-  readonly API_ADMIN_BASE_URL: string = API_ADMIN_BASE_URL;
+  readonly API_BASE_URL: string = environment.API_BASE_URL;
+  readonly API_ADMIN_BASE_URL: string = environment.API_ADMIN_BASE_URL;
 
   constructor(private http: HttpClient) { }
 
@@ -40,7 +41,7 @@ export class ForumService {
   // }
 
   public addSubject = (form: NgForm): Observable<ForumSubjectAdd> => {
-    // console.log("form", form.value);
+    console.log("form", form.value);
     return this.http.post<ForumSubjectAdd>(this.API_BASE_URL + "forum", form.value);
   }
 

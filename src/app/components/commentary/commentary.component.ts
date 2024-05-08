@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Commentary } from 'src/app/interfaces/commentary.interface';
-import { PUBLIC_URL_GET_FILE_USER } from 'src/environments/config';
+// import { PUBLIC_URL_GET_FILE_USER } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 import { faComments, faMessage, faTrashArrowUp, faPencil, faFloppyDisk, faCaretDown, faPencilAlt, faXmark, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -16,7 +17,7 @@ export class CommentaryComponent {
 
   public Editor = ClassicEditor;
 
-  readonly PUBLIC_URL_GET_FILE_USER: string = PUBLIC_URL_GET_FILE_USER;
+  readonly PUBLIC_URL_GET_FILE_USER: string = environment.PUBLIC_URL_GET_FILE_USER;
 
   faComments = faComments;
   faMessage = faMessage;

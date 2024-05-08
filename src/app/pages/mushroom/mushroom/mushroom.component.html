@@ -53,16 +53,16 @@
         <!-- Titre et sous titre -->
         <div
             class="col-12 col-md-12 order-md-1 col-lg-6 order-lg-2 col-xl-7 order-xl-2 mt-1 p-3 text-center fiche__header">
-            <h1 class="text-light txtShadow--dark">{{ mushroom?.commonname }}</h1>
-            <h2 class="descriptionMushroom__header__letter text-uppercase txtShadow--dark">{{ mushroom?.latinname }}
+            <h1 class="text-light txtShadow--dark">{{ mushroom.commonname }}</h1>
+            <h2 class="descriptionMushroom__header__letter text-uppercase txtShadow--dark">{{ mushroom.latinname }}
             </h2>
         </div>
         <!-- Comestibilité -->
         <div
             class="col-12 col-md-12 order-md-2 col-lg-6 order-lg-1 col-xl-5 order-xl-1 mt-2 d-flex justify-content-center align-items-end descriptionMushroom__eat">
             <div class="text-center font-weight-bold text-light txtShadow--dark">
-                <img [src]="PUBLIC_URL_GET_FILE_EDIBILITY + mushroom?.edibility?.filename" alt="?">
-                <p>{{ mushroom?.edibility?.name }}</p>
+                <img [src]="PUBLIC_URL_GET_FILE_EDIBILITY + mushroom.edibility?.filename" alt="?">
+                <p>{{ mushroom.edibility?.name }}</p>
             </div>
         </div>
         <!-- Descriptif -->
@@ -77,7 +77,7 @@
             <!-- Chapeau -->
             <p *ngIf="mushroom?.hat">
                 <span class="fw-bold">Chapeau</span><br>
-                {{ mushroom?.hat }}
+                {{ mushroom.hat }}
             </p>
 
             <!-- Lamelle et type de lamelle -->
@@ -86,32 +86,32 @@
                 <p *ngIf="mushroom?.lamella">
                     <span class="fw-bold">Hyménium</span>
                     (Lames - Tubes - Plis - Aiguillons - Pores)<br>
-                    {{ mushroom?.lamella }}
+                    {{ mushroom.lamella }}
                 </p>
             </div>
 
             <!-- Pied -->
             <p *ngIf="mushroom?.foot">
                 <span class="fw-bold">Pied</span><br>
-                {{ mushroom?.foot }}
+                {{ mushroom.foot }}
             </p>
 
             <!-- Chair -->
             <p *ngIf="mushroom?.flesh">
                 <span class="fw-bold">Chair</span><br>
-                {{ mushroom?.flesh }}
+                {{ mushroom.flesh }}
             </p>
 
             <!-- Habitat -->
             <p *ngIf="mushroom?.habitat">
                 <span class="fw-bold">Habitat</span><br>
-                {{ mushroom?.habitat }}
+                {{ mushroom.habitat }}
             </p>
 
             <!-- Commentaire -->
             <p *ngIf="mushroom?.comment">
                 <span class="fw-bold">Remarques</span><br>
-                {{ mushroom?.comment }}
+                {{ mushroom.comment }}
             </p>
         </div>
     </div>

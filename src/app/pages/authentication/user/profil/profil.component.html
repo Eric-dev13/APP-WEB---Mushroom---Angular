@@ -25,15 +25,15 @@
             </div>
         </div>
         <div class="col flex-grow-1 d-flex flex-column justify-content-center">
-            <ng-template [ngIf]="user?.lastname">
+            <ng-template [ngIf]="user.lastname">
                 <span class="mt-5 mt-sm-0 fw-bold">Nom</span>
                 <p>{{user.lastname}}</p>
             </ng-template>
-            <ng-template [ngIf]="user?.firstname">
+            <ng-template [ngIf]="user.firstname">
                 <span class="mt-5 mt-sm-0 fw-bold">Prénom</span>
                 <p>{{user.firstname}}</p>
             </ng-template>
-            <ng-template [ngIf]="user?.email">
+            <ng-template [ngIf]="user.email">
                 <span class="mt-5 mt-sm-0 fw-bold">Email</span>
                 <p>{{user.email}}</p>
             </ng-template>

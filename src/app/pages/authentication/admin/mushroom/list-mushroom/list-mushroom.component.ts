@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { faEdit, faTrash, faCircleInfo, faThumbsUp, faThumbsDown, faEye, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { Router, ActivatedRoute } from '@angular/router';
-import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
+// import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 import { MushroomAdminService } from 'src/app/services/mushroom.service';
 import { Paginator } from 'src/app/interfaces/paginator.interface';
 import { MushroomsPaginator } from 'src/app/interfaces/mushroomsPaginator.interface';
@@ -28,9 +29,9 @@ export class ListMushroomComponent implements OnInit {
   faSquarePlus = faSquarePlus;
 
   // Déclaration de constantes
-  readonly API_ADMIN_BASE_URL: string = API_ADMIN_BASE_URL;
-  readonly PUBLIC_URL_GET_FILE_MUSHROOM: string = PUBLIC_URL_GET_FILE_MUSHROOM;
-  readonly PUBLIC_URL_GET_FILE_EDIBILITY: string = PUBLIC_URL_GET_FILE_EDIBILITY;
+  readonly API_ADMIN_BASE_URL: string = environment.API_ADMIN_BASE_URL;
+  readonly PUBLIC_URL_GET_FILE_MUSHROOM: string = environment.PUBLIC_URL_GET_FILE_MUSHROOM;
+  readonly PUBLIC_URL_GET_FILE_EDIBILITY: string = environment.PUBLIC_URL_GET_FILE_EDIBILITY;
 
   // Configuration de la pagination : nombre d'élément par page
   itemsPerPage: number = 10;

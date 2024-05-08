@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { API_URL_AUTH } from 'src/environments/config';
+// import { API_URL_AUTH } from 'src/environments/config';
+import { environment } from 'src/environments/environment.development';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -22,7 +23,7 @@ export class AuthenticateComponent{
   faLock = faLock;
 
   // Déclaration de constantes
-  readonly API_URL_AUTH: string = API_URL_AUTH;
+  readonly API_URL_AUTH: string = environment.API_URL_AUTH;
 
   messageToast: ToastComponent;
 
