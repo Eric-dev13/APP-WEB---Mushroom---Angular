@@ -31,7 +31,7 @@ jobs:
         run: npm install
 
       - name: Build de l'application Angular
-        run: npm run build -- --production
+        run: ng build --configuration=production
 
       - name: Déploiement sur serveur
         uses: appleboy/ssh-action@master
