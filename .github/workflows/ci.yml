@@ -37,7 +37,7 @@ jobs:
       - name: Construction de l'application Angular
         run: ng build --configuration=production
 
-      - name: Contenu du build production
+      - name: Déploiement sur le serveur VPS
         run: ls "${{ github.workspace }}/dist/mushroomkingdom"
 
       - name: Copy WAR file to VPS user # Nom de l'étape
@@ -48,7 +48,7 @@ jobs:
           password: ${{ secrets.SUDO_PASSWORD }} # Mot de passe de l'utilisateur sur le serveur
           key: ${{ secrets.SSH_PRIVATE_KEY }} # Clé SSH privée pour se connecter au serveur, stockée en tant que secret GitHub
           port: ${{ secrets.SERVER_PORT }} # Port SSH du serveur
-          source: "target/mushroomkingdom-api.war"
+          source: "${{ github.workspace }}/dist/mushroomkingdom/*"
           target: "/var/www/mushroomkingdom-test" # Répertoire cible sur le serveur
           sudo: true
 
