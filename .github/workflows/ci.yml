@@ -17,7 +17,6 @@ jobs:
       - run: echo "🐧 Cette tâche s'exécute désormais sur un serveur ${{ runner.os }} hébergé par GitHub !"
       - run: echo "🔎 Le nom de votre branche est ${{ github.ref }} et votre référentiel est  ${{ github.repository }}."
 
-
       - name: Checkout code # Nom de l'étape
         uses: actions/checkout@v4 # Action qui clone le dépôt GitHub sur le runner
       - run: echo "💡 Le dépôt ${{ github.repository }} a été cloné sur le runner."
@@ -51,7 +50,7 @@ jobs:
           source: "${{ github.workspace }}/dist/mushroomkingdom/*"
           target: "/home/lova/application_web-eric/mushroomkingdom" # Répertoire cible sur le serveur
 
-      - name: Déploiement sur le serveur VPS
+      - name: Transfert du build production dans /var/www
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.IP_VPS }} # Adresse IP ou nom d'hôte du serveur
@@ -59,10 +58,14 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }} # Clé SSH privée pour se connecter au serveur, stockée en tant que secret GitHub
           port: ${{ secrets.SERVER_PORT }} # Port SSH du serveur
           script: |
-            echo "${{ github.workspace }}"
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S mkdir -p /var/www/mushroomkingdom-test # Crée le répertoire pour le déploiement
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /var/www/mushroomkingdom-test/* # Supprimer les anciens fichiers
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S scp -r /home/lova/application_web-eric/mushroomkingdom/* /var/www/mushroomkingdom-test # Copier les fichiers depuis le workflow vers le serveur
+            # Crée le répertoire pour le déploiement
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S mkdir -p /var/www/mushroomkingdom-test 
+            # Supprimer les anciens fichiers
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /var/www/mushroomkingdom-test/* 
+            # Copier les fichiers depuis le workflow vers le serveur
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S scp -r \
+              /home/lova/application_web-eric/mushroomkingdom/github/workflow/dist/mushroomkingdom/* \
+              /var/www/mushroomkingdom-test 
         env:
           SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
 
