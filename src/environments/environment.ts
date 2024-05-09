@@ -1,3 +1,13 @@
 export const environment = {
+    API_BASE_URL: '',
+    
+    API_ADMIN_BASE_URL: '',
+    API_URL_AUTH: '',
+    API_URL_GET_FILE: '',
 
-}
+    // ACCES SERVEUR DE FICHIERS - PUBLIC
+    PUBLIC_URL_GET_FILE_MUSHROOM: '',
+    PUBLIC_URL_GET_FILE_EDIBILITY: '',
+    PUBLIC_URL_GET_FILE_LAMELLATYPE: '',
+    PUBLIC_URL_GET_FILE_USER: ''
+};

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 // import { PUBLIC_URL_GET_FILE_USER } from 'src/environments/config';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { User } from 'src/app/pages/authentication/user/user.interface';
 
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faEdit, faTrash, faCircleInfo, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
 // import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config'
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { MushroomAdminService } from 'src/app/services/mushroom.service';
 import { Mushroom } from 'src/app/interfaces/mushroom.interface';
 

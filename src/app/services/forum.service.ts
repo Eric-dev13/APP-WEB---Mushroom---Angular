@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 // import { API_BASE_URL, API_ADMIN_BASE_URL } from 'src/environments/config';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { ForumSubject } from 'src/app/interfaces/forumSubject.interface';
 import { ForumSubjectsPaginator } from 'src/app/interfaces/forum-subjects-paginator.interface';
 import { ForumCategory } from 'src/app/interfaces/forum-category.interface';

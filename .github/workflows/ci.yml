@@ -34,7 +34,7 @@ jobs:
         run: npm install
 
       - name: Construction de l'application Angular
-        run: ng build --configuration=production
+        run: npm run build-prod
 
       - name: Contenu du build production
         run: ls "${{ github.workspace }}/dist/mushroomkingdom"
@@ -59,14 +59,14 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }} # Clé SSH privée pour se connecter au serveur, stockée en tant que secret GitHub
           port: ${{ secrets.SERVER_PORT }} # Port SSH du serveur
           script: |
-            # Crée le répertoire pour le déploiement
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S mkdir -p /var/www/mushroomkingdom-test 
+            # Crée si il n'exite pas le répertoire pour le déploiement
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S mkdir -p /var/www/mushroomkingdom 
             # Supprimer les anciens fichiers
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /var/www/mushroomkingdom-test/* 
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /var/www/mushroomkingdom/* 
             # Copier les fichiers depuis le workflow vers le serveur
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S scp -r \
               /home/lova/mushroomkingdom-app/build-angular/github/workspace/dist/mushroomkingdom/* \
-              /var/www/mushroomkingdom-test 
+              /var/www/mushroomkingdom
         env:
           SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
 

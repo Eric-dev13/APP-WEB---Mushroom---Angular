@@ -5,7 +5,7 @@ import { faEdit, faTrash, faRotateLeft, faSquarePlus } from '@fortawesome/free-s
 import { Router, ActivatedRoute } from '@angular/router';
 import { EdibilityInterface } from 'src/app/pages/authentication/admin/edibility/edibility-interface';
 // import { API_ADMIN_BASE_URL, API_BASE_URL, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
