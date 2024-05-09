@@ -37,6 +37,9 @@ jobs:
       - name: Construction de l'application Angular
         run: ng build --configuration=production
 
+      - name: Contenu du build production
+        run: ls "${{ github.workspace }}/dist/mushroomkingdom"
+
       - name: Déploiement sur le serveur VPS
         uses: appleboy/ssh-action@master
         with:
@@ -45,9 +48,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }} # Clé SSH privée pour se connecter au serveur, stockée en tant que secret GitHub
           port: ${{ secrets.SERVER_PORT }} # Port SSH du serveur
           script: |
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S mkdir /var/www/testAngular # Crée le répertoire pour le déploiement
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /var/www/testAngular/* # Supprimer les anciens fichiers
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S scp -r ${{ github.workspace }}/dist/mushroomkingdom/* /var/www/testAngular # Copier les fichiers depuis le workflow vers le serveur
+            echo "${{ github.workspace }}"
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S mkdir /var/www/mushroomkingdom # Crée le répertoire pour le déploiement
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /var/www/mushroomkingdom/* # Supprimer les anciens fichiers
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S scp -r ${{ github.workspace }}/dist/mushroomkingdom/* /var/www/mushroomkingdom # Copier les fichiers depuis le workflow vers le serveur
         env:
           SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
 
