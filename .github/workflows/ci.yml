@@ -48,7 +48,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }} # Clé SSH privée pour se connecter au serveur, stockée en tant que secret GitHub
           port: ${{ secrets.SERVER_PORT }} # Port SSH du serveur
           source: "${{ github.workspace }}/dist/mushroomkingdom/*"
-          target: "/home/lova/mushroomkingdom-app/mushroomkingdom" # Répertoire cible sur le serveur
+          target: "/home/lova/mushroomkingdom-app/build-angular" # Répertoire cible sur le serveur
 
       - name: Transfert du build production dans /var/www
         uses: appleboy/ssh-action@master
@@ -64,7 +64,7 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /var/www/mushroomkingdom-test/* 
             # Copier les fichiers depuis le workflow vers le serveur
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S scp -r \
-              /home/lova/mushroomkingdom-app/mushroomkingdom/github/workflow/dist/mushroomkingdom/* \
+              /home/lova/mushroomkingdom-app/build-angular/github/workspace/dist/mushroomkingdom/* \
               /var/www/mushroomkingdom-test 
         env:
           SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
