@@ -27,13 +27,16 @@ jobs:
         with:
           node-version: '16' # Version de Node.js à utiliser
 
-      - name: Installation des dépendances
+      - name: Installation d'Angular CLI
+        run: npm install -g @angular/cli
+
+      - name: Installation des dépendances du projet
         run: npm install
 
-      - name: Build de l'application Angular
+      - name: Construction de l'application Angular
         run: ng build --configuration=production
 
-      - name: Déploiement sur serveur
+      - name: Déploiement sur le serveur VPS
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.IP_VPS }} # Adresse IP ou nom d'hôte du serveur
