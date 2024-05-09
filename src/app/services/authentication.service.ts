@@ -4,7 +4,7 @@ import { User } from 'src/app/interfaces/user.interface';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 // import { API_URL_AUTH } from 'src/environments/config';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { JwtTokenService } from './jwt-token.service';
 
 @Injectable({

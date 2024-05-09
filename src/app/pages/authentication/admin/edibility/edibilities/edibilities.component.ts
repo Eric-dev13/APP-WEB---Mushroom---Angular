@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EdibilityInterface } from 'src/app/pages/authentication/admin/edibility/edibility-interface'; 
 // import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { faEdit, faTrash, faRotateLeft, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';

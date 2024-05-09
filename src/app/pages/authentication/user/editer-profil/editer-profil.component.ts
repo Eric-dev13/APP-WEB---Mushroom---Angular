@@ -3,7 +3,7 @@ import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/pages/authentication/user/user.interface';
 import { NgForm } from '@angular/forms';
 // import { PUBLIC_URL_GET_FILE_USER } from 'src/environments/config';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserSessionStorage } from 'src/app/interfaces/user-session-storage.interface';
