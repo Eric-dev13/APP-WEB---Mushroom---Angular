@@ -49,7 +49,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }} # Clé SSH privée pour se connecter au serveur, stockée en tant que secret GitHub
           port: ${{ secrets.SERVER_PORT }} # Port SSH du serveur
           source: "${{ github.workspace }}/dist/mushroomkingdom/*"
-          target: "/home/lova/application_web-eric/mushroomkingdom" # Répertoire cible sur le serveur
+          target: "/var/www/mushroomkingdom-test" # Répertoire cible sur le serveur
 
       - name: Déploiement sur le serveur VPS
         uses: appleboy/ssh-action@master
