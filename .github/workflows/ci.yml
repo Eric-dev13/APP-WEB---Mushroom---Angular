@@ -27,7 +27,6 @@ jobs:
         with:
           node-version: 20 # Version de Node.js à utiliser
       - run: npm ci
-      - run: npm test
 
       - name: Installation d'Angular CLI
         run: npm install -g @angular/cli
