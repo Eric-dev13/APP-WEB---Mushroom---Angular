@@ -2,7 +2,7 @@ import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 // import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM } from 'src/environments/config';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { faEdit, faTrash, faRotateLeft, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { Mushroom } from 'src/app/interfaces/mushroom.interface';
 import { Edibility } from 'src/app/interfaces/edibility.interface';

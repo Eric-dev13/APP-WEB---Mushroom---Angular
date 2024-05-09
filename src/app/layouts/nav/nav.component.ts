@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { faAlignJustify } from '@fortawesome/free-solid-svg-icons';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 // import { PUBLIC_URL_GET_FILE_USER } from 'src/environments/config';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 
 
 @Component({

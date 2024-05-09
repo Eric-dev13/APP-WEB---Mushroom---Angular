@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 // import { API_BASE_URL, API_ADMIN_BASE_URL } from 'src/environments/config';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { Mushroom } from 'src/app/interfaces/mushroom.interface';
 import { MushroomsPaginator } from 'src/app/interfaces/mushroomsPaginator.interface';
 

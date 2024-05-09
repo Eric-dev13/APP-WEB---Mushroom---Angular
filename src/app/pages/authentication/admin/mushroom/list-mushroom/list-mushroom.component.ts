@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faEdit, faTrash, faCircleInfo, faThumbsUp, faThumbsDown, faEye, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { Router, ActivatedRoute } from '@angular/router';
 // import { API_ADMIN_BASE_URL, PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { MushroomAdminService } from 'src/app/services/mushroom.service';
 import { Paginator } from 'src/app/interfaces/paginator.interface';
 import { MushroomsPaginator } from 'src/app/interfaces/mushroomsPaginator.interface';

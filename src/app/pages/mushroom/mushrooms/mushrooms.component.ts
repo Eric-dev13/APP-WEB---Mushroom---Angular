@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 // import { PUBLIC_URL_GET_FILE_MUSHROOM, PUBLIC_URL_GET_FILE_EDIBILITY } from 'src/environments/config';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { MushroomService } from 'src/app/services/mushroom.service';
 import { MushroomsPaginator } from 'src/app/interfaces/mushroomsPaginator.interface';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
