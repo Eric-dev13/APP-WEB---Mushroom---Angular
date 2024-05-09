@@ -19,13 +19,15 @@ jobs:
 
 
       - name: Checkout code # Nom de l'étape
-        uses: actions/checkout@v2 # Action qui clone le dépôt GitHub sur le runner
+        uses: actions/checkout@v4 # Action qui clone le dépôt GitHub sur le runner
       - run: echo "💡 Le dépôt ${{ github.repository }} a été cloné sur le runner."
 
-      - name: Configuration de l'environnement Node.js
-        uses: actions/setup-node@v2
+      - name: Configuration de Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '16' # Version de Node.js à utiliser
+          node-version: 20 # Version de Node.js à utiliser
+      - run: npm ci
+      - run: npm test
 
       - name: Installation d'Angular CLI
         run: npm install -g @angular/cli
