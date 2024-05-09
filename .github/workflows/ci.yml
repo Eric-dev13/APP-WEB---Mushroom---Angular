@@ -48,7 +48,7 @@ jobs:
           password: ${{ secrets.SUDO_PASSWORD }} # Mot de passe de l'utilisateur sur le serveur
           key: ${{ secrets.SSH_PRIVATE_KEY }} # Clé SSH privée pour se connecter au serveur, stockée en tant que secret GitHub
           port: ${{ secrets.SERVER_PORT }} # Port SSH du serveur
-          source: "target/mushroomkingdom-api.war"
+          source: "/github/workflow/dist/mushroomkingdom/*"
           target: "/var/www/mushroomkingdom-test" # Répertoire cible sur le serveur
           sudo: true
 
