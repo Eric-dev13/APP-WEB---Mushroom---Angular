@@ -37,10 +37,10 @@ jobs:
       - name: Construction de l'application Angular
         run: ng build --configuration=production
 
-      - name: Déploiement sur le serveur VPS
+      - name: Contenu du build production
         run: ls "${{ github.workspace }}/dist/mushroomkingdom"
 
-      - name: Copy WAR file to VPS user # Nom de l'étape
+      - name: Déploiement sur le serveur VPS
         uses: appleboy/scp-action@master # Action qui copie les fichiers sur le serveur via SCP
         with:
           host: ${{ secrets.IP_VPS }} # Adresse IP ou nom d'hôte du serveur
@@ -49,8 +49,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }} # Clé SSH privée pour se connecter au serveur, stockée en tant que secret GitHub
           port: ${{ secrets.SERVER_PORT }} # Port SSH du serveur
           source: "${{ github.workspace }}/dist/mushroomkingdom/*"
-          target: "/var/www/mushroomkingdom-test" # Répertoire cible sur le serveur
-          sudo: true
+          target: "/home/lova/application_web-eric/mushroomkingdom" # Répertoire cible sur le serveur
 
       - name: Déploiement sur le serveur VPS
         uses: appleboy/ssh-action@master
@@ -63,9 +62,8 @@ jobs:
             echo "${{ github.workspace }}"
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S mkdir -p /var/www/mushroomkingdom-test # Crée le répertoire pour le déploiement
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /var/www/mushroomkingdom-test/* # Supprimer les anciens fichiers
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S scp -r /github/workspace/dist/mushroomkingdom/* /var/www/mushroomkingdom-test # Copier les fichiers depuis le workflow vers le serveur
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S scp -r /home/lova/application_web-eric/mushroomkingdom/* /var/www/mushroomkingdom-test # Copier les fichiers depuis le workflow vers le serveur
         env:
           SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
-
 
       - run: echo "🍏 Le statut de cette tâche est ${{ job.status }}."
