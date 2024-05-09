@@ -40,6 +40,18 @@ jobs:
       - name: Contenu du build production
         run: ls "${{ github.workspace }}/dist/mushroomkingdom"
 
+      - name: Copy WAR file to VPS user # Nom de l'étape
+        uses: appleboy/scp-action@master # Action qui copie les fichiers sur le serveur via SCP
+        with:
+          host: ${{ secrets.IP_VPS }} # Adresse IP ou nom d'hôte du serveur
+          username: ${{ secrets.USERNAME_VPS }} # Nom d'utilisateur sur le serveur
+          password: ${{ secrets.SUDO_PASSWORD }} # Mot de passe de l'utilisateur sur le serveur
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # Clé SSH privée pour se connecter au serveur, stockée en tant que secret GitHub
+          port: ${{ secrets.SERVER_PORT }} # Port SSH du serveur
+          source: "target/mushroomkingdom-api.war"
+          target: "/var/www/mushroomkingdom-test" # Répertoire cible sur le serveur
+          sudo: true
+
       - name: Déploiement sur le serveur VPS
         uses: appleboy/ssh-action@master
         with:
@@ -49,9 +61,9 @@ jobs:
           port: ${{ secrets.SERVER_PORT }} # Port SSH du serveur
           script: |
             echo "${{ github.workspace }}"
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S mkdir /var/www/mushroomkingdom # Crée le répertoire pour le déploiement
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /var/www/mushroomkingdom/* # Supprimer les anciens fichiers
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S scp -r ${{ github.workspace }}/dist/mushroomkingdom/* /var/www/mushroomkingdom # Copier les fichiers depuis le workflow vers le serveur
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S mkdir -p /var/www/mushroomkingdom-test # Crée le répertoire pour le déploiement
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /var/www/mushroomkingdom-test/* # Supprimer les anciens fichiers
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S scp -r /github/workspace/dist/mushroomkingdom/* /var/www/mushroomkingdom-test # Copier les fichiers depuis le workflow vers le serveur
         env:
           SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
 
